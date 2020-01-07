@@ -1,9 +1,0 @@
-# -- Entity and Trigger Tooltips -- 
-#    placements.entities.entityName.tooltips.attr=Tooltip
-#    placements.triggers.triggerName.tooltips.attr=Tooltip
-
-# --- Triggers ---
-
-# No Refill Field
-
-placements.triggers.SpringCollab2020/NoRefillField.tooltips.noGroundRefillInside=If checked, ground refills will be disabled inside the field, and enabled outside. If unchecked, the contrary will happen.
