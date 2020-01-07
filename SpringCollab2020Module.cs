@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Celeste.Mod.CollabUtils2 {
-    public class CollabModule : EverestModule {
+namespace Celeste.Mod.SpringCollab2020 {
+    public class SpringCollab2020Module : EverestModule {
 
-        public static CollabModule Instance;
+        public static SpringCollab2020Module Instance;
         
-        public CollabModule() {
+        public SpringCollab2020Module() {
             Instance = this;
         }
 

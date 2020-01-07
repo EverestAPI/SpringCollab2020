@@ -1,5 +1,5 @@
 # CelesteCollabUtils2
-"If CollabUtils is so good, why isn't there CollabUtils2?" -- no one, ever
+Code mod to be used for the 2020 Celeste Spring Community Collab.
 
 ### Setup instructions:
 
