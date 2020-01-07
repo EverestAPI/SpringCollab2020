@@ -1,4 +1,4 @@
-# CelesteCollabUtils2
+# SpringCollab2020
 Code mod to be used for the 2020 Celeste Spring Community Collab.
 
 ### Setup instructions:
@@ -10,8 +10,8 @@ Developing directly on the master branch is only allowed if you've forked the re
 **If you've got read-write access to the repo:**
 - Make sure you've got the FNA version of Celeste + Everest installed.
 - `cd` to your mods folder.
-- `git clone https://github.com/EverestAPI/CelesteCollabUtils2.git`
-    - ... or if you prefer SSH, `git clone git@github.com:EverestAPI/CelesteCollabUtils2.git`
+- `git clone https://github.com/EverestAPI/SpringCollab2020.git`
+    - ... or if you prefer SSH, `git clone git@github.com:EverestAPI/SpringCollab2020.git`
 - Open the `.sln` in VS.
 
 **If you want to submit contributions the old-fashioned way:**
