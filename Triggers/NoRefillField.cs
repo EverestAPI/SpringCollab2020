@@ -18,7 +18,7 @@ namespace Celeste.Mod.SpringCollab2020.Triggers {
             base.OnLeave(player);
 
             // re-enable refills if not colliding with another no refill field.
-            if (!player.CollideCheck<NoRefillField>()) {
+            if (player.Dead || !player.CollideCheck<NoRefillField>()) {
                 SceneAs<Level>().Session.Inventory.NoRefills = false;
             }
         }
