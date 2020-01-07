@@ -4,6 +4,6 @@
 
 # --- Triggers ---
 
-# Factory Activation Trigger
+# No Refill Field
 
 placements.triggers.SpringCollab2020/NoRefillField.tooltips.noGroundRefillInside=If checked, ground refills will be disabled inside the field, and enabled outside. If unchecked, the contrary will happen.
