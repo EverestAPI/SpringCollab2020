@@ -10,7 +10,7 @@ namespace Celeste.Mod.SpringCollab2020.Triggers {
         public NoRefillField(EntityData data, Vector2 offset): base(data, offset) { }
 
         public override void OnEnter(Player player) {
-            base.OnStay(player);
+            base.OnEnter(player);
             SceneAs<Level>().Session.Inventory.NoRefills = true;
         }
 
