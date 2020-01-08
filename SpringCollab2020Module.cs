@@ -15,21 +15,11 @@ namespace Celeste.Mod.SpringCollab2020 {
         }
 
         public override void Load() {
-            Everest.Events.Level.OnExit += onLevelExit;
+            NoRefillField.Load();
         }
 
         public override void Unload() {
-            Everest.Events.Level.OnExit -= onLevelExit;
-        }
-
-        private void onLevelExit(Level level, LevelExit exit, LevelExit.Mode mode, Session session, HiresSnow snow) {
-            if (mode == LevelExit.Mode.SaveAndQuit) {
-                // if saving in a No Refill Field, be sure to restore the refills.
-                Player player = level.Tracker.GetEntity<Player>();
-                if (player != null && player.CollideCheck<NoRefillField>()) {
-                    level.Session.Inventory.NoRefills = false;
-                }
-            }
+            NoRefillField.Unload();
         }
     }
 }
