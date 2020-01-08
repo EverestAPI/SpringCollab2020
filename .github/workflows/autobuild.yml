@@ -4,7 +4,7 @@ on: [push]
 
 jobs:
   build:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
 
@@ -13,8 +13,11 @@ jobs:
       with:
         dotnet-version: 2.2.108
 
-    - name: Build with dotnet
-      run: dotnet build --configuration Release
+    - name: Restore with .NET Core
+      run: dotnet restore
+
+    - name: Build using Mono
+      run: msbuild *.sln "/p:Configuration=Release"
 
     - name: Upload artifact
       uses: actions/upload-artifact@v1.0.0
