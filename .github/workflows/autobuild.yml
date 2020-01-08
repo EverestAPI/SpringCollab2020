@@ -4,19 +4,36 @@ on: [push]
 
 jobs:
   build:
-
     runs-on: windows-latest
-
     steps:
+
     - uses: actions/checkout@v1
+
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 2.2.108
+
     - name: Build with dotnet
       run: dotnet build --configuration Release
+
     - name: Upload artifact
       uses: actions/upload-artifact@v1.0.0
       with:
         name: main
         path: bin/Release/net452
+
+    - name: Zip release
+      uses: TheDoctor0/zip-release@v0.2.1
+      if: github.ref == 'master'
+      with:
+        filename: springcollab2020.zip
+        path: bin/Release/net452
+
+    - name: Publish release
+      uses: sinshutu/upload-to-discord@v2.0.0
+      if: github.ref == 'master'
+      env:
+        DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+      with:
+        args: springcollab2020.zip
