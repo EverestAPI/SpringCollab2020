@@ -6,7 +6,6 @@ jobs:
   build:
     runs-on: windows-latest
     steps:
-
     - uses: actions/checkout@v1
 
     - name: Setup .NET Core
@@ -25,14 +24,14 @@ jobs:
 
     - name: Zip release
       uses: TheDoctor0/zip-release@v0.2.1
-      if: github.ref == 'master'
+      if: github.ref == 'refs/heads/master'
       with:
         filename: springcollab2020.zip
         path: bin/Release/net452
 
     - name: Publish release
       uses: sinshutu/upload-to-discord@v2.0.0
-      if: github.ref == 'master'
+      if: github.ref == 'refs/heads/master'
       env:
         DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
       with:
