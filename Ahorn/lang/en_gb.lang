@@ -1,0 +1,7 @@
+﻿# Cave Wall
+placements.entities.SpringCollab2020/caveWall.tooltips.tiletype=Changes the visual appearance of the wall.
+
+# Floatier Space Block
+placements.entities.SpringCollab2020/floatierSpaceBlock.tooltips.disableSpawnOffset=Whether or not the entity should spawn without the random offset.
+placements.entities.SpringCollab2020/floatierSpaceBlock.tooltips.floatinessMultiplier=A multiplier for how far the block sinks.
+placements.entities.SpringCollab2020/floatierSpaceBlock.tooltips.tiletype=Determines the visual appearance of the wall.

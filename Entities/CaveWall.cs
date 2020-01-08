@@ -1,10 +1,9 @@
 ﻿using Celeste.Mod.Entities;
 using Microsoft.Xna.Framework;
 using Monocle;
-using System;
 using System.Collections.Generic;
 
-namespace Celeste.Mod.CollabUtils2 {
+namespace Celeste.Mod.SpringCollab2020.Entities {
 
     [Tracked(false)]
     [CustomEntity("SpringCollab2020/caveWall")]
@@ -71,12 +70,12 @@ namespace Celeste.Mod.CollabUtils2 {
                 Rectangle tileBounds = level.Session.MapData.TileBounds;
                 VirtualMap<char> virtualMap = level.SolidsData.Clone();
                 foreach (CaveWall item in Group) {
-                    int num = (int) (item.X / 8f) - level.Session.MapData.TileBounds.X;
-                    int num2 = (int) (item.Y / 8f - level.Session.MapData.TileBounds.Y);
-                    int num3 = (int) (item.Width / 8f);
-                    int num4 = (int) (item.Height / 8f);
-                    for (int i = num; i < num + num3; i++) {
-                        for (int j = num2; j < num2 + num4; j++) {
+                    int x = (int) (item.X / 8f) - level.Session.MapData.TileBounds.X;
+                    int y = (int) (item.Y / 8f - level.Session.MapData.TileBounds.Y);
+                    int tilesX = (int) (item.Width / 8f);
+                    int tilesY = (int) (item.Height / 8f);
+                    for (int i = x; i < x + tilesX; i++) {
+                        for (int j = y; j < y + tilesY; j++) {
                             virtualMap[i, j] = fillTile;
                         }
                     }
