@@ -9,6 +9,10 @@ jobs:
 
     - uses: actions/checkout@v1
 
+    - run: echo %GITHUB_REF%
+      env:
+        GITHUB_REF: ${{ github.ref }}
+
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v1
       with:
@@ -25,14 +29,14 @@ jobs:
 
     - name: Zip release
       uses: TheDoctor0/zip-release@v0.2.1
-      if: github.ref == 'master'
+      if: github.ref == 'gh-actions'
       with:
         filename: springcollab2020.zip
         path: bin/Release/net452
 
     - name: Publish release
       uses: sinshutu/upload-to-discord@v2.0.0
-      if: github.ref == 'master'
+      if: github.ref == 'gh-actions'
       env:
         DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
       with:
