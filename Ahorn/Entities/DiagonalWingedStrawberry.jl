@@ -14,7 +14,7 @@ function Ahorn.selection(entity::DiagonalWingedStrawberry)
 	return Ahorn.Rectangle(x - 4, y - 6, 8, 12)
 end
 
-function Ahorn.render(ctx::Ahorn.Cairo.CairoContext, entity::DiagonalWingedStrawberry, room::Maple.Room)
+function Ahorn.renderAbs(ctx::Ahorn.Cairo.CairoContext, entity::DiagonalWingedStrawberry, room::Maple.Room)
 	x, y = Ahorn.position(entity)
 
 	Ahorn.drawSprite(ctx, "collectables/strawberry/wings01", x, y)
