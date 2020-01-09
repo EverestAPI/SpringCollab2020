@@ -66,9 +66,9 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
                 }
                 float yLerpVal = (float)yLerpInfo.GetValue(this);
                 if (sinkTimerVal > 0f) {
-                    yLerpInfo.SetValue(this, Calc.Approach(yLerpVal, 1f, (1f / floatinessBoost) * Engine.DeltaTime));
+                    yLerpInfo.SetValue(this, Calc.Approach(yLerpVal, 1f, 1f * Engine.DeltaTime));
                 } else {
-                    yLerpInfo.SetValue(this, Calc.Approach(yLerpVal, 0f, (1f / floatinessBoost) * Engine.DeltaTime));
+                    yLerpInfo.SetValue(this, Calc.Approach(yLerpVal, 0f, 1f * Engine.DeltaTime));
                 }
                 sineWaveInfo.SetValue(this, (float)sineWaveInfo.GetValue(this) + Engine.DeltaTime);
                 dashEaseInfo.SetValue(this, Calc.Approach((float)dashEaseInfo.GetValue(this), 0f, Engine.DeltaTime * 1.5f));
@@ -79,7 +79,7 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
 
         private void MoveToTarget() {
             float sineWavePos = (float) Math.Sin((float)sineWaveInfo.GetValue(this)) * 4f;
-            Vector2 dashOffset = Calc.YoYo(Ease.QuadIn((float)dashEaseInfo.GetValue(this))) * (Vector2)dashDirectionInfo.GetValue(this) * 8f;
+            Vector2 dashOffset = Calc.YoYo(Ease.QuadIn((float)dashEaseInfo.GetValue(this))) * (Vector2)dashDirectionInfo.GetValue(this) * 8f * floatinessBoost;
             for (int i = 0; i < 2; i++) {
                 foreach (KeyValuePair<Platform, Vector2> move in Moves) {
                     Platform key = move.Key;
