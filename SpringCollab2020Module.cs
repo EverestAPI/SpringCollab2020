@@ -1,9 +1,5 @@
-﻿using Celeste.Mod.SpringCollab2020.Triggers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Celeste.Mod.SpringCollab2020.Entities;
+using Celeste.Mod.SpringCollab2020.Triggers;
 
 namespace Celeste.Mod.SpringCollab2020 {
     public class SpringCollab2020Module : EverestModule {
@@ -16,10 +12,12 @@ namespace Celeste.Mod.SpringCollab2020 {
 
         public override void Load() {
             NoRefillField.Load();
+            FloatierSpaceBlock.Load();
         }
 
         public override void Unload() {
             NoRefillField.Unload();
+            FloatierSpaceBlock.Unload();
         }
     }
 }
