@@ -25,17 +25,12 @@ jobs:
         name: main
         path: bin/Release/net452
 
-    - name: Zip release
-      uses: TheDoctor0/zip-release@v0.2.1
-      if: github.ref == 'refs/heads/master'
-      with:
-        filename: springcollab2020.zip
-        path: bin/Release/net452
-
     - name: Publish release
-      uses: sinshutu/upload-to-discord@v2.0.0
-      if: github.ref == 'refs/heads/master'
+      #if: github.ref == 'refs/heads/master'
       env:
+        ZIPNAME: SpringCollab2020.zip
         DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
-      with:
-        args: springcollab2020.zip
+      run: |
+        zip -qq -r $ZIPNAME everest.yaml bin/*/net452
+        url=$(curl -H 'Content-Type: multipart/form-data' -X POST -F "file=@$ZIPNAME" "$DISCORD_WEBHOOK" | grep -Po 'cdn.discordapp.com\/.*?\.zip' | tr -d '\n')
+        curl -H 'Content-Type: application/json' -X POST -d '{"embeds": [{"title": "Install '"$ZIPNAME"'", "url": "https://0x0ade.ga/twoclick/?'"$url"'"}]}' "$DISCORD_WEBHOOK"
