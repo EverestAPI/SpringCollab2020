@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Celeste.Mod.SpringCollab2020.Entities;
 
 namespace Celeste.Mod.SpringCollab2020 {
     public class SpringCollab2020Module : EverestModule {
@@ -14,9 +15,11 @@ namespace Celeste.Mod.SpringCollab2020 {
         }
 
         public override void Load() {
+            DiagonalWingedStrawberry.Load();
         }
 
         public override void Unload() {
+            DiagonalWingedStrawberry.Unload();
         }
     }
 }
