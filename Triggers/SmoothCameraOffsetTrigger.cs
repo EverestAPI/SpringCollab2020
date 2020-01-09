@@ -27,7 +27,7 @@ namespace Celeste.Mod.SpringCollab2020.Triggers {
         public override void OnLeave(Player player) {
             base.OnLeave(player);
 
-            if(onlyOnce) {
+            if (onlyOnce) {
                 RemoveSelf();
             }
         }
