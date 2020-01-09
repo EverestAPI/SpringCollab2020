@@ -5,3 +5,11 @@ placements.entities.SpringCollab2020/caveWall.tooltips.tiletype=Changes the visu
 placements.entities.SpringCollab2020/floatierSpaceBlock.tooltips.disableSpawnOffset=Whether or not the entity should spawn without the random offset.
 placements.entities.SpringCollab2020/floatierSpaceBlock.tooltips.floatinessMultiplier=A multiplier for how far the block sinks.
 placements.entities.SpringCollab2020/floatierSpaceBlock.tooltips.tiletype=Determines the visual appearance of the wall.
+
+# Smooth Camera Offset Trigger
+placements.triggers.SpringCollab2020/SmoothCameraOffsetTrigger.tooltips.offsetXFrom=The X offset to fade from.
+placements.triggers.SpringCollab2020/SmoothCameraOffsetTrigger.tooltips.offsetXTo=The X offset to fade to.
+placements.triggers.SpringCollab2020/SmoothCameraOffsetTrigger.tooltips.offsetYFrom=The Y offset to fade from.
+placements.triggers.SpringCollab2020/SmoothCameraOffsetTrigger.tooltips.offsetYTo=The Y offset to fade to.
+placements.triggers.SpringCollab2020/SmoothCameraOffsetTrigger.tooltips.positionMode=The fade direction.
+placements.triggers.SpringCollab2020/SmoothCameraOffsetTrigger.tooltips.onlyOnce=If checked, the trigger will be disabled when the player first leaves it.
