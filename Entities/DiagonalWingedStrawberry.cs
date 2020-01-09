@@ -55,13 +55,6 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
         }
 
         private void OnDiagDash(Vector2 dir) {
-            bool flag = false;
-            if (dir.X == -0.7071068 && dir.Y == -0.7071068)
-                flag = true;
-
-            if (!flag && dir.X == 0.7071068 && dir.Y == -0.7071068)
-                flag = true;
-
             if (CheckDirection(dir))
                 OriginalOnDash.Invoke(this, new object[] { dir });
         }
