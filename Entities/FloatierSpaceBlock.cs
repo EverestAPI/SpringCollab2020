@@ -16,8 +16,8 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
         private static FieldInfo dashEaseInfo = typeof(FloatySpaceBlock).GetField("dashEase", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.GetField);
         private static FieldInfo dashDirectionInfo = typeof(FloatySpaceBlock).GetField("dashDirection", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.GetField);
 
-        //private static MethodInfo MoveToTargetInfo = typeof(FloatySpaceBlock).GetMethod("MoveToTarget", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.InvokeMethod);
-
+        private static PropertyInfo MasterOfGroupInfo = typeof(FloatySpaceBlock).GetProperty("MasterOfGroup", BindingFlags.Public | BindingFlags.Instance | BindingFlags.SetProperty);
+        
         public FloatierSpaceBlock(EntityData data, Vector2 offset) : base(data, offset) {
             floatinessBoost = data.Float("floatinessMultiplier", 1);
         }
@@ -36,57 +36,60 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
         }
 
         public override void Update() {
-            float oldYLerp = (float) yLerpInfo.GetValue(this);
+            bool masterOfGroup = MasterOfGroup;
+            // If MasterOfGroup is false, FloatySpaceBlock does almost nothing in Update()
+            MasterOfGroupInfo.SetValue(this, false);
             base.Update();
+            MasterOfGroupInfo.SetValue(this, masterOfGroup);
+
             if (MasterOfGroup) {
-                bool flag = false;
+                bool playerRiding = false;
                 foreach (FloatySpaceBlock item in Group) {
                     if (item.HasPlayerRider()) {
-                        flag = true;
+                        playerRiding = true;
                         break;
                     }
                 }
-                if (!flag) {
+                if (!playerRiding) {
                     foreach (JumpThru jumpthru in Jumpthrus) {
                         if (jumpthru.HasPlayerRider()) {
-                            flag = true;
+                            playerRiding = true;
                             break;
                         }
                     }
                 }
                 float sinkTimerVal = (float) sinkTimerInfo.GetValue(this);
-                if (flag) {
+                if (playerRiding) {
                     sinkTimerInfo.SetValue(this, sinkTimerVal = 0.3f * floatinessBoost);
                 } else if (sinkTimerVal > 0f) {
                     sinkTimerInfo.SetValue(this, sinkTimerVal -= Engine.DeltaTime);
                 }
+                float yLerpVal = (float)yLerpInfo.GetValue(this);
                 if (sinkTimerVal > 0f) {
-                    yLerpInfo.SetValue(this, Calc.Approach(oldYLerp, 1f, (1f / floatinessBoost) * Engine.DeltaTime));
+                    yLerpInfo.SetValue(this, Calc.Approach(yLerpVal, 1f, (1f / floatinessBoost) * Engine.DeltaTime));
                 } else {
-                    yLerpInfo.SetValue(this, Calc.Approach(oldYLerp, 0f, (1f / floatinessBoost) * Engine.DeltaTime));
+                    yLerpInfo.SetValue(this, Calc.Approach(yLerpVal, 0f, (1f / floatinessBoost) * Engine.DeltaTime));
                 }
+                sineWaveInfo.SetValue(this, (float)sineWaveInfo.GetValue(this) + Engine.DeltaTime);
+                dashEaseInfo.SetValue(this, Calc.Approach((float)dashEaseInfo.GetValue(this), 0f, Engine.DeltaTime * 1.5f));
                 MoveToTarget();
             }
             LiftSpeed = Vector2.Zero;
         }
 
         private void MoveToTarget() {
-            float num = (float) Math.Sin((float)sineWaveInfo.GetValue(this)) * 4f;
-            Vector2 vector = Calc.YoYo(Ease.QuadIn((float)dashEaseInfo.GetValue(this))) * (Vector2)dashDirectionInfo.GetValue(this) * 8f;
+            float sineWavePos = (float) Math.Sin((float)sineWaveInfo.GetValue(this)) * 4f;
+            Vector2 dashOffset = Calc.YoYo(Ease.QuadIn((float)dashEaseInfo.GetValue(this))) * (Vector2)dashDirectionInfo.GetValue(this) * 8f;
             for (int i = 0; i < 2; i++) {
                 foreach (KeyValuePair<Platform, Vector2> move in Moves) {
                     Platform key = move.Key;
-                    bool flag = false;
-                    Solid solid = key as Solid;
-                    if ((key is JumpThru jumpThru && jumpThru.HasRider()) || (solid != null && solid.HasRider())) {
-                        flag = true;
-                    }
+                    bool flag = (key is JumpThru jumpThru && jumpThru.HasRider()) || (key is Solid solid && solid.HasRider());
                     if ((flag || i != 0) && (!flag || i != 1)) {
-                        Vector2 value = move.Value;
+                        Vector2 intialPos = move.Value;
                         // This is the important line
-                        float num2 = MathHelper.Lerp(value.Y, value.Y + 12f * floatinessBoost, Ease.SineInOut((float) yLerpInfo.GetValue(this))) + num;
-                        key.MoveToY(num2 + vector.Y);
-                        key.MoveToX(value.X + vector.X);
+                        float bobbingOffset = MathHelper.Lerp(intialPos.Y, intialPos.Y + 12f * floatinessBoost, Ease.SineInOut((float) yLerpInfo.GetValue(this))) + sineWavePos * floatinessBoost;
+                        key.MoveToY(bobbingOffset + dashOffset.Y);
+                        key.MoveToX(intialPos.X + dashOffset.X);
                     }
                 }
             }
