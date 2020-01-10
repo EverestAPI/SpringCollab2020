@@ -9,6 +9,7 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
     [CustomEntity("SpringCollab2020/floatierSpaceBlock")]
     public class FloatierSpaceBlock : FloatySpaceBlock {
         public float floatinessBoost;
+        public float dashEaseMultiplier;
 
         private static FieldInfo sinkTimerInfo = typeof(FloatySpaceBlock).GetField("sinkTimer", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.GetField);
         private static FieldInfo yLerpInfo = typeof(FloatySpaceBlock).GetField("yLerp", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.GetField);
@@ -20,6 +21,7 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
         
         public FloatierSpaceBlock(EntityData data, Vector2 offset) : base(data, offset) {
             floatinessBoost = data.Float("floatinessMultiplier", 1);
+            dashEaseMultiplier = data.Float("bounceBackMultiplier", 1);
         }
 
         public static void Load() {
@@ -71,7 +73,7 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
                     yLerpInfo.SetValue(this, Calc.Approach(yLerpVal, 0f, 1f * Engine.DeltaTime));
                 }
                 sineWaveInfo.SetValue(this, (float)sineWaveInfo.GetValue(this) + Engine.DeltaTime);
-                dashEaseInfo.SetValue(this, Calc.Approach((float)dashEaseInfo.GetValue(this), 0f, Engine.DeltaTime * 1.5f));
+                dashEaseInfo.SetValue(this, Calc.Approach((float)dashEaseInfo.GetValue(this), 0f, Engine.DeltaTime * 1.5f * dashEaseMultiplier));
                 MoveToTarget();
             }
             LiftSpeed = Vector2.Zero;
