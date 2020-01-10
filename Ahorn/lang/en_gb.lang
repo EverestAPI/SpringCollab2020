@@ -1,0 +1,5 @@
+﻿# Diagonal Winged Strawberry
+
+placements.entities.SpringCollab2020/diagonalWingedStrawberry.tooltips.winged=DO NOT CHANGE THIS!
+placements.entities.SpringCollab2020/diagonalWingedStrawberry.tooltips.order=The order within a checkpoint. When set to -1, bugs occur with strawberry order. Manually set the order of both this and regular strawberries.
+placements.entities.SpringCollab2020/diagonalWingedStrawberry.tooltips.checkpointID=The checkpoint the berry is located within. While it can cause issues, leave to -1.

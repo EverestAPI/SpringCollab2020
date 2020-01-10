@@ -7,7 +7,7 @@ using System;
 using System.Reflection;
 
 namespace Celeste.Mod.SpringCollab2020.Entities {
-    [CustomEntity("SpringCollab2020/DiagonalWingedStrawberry")]
+    [CustomEntity("SpringCollab2020/diagonalWingedStrawberry")]
     class DiagonalWingedStrawberry : Strawberry {
         public DiagonalWingedStrawberry(EntityData data, Vector2 offset, EntityID gid) : base(data, offset, gid) {
             Component[] componentArray = Components.ToArray();
@@ -25,7 +25,6 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
 
         public static void Load() {
             MethodInfo mapDataLoad = typeof(MapData).GetMethod("orig_Load", BindingFlags.Instance | BindingFlags.NonPublic);
-            MethodInfo mapGetStrawberries = typeof(MapData).GetMethod("GetStrawberries", BindingFlags.Instance | BindingFlags.Public);
             MethodInfo levelDataCtor = typeof(LevelData).GetMethod("orig_ctor", BindingFlags.Instance | BindingFlags.Public);
 
             MapDataLoadHook = new ILHook(mapDataLoad, SearchModdedStrawberries);
@@ -48,20 +47,13 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
         }
 
         private static bool CountModdedBerries(string berryName) {
-            if (berryName == "strawberry" || berryName == "SpringCollab2020/DiagonalWingedStrawberry")
+            if (berryName == "strawberry" || berryName == "SpringCollab2020/diagonalWingedStrawberry")
                 return true;
 
             return false;
         }
 
         private void OnDiagDash(Vector2 dir) {
-            bool flag = false;
-            if (dir.X == -0.7071068 && dir.Y == -0.7071068)
-                flag = true;
-
-            if (!flag && dir.X == 0.7071068 && dir.Y == -0.7071068)
-                flag = true;
-
             if (CheckDirection(dir))
                 OriginalOnDash.Invoke(this, new object[] { dir });
         }
