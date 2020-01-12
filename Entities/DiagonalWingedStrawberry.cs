@@ -8,49 +8,20 @@ using System.Reflection;
 
 namespace Celeste.Mod.SpringCollab2020.Entities {
     [CustomEntity("SpringCollab2020/diagonalWingedStrawberry")]
+    [RegisterStrawberry(true, false)]
     class DiagonalWingedStrawberry : Strawberry {
-        public DiagonalWingedStrawberry(EntityData data, Vector2 offset, EntityID gid) : base(data, offset, gid) {
-            Component[] componentArray = Components.ToArray();
+        public DiagonalWingedStrawberry(EntityData data, Vector2 offset, EntityID gid) : base(FixData(data), offset, gid) {
             OriginalOnDash = typeof(Strawberry).GetMethod("OnDash", BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.InvokeMethod);
 
-            foreach (Component comp in componentArray) {
+            // Components.ToArray() is used because the map fails to load when using merely "Components" for some reason.
+            foreach (Component comp in Components.ToArray()) {
                 if (comp is DashListener)
                     Components.Remove(comp);
             }
-
-            base.Add(new DashListener {
+            
+            Add(new DashListener {
                 OnDash = new Action<Vector2>(OnDiagDash)
             });
-        }
-
-        public static void Load() {
-            MethodInfo mapDataLoad = typeof(MapData).GetMethod("orig_Load", BindingFlags.Instance | BindingFlags.NonPublic);
-            MethodInfo levelDataCtor = typeof(LevelData).GetMethod("orig_ctor", BindingFlags.Instance | BindingFlags.Public);
-
-            MapDataLoadHook = new ILHook(mapDataLoad, SearchModdedStrawberries);
-            StrawberryDetectHook = new ILHook(levelDataCtor, SearchModdedStrawberries);
-        }
-
-        public static void Unload() {
-            MapDataLoadHook.Dispose();
-            StrawberryDetectHook.Dispose();
-        }
-
-        private static void SearchModdedStrawberries(ILContext il) {
-            ILCursor cursor = new ILCursor(il);
-            if (cursor.TryGotoNext(MoveType.Before, instr => instr.MatchLdstr("strawberry"))) {
-                cursor.Remove();
-                cursor.Goto(cursor.Next);
-                cursor.Remove();
-                cursor.EmitDelegate<Func<string, bool>>(CountModdedBerries);
-            }
-        }
-
-        private static bool CountModdedBerries(string berryName) {
-            if (berryName == "strawberry" || berryName == "SpringCollab2020/diagonalWingedStrawberry")
-                return true;
-
-            return false;
         }
 
         private void OnDiagDash(Vector2 dir) {
@@ -74,10 +45,11 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
             return false;
         }
 
+        private static EntityData FixData(EntityData data) {
+            data.Values["winged"] = true;
+            return data;
+        }
+
         private MethodInfo OriginalOnDash;
-
-        static ILHook MapDataLoadHook;
-
-        static ILHook StrawberryDetectHook;
     }
 }

@@ -1,6 +1,6 @@
 ﻿module SpringCollab2020DiagonalWingedStrawberry
 using ..Ahorn, Maple
-@mapdef Entity "SpringCollab2020/diagonalWingedStrawberry" DiagonalWingedStrawberry(x::Integer, y::Integer, winged::Bool=true, order::Integer=-1, checkpointID::Integer=-1)
+@mapdef Entity "SpringCollab2020/diagonalWingedStrawberry" DiagonalWingedStrawberry(x::Integer, y::Integer, order::Integer=-1, checkpointID::Integer=-1)
 
 const placements = Ahorn.PlacementDict(
 	"Diagonal Winged Strawberry (Spring Collab 2020)" => Ahorn.EntityPlacement(
@@ -11,7 +11,7 @@ const placements = Ahorn.PlacementDict(
 function Ahorn.selection(entity::DiagonalWingedStrawberry)
 	x, y = Ahorn.position(entity)
 
-	return Ahorn.Rectangle(x - 4, y - 6, 8, 12)
+	return Ahorn.getSpriteRectangle("collectables/strawberry/wings01", x, y)
 end
 
 function Ahorn.renderAbs(ctx::Ahorn.Cairo.CairoContext, entity::DiagonalWingedStrawberry, room::Maple.Room)

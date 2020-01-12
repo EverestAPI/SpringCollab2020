@@ -16,30 +16,11 @@ namespace Celeste.Mod.SpringCollab2020 {
         }
 
         public override void Load() {
-            DiagonalWingedStrawberry.Load();
+            
         }
 
         public override void Unload() {
-            DiagonalWingedStrawberry.Unload();
+            
         }
-
-        public void PrepareMapDataProcessor(MapDataFixup context) {
-            context.Add<BerryMapDataProcessor>();
-        }
-    }
-
-    public class BerryMapDataProcessor : EverestMapDataProcessor {
-        public override void Reset() { }
-        
-        public override void End() { }
-
-        public override Dictionary<string, Action<BinaryPacker.Element>> Init()
-            => new Dictionary<string, Action<BinaryPacker.Element>>() {
-                {
-                    "entity:SpringCollab2020/diagonalWingedStrawberry", entity => {
-                        Context.Run("entity:strawberry", entity);
-                    }
-                }
-            };
     }
 }
