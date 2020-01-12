@@ -4,8 +4,6 @@ using ..Ahorn, Maple
 
 @mapdef Entity "SpringCollab2020/invisibleLightSource" InvisibleLightSource(x::Integer, y::Integer, alpha::Number=1, radius::Number=48, startFade::Number=24, endFade::Number=48, color::String="White")
 
-#Ahorn.drawImage(ctx, "objects/hanginglamp", x + 1, y - 14)
-
 const colors = sort(collect(keys(Ahorn.XNAColors.colors)))
 
 const placements = Ahorn.PlacementDict(
@@ -21,7 +19,7 @@ Ahorn.editingOptions(entity::InvisibleLightSource) = Dict{String,Any}(
 function Ahorn.selection(entity::InvisibleLightSource)
 	x, y = Ahorn.position(entity)
 
-	return Ahorn.Rectangle(x, y, 7, 8)
+	return Ahorn.Rectangle(x - 4, y - 4, 7, 8)
 end
 
 function Ahorn.renderAbs(ctx::Ahorn.Cairo.CairoContext, entity::InvisibleLightSource, room::Maple.Room)
