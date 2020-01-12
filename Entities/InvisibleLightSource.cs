@@ -37,7 +37,7 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
     // Cruor made this
     class ColorHelper {
         public static Color GetColor(string color) {
-            foreach(PropertyInfo c in colorProps) {
+            foreach (PropertyInfo c in colorProps) {
                 if (color.Equals(c.Name, System.StringComparison.OrdinalIgnoreCase))
                     return (Color) c.GetValue(new Color(), null);
             }
