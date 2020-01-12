@@ -8,8 +8,10 @@ placements.entities.SpringCollab2020/floatierSpaceBlock.tooltips.tiletype=Determ
 placements.entities.SpringCollab2020/floatierSpaceBlock.tooltips.bounceBackMultiplier=A multiplier for how fast the block bounces back when dashed into.
 
 # Invisible Light Source
-placements.entities.SpringCollab2020/invisibleLightSource.tooltips.alpha=Opacity of the light.
+placements.entities.SpringCollab2020/invisibleLightSource.tooltips.alpha=Opacity of the light. Makes the bloom near the light stronger.
 placements.entities.SpringCollab2020/invisibleLightSource.tooltips.radius=Radius of the light.
+placements.entities.SpringCollab2020/invisibleLightSource.tooltips.startFade=Where the light begins to fade out (distance away from light source)
+placements.entities.SpringCollab2020/invisibleLightSource.tooltips.endFade=Where the light finishes fading out (distance away from light source)
 placements.entities.SpringCollab2020/invisibleLightSource.tooltips.color=The color of the light. Accepts both hex codes and XNA color names.
 
 # Smooth Camera Offset Trigger

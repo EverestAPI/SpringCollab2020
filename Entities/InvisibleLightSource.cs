@@ -6,13 +6,21 @@ using System.Reflection;
 namespace Celeste.Mod.SpringCollab2020.Entities {
     [CustomEntity("SpringCollab2020/invisibleLightSource")]
     class InvisibleLightSource : Entity {
-        public InvisibleLightSource(Vector2 position, EntityData data) : base(position) {
+        public InvisibleLightSource(EntityData data, Vector2 position) : base(data.Position) {
+            Position = data.Position;
+
             alpha = data.Float("alpha", 1f);
             radius = data.Float("radius", 48f);
             color = ColorHelper.GetColor(data.Attr("color", "White"));
 
-            base.Add(bloom = new BloomPoint(position, alpha, radius));
-            base.Add(light = new VertexLight(position, color, alpha, data.Int("startFade", 24), data.Int("endFade", 48)));
+            bloom = new BloomPoint(alpha, radius);
+            light = new VertexLight(color, alpha, data.Int("startFade", 24), data.Int("endFade", 48));
+
+            bloom.Visible = true;
+            light.Visible = true;
+
+            base.Add(bloom);
+            base.Add(light);
         }
 
         private BloomPoint bloom;
