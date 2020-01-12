@@ -4,7 +4,6 @@ using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 
 namespace Celeste.Mod.SpringCollab2020.Triggers {
-
     [CustomEntity("SpringCollab2020/RemoveLightSourcesTrigger")]
     [Tracked]
     class RemoveLightSourcesTrigger : Trigger {
