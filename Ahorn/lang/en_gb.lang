@@ -3,7 +3,7 @@ placements.entities.SpringCollab2020/caveWall.tooltips.tiletype=Changes the visu
 
 # Variable Crumble Blocks
 
-placements.entities.SpringCollab2020/variableCrumbleBlock.tooltips.texture=The texture of the blocks that are crumbling.
+placements.entities.SpringCollab2020/variableCrumbleBlock.tooltips.texture=The texture of the blocks that are crumbling.2
 placements.entities.SpringCollab2020/variableCrumbleBlock.tooltips.timer=How long the blocks will shake for before falling.
 
 # Floatier Space Block
