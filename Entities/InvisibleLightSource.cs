@@ -20,7 +20,7 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
             light.Visible = true;
 
             Add(bloom);
-            base.Add(light);
+            Add(light);
         }
 
         private BloomPoint bloom;
