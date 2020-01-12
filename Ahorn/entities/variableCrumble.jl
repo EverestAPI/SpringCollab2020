@@ -5,7 +5,7 @@ using ..Ahorn, Maple
 @mapdef Entity "SpringCollab2020/variableCrumbleBlock" VariableCrumbleBlock(x::Integer, y::Integer, width::Integer=Maple.defaultBlockWidth, texture::String="default", timer::Number=0.4)
 
 const placements = Ahorn.PlacementDict(
-    "Variable Crumble Blocks ($(uppercasefirst(texture)))" => Ahorn.EntityPlacement(
+    "Variable Crumble Blocks ($(uppercasefirst(texture))) (Spring Collab 2020)" => Ahorn.EntityPlacement(
         VariableCrumbleBlock,
         "rectangle",
         Dict{String, Any}(
