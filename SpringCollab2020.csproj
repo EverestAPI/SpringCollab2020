@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFrameworks>net452</TargetFrameworks>
@@ -15,7 +15,6 @@
       <ItemGroup>
         <Reference Include="Celeste" HintPath="..\..\Celeste.exe" Private="false" />
         <Reference Include="MMHOOK_Celeste" HintPath="..\..\MMHOOK_Celeste.dll" Private="false" />
-        <Reference Include="YamlDotNet" HintPath="..\..\YamlDotNet.dll" Private="false" />
       </ItemGroup>
 
       <Choose>
@@ -39,7 +38,6 @@
       <ItemGroup>
         <Reference Include="Celeste" HintPath="lib-stripped\Celeste.exe" Private="false" />
         <Reference Include="MMHOOK_Celeste" HintPath="lib-stripped\MMHOOK_Celeste.dll" Private="false" />
-        <Reference Include="YamlDotNet" HintPath="lib-stripped\YamlDotNet.dll" Private="false" />
         <Reference Include="FNA" HintPath="lib-stripped\FNA.dll" Private="false" />
       </ItemGroup>
     </Otherwise>
