@@ -1,6 +1,7 @@
 ﻿using Celeste.Mod.Entities;
 using Microsoft.Xna.Framework;
 using Monocle;
+using System;
 using System.Collections.Generic;
 
 namespace Celeste.Mod.SpringCollab2020.Entities {
@@ -76,7 +77,7 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
                     int tilesY = (int) (item.Height / 8f);
                     for (int i = x; i < x + tilesX; i++) {
                         for (int j = y; j < y + tilesY; j++) {
-                            virtualMap[i, j] = fillTile;
+                            virtualMap[i, j] = item.fillTile;
                         }
                     }
                 }
@@ -140,7 +141,7 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
                 from.master = this;
             }
             foreach (CaveWall entity in Scene.Tracker.GetEntities<CaveWall>()) {
-                if (!entity.HasGroup && entity.fillTile == fillTile && (Scene.CollideCheck(new Rectangle((int) from.X - 1, (int) from.Y, (int) from.Width + 2, (int) from.Height), entity) || Scene.CollideCheck(new Rectangle((int) from.X, (int) from.Y - 1, (int) from.Width, (int) from.Height + 2), entity))) {
+                if (!entity.HasGroup && (Scene.CollideCheck(new Rectangle((int) from.X - 1, (int) from.Y, (int) from.Width + 2, (int) from.Height), entity) || Scene.CollideCheck(new Rectangle((int) from.X, (int) from.Y - 1, (int) from.Width, (int) from.Height + 2), entity))) {
                     AddToGroupAndFindChildren(entity);
                 }
             }
@@ -201,8 +202,19 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
                         break;
                     }
                 }
+                // The wall shouldn't fade out when a player dies in it
+                PlayerDeadBody playerDeadBody = null;
+                bool bodyCollided = false;
+                if ((playerDeadBody = SceneAs<Level>().Entities.FindFirst<PlayerDeadBody>()) != null) {
+                    foreach (CaveWall entity in Group) {
+                        bodyCollided = playerDeadBody.Position.X >= entity.Left && playerDeadBody.Position.X <= entity.Right && playerDeadBody.Position.Y >= entity.Top && playerDeadBody.Position.Y <= entity.Bottom;
+                        if (bodyCollided) {
+                            break;
+                        }
+                    }
+                }
 
-                if (player != null && player.StateMachine.State != 9) {
+                if ((player != null && player.StateMachine.State != 9) || bodyCollided) {
                     fadeOut = true;
                     foreach (CaveWall entity in Group) {
                         entity.fadeOut = true;
