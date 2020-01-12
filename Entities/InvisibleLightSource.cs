@@ -13,14 +13,8 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
             radius = data.Float("radius", 48f);
             color = ColorHelper.GetColor(data.Attr("color", "White"));
 
-            bloom = new BloomPoint(alpha, radius);
-            light = new VertexLight(color, alpha, data.Int("startFade", 24), data.Int("endFade", 48));
-
-            bloom.Visible = true;
-            light.Visible = true;
-
-            Add(bloom);
-            Add(light);
+            Add(bloom = new BloomPoint(alpha, radius));
+            Add(light = new VertexLight(color, alpha, data.Int("startFade", 24), data.Int("endFade", 48)));
         }
 
         private BloomPoint bloom;
