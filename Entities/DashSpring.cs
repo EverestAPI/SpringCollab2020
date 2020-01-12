@@ -32,7 +32,6 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
 
         public DashSpring(EntityData data, Vector2 offset)
             : this(data.Position + offset, GetOrientationFromName(data.Name), data.Bool("playerCanUse", true)) {
-
         }
 
         public static Orientations GetOrientationFromName(string name) {
@@ -49,7 +48,7 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
         }
 
         protected void OnCollide(Player player) {
-            if (player.StateMachine.State == 9 || !(bool)playerCanUseInfo.GetValue(this) || !player.DashAttacking) {
+            if (player.StateMachine.State == 9 || !((bool) playerCanUseInfo.GetValue(this)) || !player.DashAttacking) {
                 return;
             }
             if (Orientation == Orientations.Floor) {
