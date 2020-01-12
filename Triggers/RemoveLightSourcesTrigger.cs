@@ -23,11 +23,10 @@ namespace Celeste.Mod.SpringCollab2020.Triggers {
         }
 
         private static void LevelLoadHandler(Level loadedLevel, Player.IntroTypes playerIntro, bool isFromLoader) {
-            if(loadedLevel.Session.GetFlag("lightsDisabled") == true)
+            if(loadedLevel.Session.GetFlag("lightsDisabled") == true) {
                 DisableAllLights(loadedLevel);
-
-            if (loadedLevel.Session.GetFlag("lightsDisabled") == true)
                 On.Celeste.Level.TransitionTo += TransitionLightSources;
+            }
         }
 
         private static void OnExitHandler(Level exitLevel, LevelExit exit, LevelExit.Mode mode, Session session, HiresSnow snow) {
