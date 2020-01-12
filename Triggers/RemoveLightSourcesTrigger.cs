@@ -23,7 +23,7 @@ namespace Celeste.Mod.SpringCollab2020.Triggers {
         }
 
         private static void LevelLoadHandler(Level loadedLevel, Player.IntroTypes playerIntro, bool isFromLoader) {
-            if(loadedLevel.Session.GetFlag("lightsDisabled") == true) {
+            if (loadedLevel.Session.GetFlag("lightsDisabled")) {
                 DisableAllLights(loadedLevel);
                 On.Celeste.Level.TransitionTo += TransitionLightSources;
             }
