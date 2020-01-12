@@ -7,6 +7,11 @@ placements.entities.SpringCollab2020/floatierSpaceBlock.tooltips.floatinessMulti
 placements.entities.SpringCollab2020/floatierSpaceBlock.tooltips.tiletype=Determines the visual appearance of the wall.
 placements.entities.SpringCollab2020/floatierSpaceBlock.tooltips.bounceBackMultiplier=A multiplier for how fast the block bounces back when dashed into.
 
+# Invisible Light Source
+placements.entities.SpringCollab2020/invisibleLightSource.tooltips.alpha=Opacity of the light.
+placements.entities.SpringCollab2020/invisibleLightSource.tooltips.radius=Radius of the light.
+placements.entities.SpringCollab2020/invisibleLightSource.tooltips.color=The color of the light. Accepts both hex codes and XNA color names.
+
 # Smooth Camera Offset Trigger
 placements.triggers.SpringCollab2020/SmoothCameraOffsetTrigger.tooltips.offsetXFrom=The X offset to fade from.
 placements.triggers.SpringCollab2020/SmoothCameraOffsetTrigger.tooltips.offsetXTo=The X offset to fade to.
