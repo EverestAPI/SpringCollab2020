@@ -14,3 +14,6 @@ placements.triggers.SpringCollab2020/SmoothCameraOffsetTrigger.tooltips.offsetYF
 placements.triggers.SpringCollab2020/SmoothCameraOffsetTrigger.tooltips.offsetYTo=The Y offset to fade to.
 placements.triggers.SpringCollab2020/SmoothCameraOffsetTrigger.tooltips.positionMode=The fade direction.
 placements.triggers.SpringCollab2020/SmoothCameraOffsetTrigger.tooltips.onlyOnce=If checked, the trigger will be disabled when the player first leaves it.
+
+# Dash Spring
+placements.entities.SpringCollab2020/dashSpring.tooltips.playerCanUse=Determines whether the player is able to interact with the spring.
