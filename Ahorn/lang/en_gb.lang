@@ -2,3 +2,30 @@
 
 placements.entities.SpringCollab2020/diagonalWingedStrawberry.tooltips.order=The order within a checkpoint. When -1, Everest automatically sets it.
 placements.entities.SpringCollab2020/diagonalWingedStrawberry.tooltips.checkpointID=The checkpoint the berry is located within. When -1, Everest automatically sets it.
+
+﻿# Cave Wall
+placements.entities.SpringCollab2020/caveWall.tooltips.tiletype=Changes the visual appearance of the wall.
+
+# Floatier Space Block
+placements.entities.SpringCollab2020/floatierSpaceBlock.tooltips.disableSpawnOffset=Whether or not the entity should spawn without the random offset.
+placements.entities.SpringCollab2020/floatierSpaceBlock.tooltips.floatinessMultiplier=A multiplier for how far the block sinks.
+placements.entities.SpringCollab2020/floatierSpaceBlock.tooltips.tiletype=Determines the visual appearance of the wall.
+placements.entities.SpringCollab2020/floatierSpaceBlock.tooltips.bounceBackMultiplier=A multiplier for how fast the block bounces back when dashed into.
+
+# Invisible Light Source
+placements.entities.SpringCollab2020/invisibleLightSource.tooltips.alpha=Opacity of the light. Makes the bloom near the light stronger.
+placements.entities.SpringCollab2020/invisibleLightSource.tooltips.radius=Radius of the light.
+placements.entities.SpringCollab2020/invisibleLightSource.tooltips.startFade=Where the light begins to fade out (distance away from light source)
+placements.entities.SpringCollab2020/invisibleLightSource.tooltips.endFade=Where the light finishes fading out (distance away from light source)
+placements.entities.SpringCollab2020/invisibleLightSource.tooltips.color=The color of the light. Accepts both hex codes and XNA color names.
+
+# Smooth Camera Offset Trigger
+placements.triggers.SpringCollab2020/SmoothCameraOffsetTrigger.tooltips.offsetXFrom=The X offset to fade from.
+placements.triggers.SpringCollab2020/SmoothCameraOffsetTrigger.tooltips.offsetXTo=The X offset to fade to.
+placements.triggers.SpringCollab2020/SmoothCameraOffsetTrigger.tooltips.offsetYFrom=The Y offset to fade from.
+placements.triggers.SpringCollab2020/SmoothCameraOffsetTrigger.tooltips.offsetYTo=The Y offset to fade to.
+placements.triggers.SpringCollab2020/SmoothCameraOffsetTrigger.tooltips.positionMode=The fade direction.
+placements.triggers.SpringCollab2020/SmoothCameraOffsetTrigger.tooltips.onlyOnce=If checked, the trigger will be disabled when the player first leaves it.
+
+# Dash Spring
+placements.entities.SpringCollab2020/dashSpring.tooltips.playerCanUse=Determines whether the player is able to interact with the spring.
