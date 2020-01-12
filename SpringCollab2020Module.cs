@@ -1,4 +1,4 @@
-﻿using Celeste.Mod.SpringCollab2020.Entities;
+using Celeste.Mod.SpringCollab2020.Entities;
 using Celeste.Mod.SpringCollab2020.Triggers;
 
 namespace Celeste.Mod.SpringCollab2020 {

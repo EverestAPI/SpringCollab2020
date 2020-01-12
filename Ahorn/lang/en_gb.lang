@@ -1,3 +1,8 @@
+﻿# Diagonal Winged Strawberry
+
+placements.entities.SpringCollab2020/diagonalWingedStrawberry.tooltips.order=The order within a checkpoint. When -1, Everest automatically sets it.
+placements.entities.SpringCollab2020/diagonalWingedStrawberry.tooltips.checkpointID=The checkpoint the berry is located within. When -1, Everest automatically sets it.
+
 ﻿# Cave Wall
 placements.entities.SpringCollab2020/caveWall.tooltips.tiletype=Changes the visual appearance of the wall.
 
