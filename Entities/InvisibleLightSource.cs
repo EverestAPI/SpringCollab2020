@@ -19,7 +19,7 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
             bloom.Visible = true;
             light.Visible = true;
 
-            base.Add(bloom);
+            Add(bloom);
             base.Add(light);
         }
 
