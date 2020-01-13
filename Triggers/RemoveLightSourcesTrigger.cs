@@ -8,7 +8,7 @@ namespace Celeste.Mod.SpringCollab2020.Triggers {
     [Tracked]
     class RemoveLightSourcesTrigger : Trigger {
         public RemoveLightSourcesTrigger(EntityData data, Vector2 offset) : base(data, offset) {
-            IsPersistent = data.Bool("persistent", true);
+            Persistent = data.Bool("persistent", true);
             level = SceneAs<Level>();
         }
 
@@ -64,10 +64,10 @@ namespace Celeste.Mod.SpringCollab2020.Triggers {
 
             level = SceneAs<Level>();
 
-            if (IsPersistent && level.Session.GetFlag("lightsDisabled") == false)
+            if (Persistent && level.Session.GetFlag("lightsDisabled") == false)
                 On.Celeste.Level.TransitionTo += TransitionLightSources;
 
-            if (IsPersistent)
+            if (Persistent)
                 level.Session.SetFlag("lightsDisabled", true);
 
             DisableAllLights(level);
@@ -76,7 +76,7 @@ namespace Celeste.Mod.SpringCollab2020.Triggers {
         public override void OnLeave(Player player) {
             base.OnLeave(player);
 
-            if (IsPersistent || level.Session.GetFlag("lightsDisabled") == true)
+            if (Persistent || level.Session.GetFlag("lightsDisabled") == true)
                 return;
 
             foreach (Component component in lightSources)
@@ -92,6 +92,6 @@ namespace Celeste.Mod.SpringCollab2020.Triggers {
 
         private Level level;
 
-        private bool IsPersistent = true;
+        private bool Persistent = true;
     }
 }
