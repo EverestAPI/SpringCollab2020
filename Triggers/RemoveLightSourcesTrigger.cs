@@ -8,7 +8,7 @@ namespace Celeste.Mod.SpringCollab2020.Triggers {
     [Tracked]
     class RemoveLightSourcesTrigger : Trigger {
         public RemoveLightSourcesTrigger(EntityData data, Vector2 offset) : base(data, offset) {
-            IsPersistent = data.Bool("isPersistent", true);
+            IsPersistent = data.Bool("persistent", true);
             level = SceneAs<Level>();
         }
 
