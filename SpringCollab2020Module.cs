@@ -14,12 +14,14 @@ namespace Celeste.Mod.SpringCollab2020 {
             NoRefillField.Load();
             FloatierSpaceBlock.Load();
             RemoveLightSourcesTrigger.Load();
+            GlassBlockBgOriginal.Load();
         }
 
         public override void Unload() {
             NoRefillField.Unload();
             FloatierSpaceBlock.Unload();
             RemoveLightSourcesTrigger.Unload();
+            GlassBlockBgOriginal.Unload();
         }
     }
 }
