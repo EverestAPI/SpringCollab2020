@@ -4,12 +4,15 @@ using Monocle;
 using System.Collections.Generic;
 
 namespace Celeste.Mod.SpringCollab2020.Entities {
+    /// <summary>
+    /// Glass Block pulled from Celeste 1.2.6.1.
+    /// Usable with CustomizableGlassBlockController to get custom star/bg colors.
+    /// </summary>
     [Tracked]
-    [CustomEntity("SpringCollab2020/GlassBlockOriginal")]
-    public class GlassBlockOriginal : Solid {
+    [CustomEntity("SpringCollab2020/CustomizableGlassBlock")]
+    public class CustomizableGlassBlock : Solid {
         private struct Line {
             public Vector2 A;
-
             public Vector2 B;
 
             public Line(Vector2 a, Vector2 b) {
@@ -21,7 +24,7 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
         private List<Line> lines = new List<Line>();
         private Color lineColor = Color.White;
 
-        public GlassBlockOriginal(Vector2 position, float width, float height)
+        public CustomizableGlassBlock(Vector2 position, float width, float height)
             : base(position, width, height, safe: false) {
 
             Depth = -10000;
@@ -30,7 +33,7 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
             SurfaceSoundIndex = 32;
         }
 
-        public GlassBlockOriginal(EntityData data, Vector2 offset)
+        public CustomizableGlassBlock(EntityData data, Vector2 offset)
             : this(data.Position + offset, data.Width, data.Height) { }
 
         public override void Awake(Scene scene) {
@@ -65,9 +68,9 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
         }
 
         private bool Open(Vector2 tile) {
-            Vector2 point = new Vector2(X + tile.X * 8f + 4f, base.Y + tile.Y * 8f + 4f);
+            Vector2 point = new Vector2(X + tile.X * 8f + 4f, Y + tile.Y * 8f + 4f);
             if (!Scene.CollideCheck<SolidTiles>(point)) {
-                return !Scene.CollideCheck<GlassBlockOriginal>(point);
+                return !Scene.CollideCheck<CustomizableGlassBlock>(point);
             }
             return false;
         }
