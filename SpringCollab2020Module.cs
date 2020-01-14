@@ -13,11 +13,13 @@ namespace Celeste.Mod.SpringCollab2020 {
         public override void Load() {
             NoRefillField.Load();
             FloatierSpaceBlock.Load();
+            MoveBlockBarrier.Load();
         }
 
         public override void Unload() {
             NoRefillField.Unload();
             FloatierSpaceBlock.Unload();
+            MoveBlockBarrier.Unload();
         }
     }
 }
