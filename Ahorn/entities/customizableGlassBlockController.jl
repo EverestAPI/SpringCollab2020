@@ -3,7 +3,7 @@ module SpringCollab2020CustomizableGlassBlockController
 using ..Ahorn, Maple
 
 @mapdef Entity "SpringCollab2020/CustomizableGlassBlockController" CustomizableGlassBlockController(x::Integer, y::Integer,
-    starColors::String="ff7777,77ff77,7777ff,ff77ff,77ffff,ffff77", bgColor::String="202020")
+    starColors::String="ff7777,77ff77,7777ff,ff77ff,77ffff,ffff77", bgColor::String="302040")
 
 const placements = Ahorn.PlacementDict(
     "Customizable Glass Block Controller (Spring Collab 2020)" => Ahorn.EntityPlacement(
