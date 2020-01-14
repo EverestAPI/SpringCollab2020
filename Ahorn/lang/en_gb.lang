@@ -6,6 +6,11 @@ placements.entities.SpringCollab2020/diagonalWingedStrawberry.tooltips.checkpoin
 ﻿# Cave Wall
 placements.entities.SpringCollab2020/caveWall.tooltips.tiletype=Changes the visual appearance of the wall.
 
+# Variable Crumble Blocks
+
+placements.entities.SpringCollab2020/variableCrumbleBlock.tooltips.texture=The texture of the blocks that are crumbling.2
+placements.entities.SpringCollab2020/variableCrumbleBlock.tooltips.timer=How long the blocks will shake for before falling.
+
 # Floatier Space Block
 placements.entities.SpringCollab2020/floatierSpaceBlock.tooltips.disableSpawnOffset=Whether or not the entity should spawn without the random offset.
 placements.entities.SpringCollab2020/floatierSpaceBlock.tooltips.floatinessMultiplier=A multiplier for how far the block sinks.
@@ -26,6 +31,9 @@ placements.triggers.SpringCollab2020/SmoothCameraOffsetTrigger.tooltips.offsetYF
 placements.triggers.SpringCollab2020/SmoothCameraOffsetTrigger.tooltips.offsetYTo=The Y offset to fade to.
 placements.triggers.SpringCollab2020/SmoothCameraOffsetTrigger.tooltips.positionMode=The fade direction.
 placements.triggers.SpringCollab2020/SmoothCameraOffsetTrigger.tooltips.onlyOnce=If checked, the trigger will be disabled when the player first leaves it.
+
+# Remove Light Sources Trigger
+placements.triggers.SpringCollab2020/RemoveLightSourcesTrigger.tooltips.persistent=If checked, all light sources will stay disabled even after leaving the trigger.
 
 # Dash Spring
 placements.entities.SpringCollab2020/dashSpring.tooltips.playerCanUse=Determines whether the player is able to interact with the spring.
