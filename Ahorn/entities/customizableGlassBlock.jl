@@ -7,8 +7,7 @@ using ..Ahorn, Maple
 const placements = Ahorn.PlacementDict(
     "Customizable Glass Block (Spring Collab 2020)" => Ahorn.EntityPlacement(
         CustomizableGlassBlock,
-        "rectangle",
-        Dict{String, Any}()
+        "rectangle"
     )
 )
 
