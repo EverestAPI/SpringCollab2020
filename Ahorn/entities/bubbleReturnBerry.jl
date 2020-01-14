@@ -13,7 +13,7 @@ const placements = Ahorn.PlacementDict(
 function getSpriteName(entity::ReturnBerry)
 	winged = get(entity.data, "winged", false)
 
-	if(winged)
+	if winged
 		return "collectables/strawberry/wings01"
 	end
 
