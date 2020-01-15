@@ -269,7 +269,8 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
 
                 Image image = new Image(mTexture.GetSubtexture(xTilePosition * 8, yTilePosition * 8, 8, 8));
                 image.X = i * 8;
-                image.FlipY = true;
+                image.Y = 8;
+                image.Scale.Y = -1;
                 Add(image);
             }
         }

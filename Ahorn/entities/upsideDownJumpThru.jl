@@ -64,7 +64,7 @@ function Ahorn.render(ctx::Ahorn.Cairo.CairoContext, entity::UpsideDownJumpThru,
         end
 
         quad = quads[2 - connected, qx]
-        Ahorn.drawImage(ctx, "objects/jumpthru/$(texture)", 8 * i, -7, quad...)
+        Ahorn.drawImage(ctx, "objects/jumpthru/$(texture)", 8 * i, -8, quad...)
     end
 end
 
