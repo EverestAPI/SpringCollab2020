@@ -96,9 +96,12 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
                     yield return null;
 
                 // Fade out the outline, fade in the tiles. Oh, and make ourselves collidable.
-                wiggler.Start();
-                tileFader.Replace(TileFade(1f, tiles, true));
-                outlineFader.Replace(TileFade(0f, outlineTiles, true));
+                if (isRespawn)
+                    wiggler.Start(1.5f, 1.5f);
+                else
+                    wiggler.Start(0.5f, 4f);
+                tileFader.Replace(TileFade(1f, tiles, !isRespawn));
+                outlineFader.Replace(TileFade(0f, outlineTiles, !isRespawn));
                 Collidable = true;
 
                 // Wait until player is found
@@ -110,11 +113,12 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
                     yield return null;
 
                 // Fade out tiles, fade in outline.
-                tileFader.Replace(TileFade(0f, tiles));
-                outlineFader.Replace(TileFade(1f, outlineTiles));
+                tileFader.Replace(TileFade(0f, tiles, true));
+                outlineFader.Replace(TileFade(1f, outlineTiles, true));
 
                 // Do nothing until next activation
                 activated = false;
+                isRespawn = false;
             }
         }
 
@@ -136,7 +140,7 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
         // Fade the passed tiles in or out.
         private IEnumerator TileFade(float to, List<Image> targetTiles, bool fast = false) {
             float from = 1f - to;
-            for (float t = 0f; t < 1f; t += Engine.DeltaTime * (fast ? 6f : 2f)) {
+            for (float t = 0f; t < 1f; t += Engine.DeltaTime * (fast ? 5f : 1.5f)) {
                 foreach (Image img in targetTiles)
                     img.Color = Color.White * (from + (to - from) * Ease.CubeInOut(t));
                 yield return null;
@@ -147,23 +151,23 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
         // Bubble and player detection hooks
         public static void Load() {
             On.Celeste.Player.CassetteFlyEnd += SafeActivatorCasetteFly;
-            On.Celeste.Player.IntroRespawnEnd += SafeActivatorRespawn;
+            On.Celeste.Player.IntroRespawnBegin += SafeActivatorRespawn;
         }
         public static void Unload() {
             On.Celeste.Player.CassetteFlyEnd -= SafeActivatorCasetteFly;
-            On.Celeste.Player.IntroRespawnEnd -= SafeActivatorRespawn;
+            On.Celeste.Player.IntroRespawnBegin -= SafeActivatorRespawn;
         }
 
         private static void SafeActivatorCasetteFly(On.Celeste.Player.orig_CassetteFlyEnd orig, Player self) {
             orig(self);
-            SafeActivate(self);
+            SafeActivate(self, false);
         }
-        private static void SafeActivatorRespawn(On.Celeste.Player.orig_IntroRespawnEnd orig, Player self) {
+        private static void SafeActivatorRespawn(On.Celeste.Player.orig_IntroRespawnBegin orig, Player self) {
             orig(self);
-            SafeActivate(self);
+            SafeActivate(self, true);
         }
 
-        private static void SafeActivate(Player player) {
+        private static void SafeActivate(Player player, bool respawn) {
             SafeRespawnCrumble target = player.Scene.Tracker.GetNearestEntity<SafeRespawnCrumble>(player.Position);
             if (target == null)
                 return;
@@ -171,8 +175,10 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
             if (target.Left < player.X &&
                 target.Right > player.X &&
                 target.Top - 12f <= player.Y &&
-                target.Bottom > player.Y)
-            target.activated = true;
+                target.Bottom > player.Y) {
+                target.activated = true;
+                target.isRespawn = respawn;
+            }
         }
 
         private List<Image> tiles;
@@ -180,6 +186,7 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
         private Coroutine tileFader;
         private Coroutine outlineFader;
         private Wiggler wiggler;
-        public bool activated = false;
+        private bool activated = false;
+        private bool isRespawn = false;
     }
 }
