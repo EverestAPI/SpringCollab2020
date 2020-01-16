@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Monocle;
 using Celeste.Mod.Entities;
+using System.Reflection;
 
 /*
  * Safe Respawn Crumble (Spring Collab 2020)
@@ -60,7 +61,8 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
             // Add pink-block tiles
             for (int tile = 0; (float) tile < base.Width; tile += 8) {
                 Image toDraw = new Image(tileTexture);
-                toDraw.Position = new Vector2((float) tile, 0f);
+                toDraw.CenterOrigin();
+                toDraw.Position = new Vector2((float) tile, 0f) + new Vector2(toDraw.Width / 2f, toDraw.Height / 2f);
                 toDraw.Color = Color.White * 0f;
                 tiles.Add(toDraw);
                 Add(toDraw);
@@ -70,6 +72,20 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
             Add(tileFader = new Coroutine(false));
 
             Add(new Coroutine(Sequence(), true));
+
+            // Let's try adding a wiggler.
+            wiggler = Wiggler.Create(
+                0.5f,
+                4f,
+                delegate (float v) {
+                    foreach (Image tile in tiles) {
+                        tile.Scale = Vector2.One * (1f + v * 0.35f);
+                    }
+                },
+                false,
+                false
+                );
+            Add(wiggler);
         }
 
         private IEnumerator Sequence() {
@@ -80,8 +96,9 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
                     yield return null;
 
                 // Fade out the outline, fade in the tiles. Oh, and make ourselves collidable.
-                tileFader.Replace(TileFade(1f, tiles));
-                outlineFader.Replace(TileFade(0f, outlineTiles));
+                wiggler.Start();
+                tileFader.Replace(TileFade(1f, tiles, true));
+                outlineFader.Replace(TileFade(0f, outlineTiles, true));
                 Collidable = true;
 
                 // Wait until player is found
@@ -89,7 +106,7 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
                     yield return null;
 
                 // Wait until player leaves
-                while (GetPlayerOnTop() != null)
+                while (CheckToStayEnabled())
                     yield return null;
 
                 // Fade out tiles, fade in outline.
@@ -101,10 +118,25 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
             }
         }
 
+        private bool CheckToStayEnabled() {
+            Player p = GetPlayerOnTop();
+            if (p != null) {
+                if (p.StartedDashing) {
+                    typeof(Player).GetField("jumpGraceTimer", BindingFlags.NonPublic | BindingFlags.Instance).SetValue(p, 0f);
+                    return false;
+                }
+                if (p.Ducking)
+                    return false;
+                return true;
+            }
+
+            return false;
+        }
+
         // Fade the passed tiles in or out.
-        private IEnumerator TileFade(float to, List<Image> targetTiles) {
+        private IEnumerator TileFade(float to, List<Image> targetTiles, bool fast = false) {
             float from = 1f - to;
-            for (float t = 0f; t < 1f; t += Engine.DeltaTime * 2f) {
+            for (float t = 0f; t < 1f; t += Engine.DeltaTime * (fast ? 6f : 2f)) {
                 foreach (Image img in targetTiles)
                     img.Color = Color.White * (from + (to - from) * Ease.CubeInOut(t));
                 yield return null;
@@ -147,6 +179,7 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
         private List<Image> outlineTiles;
         private Coroutine tileFader;
         private Coroutine outlineFader;
+        private Wiggler wiggler;
         public bool activated = false;
     }
 }
