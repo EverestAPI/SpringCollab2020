@@ -6,9 +6,7 @@ using System.Reflection;
 namespace Celeste.Mod.SpringCollab2020.Entities {
     [CustomEntity("SpringCollab2020/invisibleLightSource")]
     class InvisibleLightSource : Entity {
-        public InvisibleLightSource(EntityData data, Vector2 position) : base(data.Position) {
-            Position = data.Position;
-
+        public InvisibleLightSource(EntityData data, Vector2 offset) : base(data.Position + offset) {
             alpha = data.Float("alpha", 1f);
             radius = data.Float("radius", 48f);
             color = ColorHelper.GetColor(data.Attr("color", "White"));
