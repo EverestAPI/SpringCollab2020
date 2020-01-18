@@ -173,7 +173,7 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
                 // kill the player's vertical speed.
                 self.Speed.Y = 0;
 
-                // reset varJumpSpeed to prevent a weird "stuck on ceiling" effect.
+                // reset varJumpTimer to prevent a weird "stuck on ceiling" effect.
                 playerVarJumpTimer.SetValue(self, 0);
             }
 
