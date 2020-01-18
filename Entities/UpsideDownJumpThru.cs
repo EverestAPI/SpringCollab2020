@@ -22,11 +22,16 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
 
         public static void Load() {
             using (new DetourContext { Before = { "*" } }) { // these don't always call the orig methods, better apply them first.
+                // fix general actor/platform behavior to make them comply with jumpthrus.
                 On.Celeste.Actor.MoveVExact += onActorMoveVExact;
                 On.Celeste.Platform.MoveVExactCollideSolids += onPlatformMoveVExactCollideSolids;
             }
 
+            // fix player specific behavior allowing them to go through upside-down jumpthrus.
             On.Celeste.Player.OnCollideV += onPlayerOnCollideV;
+
+            // block player if they try to climb past an upside-down jumpthru.
+            IL.Celeste.Player.ClimbUpdate += patchPlayerClimbUpdate;
 
             // ignore upside-down jumpthrus in select places.
             playerOrigUpdateHook = new ILHook(typeof(Player).GetMethod("orig_Update"), filterOutJumpThrusFromCollideChecks);
@@ -39,6 +44,7 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
             On.Celeste.Platform.MoveVExactCollideSolids -= onPlatformMoveVExactCollideSolids;
 
             On.Celeste.Player.OnCollideV -= onPlayerOnCollideV;
+            IL.Celeste.Player.ClimbUpdate -= patchPlayerClimbUpdate;
 
             if (playerOrigUpdateHook != null)
                 playerOrigUpdateHook.Dispose();
@@ -78,7 +84,7 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
                     }
                 }
 
-                if(didCollide) {
+                if (didCollide) {
                     Vector2 movementCounter = (Vector2) actorMovementCounter.GetValue(self);
                     movementCounter.Y = 0f;
                     if (onCollide != null) {
@@ -184,7 +190,7 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
                         case "T Monocle.Entity::CollideFirstOutside<Celeste.JumpThru>(Microsoft.Xna.Framework.Vector2)":
                             Logger.Log("SpringCollab2020/UpsideDownJumpThru", $"Patching CollideFirstOutside at {cursor.Index} in IL for {il.Method.Name}");
                             cursor.Index++;
-                            
+
                             // nullify if mod jumpthru.
                             cursor.EmitDelegate<Func<JumpThru, JumpThru>>(jumpThru => {
                                 if (jumpThru?.GetType() == typeof(UpsideDownJumpThru))
@@ -218,8 +224,8 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
 
                             // remove all mod jumpthrus from the returned list.
                             cursor.EmitDelegate<Func<List<Entity>, List<Entity>>>(matches => {
-                                for(int i = 0; i < matches.Count; i++) {
-                                    if(matches[i].GetType() == typeof(UpsideDownJumpThru)) {
+                                for (int i = 0; i < matches.Count; i++) {
+                                    if (matches[i].GetType() == typeof(UpsideDownJumpThru)) {
                                         matches.RemoveAt(i);
                                         i--;
                                     }
@@ -234,11 +240,48 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
             }
         }
 
+        private static void patchPlayerClimbUpdate(ILContext il) {
+            ILCursor cursor = new ILCursor(il);
+
+            // in decompiled code, we want to get ourselves just before the last occurrence of "if (climbNoMoveTimer <= 0f)".
+            while (cursor.TryGotoNext(
+                instr => instr.MatchStfld<Vector2>("Y"),
+                instr => instr.MatchLdarg(0),
+                instr => instr.MatchLdfld<Player>("climbNoMoveTimer"),
+                instr => instr.MatchLdcR4(0f))) {
+
+                cursor.Index += 2;
+
+                FieldInfo f_lastClimbMove = typeof(Player).GetField("lastClimbMove", BindingFlags.NonPublic | BindingFlags.Instance);
+
+                Logger.Log("SpringCollab2020/UpsideDownJumpThru", $"Injecting collide check to block climbing at {cursor.Index} in IL for {il.Method.Name}");
+
+                cursor.Emit(OpCodes.Ldarg_0);
+                cursor.Emit(OpCodes.Ldarg_0);
+                cursor.Emit(OpCodes.Ldfld, f_lastClimbMove);
+
+                // if climbing is blocked by an upside down jumpthru, cancel the climb (lastClimbMove = 0 and Speed.Y = 0).
+                // injecting that at that point in the method allows it to drain stamina as if the player was not climbing.
+                cursor.EmitDelegate<Func<Player, int, int>>((self, lastClimbMove) => {
+                    if (Input.MoveY.Value == -1 && self.CollideCheck<UpsideDownJumpThru>(self.Position - Vector2.UnitY)) {
+                        self.Speed.Y = 0;
+                        return 0;
+                    }
+                    return lastClimbMove;
+                });
+
+                cursor.Emit(OpCodes.Stfld, f_lastClimbMove);
+                cursor.Emit(OpCodes.Ldarg_0);
+            }
+        }
+
+
+
 
         private int columns;
         private string overrideTexture;
 
-        public UpsideDownJumpThru(EntityData data, Vector2 offset) 
+        public UpsideDownJumpThru(EntityData data, Vector2 offset)
             : base(data.Position + offset, data.Width, false) {
 
             columns = data.Width / 8;
