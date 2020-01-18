@@ -47,8 +47,10 @@ function Ahorn.render(ctx::Ahorn.Cairo.CairoContext, entity::UpsideDownJumpThru,
     startX = div(x, 8) + 1
     stopX = startX + div(width, 8) - 1
     startY = div(y, 8) + 1
-	
-	Ahorn.scale(ctx, 1, -1)
+    
+    Ahorn.Cairo.save(ctx)
+    
+    Ahorn.scale(ctx, 1, -1)
 
     len = stopX - startX
     for i in 0:len
@@ -66,6 +68,8 @@ function Ahorn.render(ctx::Ahorn.Cairo.CairoContext, entity::UpsideDownJumpThru,
         quad = quads[2 - connected, qx]
         Ahorn.drawImage(ctx, "objects/jumpthru/$(texture)", 8 * i, -8, quad...)
     end
+    
+    Ahorn.Cairo.restore(ctx)
 end
 
 end

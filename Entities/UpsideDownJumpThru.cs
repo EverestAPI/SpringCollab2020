@@ -170,6 +170,8 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
                 // reset varJumpSpeed to prevent a weird "stuck on ceiling" effect.
                 playerVarJumpTimer.SetValue(self, 0);
             }
+
+            orig(self, data);
         }
 
         private static void filterOutJumpThrusFromCollideChecks(ILContext il) {
@@ -242,6 +244,9 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
             columns = data.Width / 8;
             Depth = -60;
             overrideTexture = data.Attr("texture", "default");
+
+            // shift the hitbox a bit to match the graphic
+            Collider.Top += 3;
         }
 
         public override void Awake(Scene scene) {
