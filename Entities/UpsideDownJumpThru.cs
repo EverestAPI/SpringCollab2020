@@ -168,7 +168,7 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
         private static void onPlayerOnCollideV(On.Celeste.Player.orig_OnCollideV orig, Player self, CollisionData data) {
             // we just want to kill a piece of code that executes in these conditions (supposed to push the player left or right when hitting a wall angle).
             if (self.StateMachine.State != 19 && self.StateMachine.State != 3 && self.StateMachine.State != 9 && self.Speed.Y < 0
-                && self.CollideCheck<UpsideDownJumpThru>(self.Position - Vector2.UnitY)) {
+                && self.CollideCheckOutside<UpsideDownJumpThru>(self.Position - Vector2.UnitY)) {
 
                 // kill the player's vertical speed.
                 self.Speed.Y = 0;
@@ -263,7 +263,7 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
                 // if climbing is blocked by an upside down jumpthru, cancel the climb (lastClimbMove = 0 and Speed.Y = 0).
                 // injecting that at that point in the method allows it to drain stamina as if the player was not climbing.
                 cursor.EmitDelegate<Func<Player, int, int>>((self, lastClimbMove) => {
-                    if (Input.MoveY.Value == -1 && self.CollideCheck<UpsideDownJumpThru>(self.Position - Vector2.UnitY)) {
+                    if (Input.MoveY.Value == -1 && self.CollideCheckOutside<UpsideDownJumpThru>(self.Position - Vector2.UnitY)) {
                         self.Speed.Y = 0;
                         return 0;
                     }
