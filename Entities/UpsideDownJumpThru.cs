@@ -46,8 +46,7 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
             On.Celeste.Player.OnCollideV -= onPlayerOnCollideV;
             IL.Celeste.Player.ClimbUpdate -= patchPlayerClimbUpdate;
 
-            if (playerOrigUpdateHook != null)
-                playerOrigUpdateHook.Dispose();
+            playerOrigUpdateHook?.Dispose();
             IL.Celeste.Player.DashUpdate -= filterOutJumpThrusFromCollideChecks;
             IL.Celeste.Player.RedDashUpdate -= filterOutJumpThrusFromCollideChecks;
         }
