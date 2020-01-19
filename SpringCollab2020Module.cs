@@ -15,6 +15,7 @@ namespace Celeste.Mod.SpringCollab2020 {
             FloatierSpaceBlock.Load();
             RemoveLightSourcesTrigger.Load();
             SafeRespawnCrumble.Load();
+            UpsideDownJumpThru.Load();
         }
 
         public override void Unload() {
@@ -22,6 +23,7 @@ namespace Celeste.Mod.SpringCollab2020 {
             FloatierSpaceBlock.Unload();
             RemoveLightSourcesTrigger.Unload();
             SafeRespawnCrumble.Unload();
+            UpsideDownJumpThru.Unload();
         }
     }
 }
