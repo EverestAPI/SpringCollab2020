@@ -17,11 +17,17 @@ namespace Celeste.Mod.SpringCollab2020 {
             SafeRespawnCrumble.Load();
         }
 
+        public override void LoadContent(bool firstLoad) {
+            base.LoadContent(firstLoad);
+            GlassBerry.LoadContent();
+        }
+
         public override void Unload() {
             NoRefillField.Unload();
             FloatierSpaceBlock.Unload();
             RemoveLightSourcesTrigger.Unload();
             SafeRespawnCrumble.Unload();
+            GlassBerry.Unload();
         }
     }
 }
