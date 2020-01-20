@@ -5,7 +5,7 @@ using ..Ahorn, Maple
 @mapdef Entity "SpringCollab2020/glassBerry" GlassBerry(x::Integer, y::Integer, checkpointID::Integer=-1, order::Integer=-1, nodes::Array{Tuple{Integer, Integer}, 1}=Tuple{Integer, Integer}[])
 
 const placements = Ahorn.PlacementDict(
-	"Strawberry (Glass) (Spring Collab 2020)" => Ahorn.EntityPlacement(
+	"Glass Strawberry (Spring Collab 2020)" => Ahorn.EntityPlacement(
 		GlassBerry,
 		"point"
 	),
