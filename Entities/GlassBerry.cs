@@ -24,7 +24,7 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
         // Requested implementations for using IStrawberrySeeded. 
         // These are the most basic implementations thereof and there is likely no reason to change these.
         public List<GenericStrawberrySeed> Seeds { get; }
-        public string gotSeedFlag { get { return "collected_seeds_of_" + ID.ToString(); } }
+        public string gotSeedFlag => "collected_seeds_of_" + ID.ToString();
         public bool WaitingOnSeeds {
             get {
                 if (Seeds != null)
@@ -70,15 +70,14 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
             isOwned = SaveData.Instance.CheckStrawberry(ID);
             Depth = -100;
             Collider = new Hitbox(14f, 14f, -7f, -7f);
-            Add(new PlayerCollider(new Action<Player>(OnPlayer), null, null));
+            Add(new PlayerCollider(OnPlayer));
             Add(new MirrorReflection());
-            Add(Follower = new Follower(ID, null, new Action(OnLoseLeader)));
+            Add(Follower = new Follower(ID, null, OnLoseLeader));
             Follower.FollowDelay = 0.3f;
 
-            // As part of the showcase, the Silver Berry is compatible with the GenericStrawberrySeed.
-            // It doesn't make sense for a Silver Berry to have seeds, so this is purely for demonstration.
-            bool flag = data.Nodes != null && data.Nodes.Length != 0;
-            if (flag) {
+            // It's unlikely, but there's no reason not to allow the Glass Berry to be a seeded berry.
+            // We'll use standard GenericStrawberrySeeds; in the future, maybe a special fragile seed could be created.
+            if (data.Nodes != null && data.Nodes.Length != 0) {
                 Seeds = new List<GenericStrawberrySeed>();
                 for (int i = 0; i < data.Nodes.Length; i++) {
                     Seeds.Add(new GenericStrawberrySeed(this, offset + data.Nodes[i], i, isOwned));
@@ -100,7 +99,7 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
 
             // Strawberries have certain special effects during their animation sequence.
             // This adds a handler to enable this.
-            sprite.OnFrameChange = new Action<string>(OnAnimate);
+            sprite.OnFrameChange = OnAnimate;
 
             // A Wiggler is capable of "shaking" and "pulsing" sprites.
             // This Wiggler adjusts the sprite's Scale when triggered.
@@ -146,7 +145,7 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
 
             // The Glass Berry's gimmick is that it breaks if the player dashes while carrying it.
             // So we need a generic DashListener.
-            Add(new DashListener { OnDash = new Action<Vector2>(OnDash) });
+            Add(new DashListener { OnDash = OnDash });
         }
 
         // Every Entity needs an Update sequence. This is where we do the bulk of our checking for things.
@@ -257,7 +256,7 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
             // Add obvious "shard" lines
             for (int i = 0; i < 12; i++) {
                 float dir = Calc.Random.NextFloat(6.2831855f);
-                base.SceneAs<Level>().ParticlesFG.Emit(StrawberrySeed.P_Burst, 1, Position + Calc.AngleToVector(dir, 4f), Vector2.Zero, dir);
+                SceneAs<Level>().ParticlesFG.Emit(StrawberrySeed.P_Burst, 1, Position + Calc.AngleToVector(dir, 4f), Vector2.Zero, dir);
             }
 
             SceneAs<Level>().Displacement.AddBurst(Position, 0.2f, 8f, 28f, 0.2f, null, null);
@@ -308,9 +307,9 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
         }
 
         private IEnumerator CollectRoutine(int collectIndex) {
-            Level level = base.Scene as Level;
-            base.Tag = Tags.TransitionUpdate;
-            base.Depth = -2000010;
+            Level level = SceneAs<Level>();
+            Tag = Tags.TransitionUpdate;
+            Depth = -2000010;
 
             // Use "yellow" text for a new berry, "blue" for an owned berry.
             // Plays the appropriate sounds, too.
