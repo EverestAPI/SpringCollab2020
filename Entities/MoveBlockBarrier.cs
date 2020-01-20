@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Reflection;
 using Celeste.Mod.Entities;
 using Microsoft.Xna.Framework;
 using Monocle;
@@ -7,7 +9,32 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
     [CustomEntity("SpringCollab2020/moveBlockBarrier")]
     [Tracked(false)]
     public class MoveBlockBarrier : SeekerBarrier {
+
+        private static FieldInfo particlesInfo = typeof(SeekerBarrier).GetField("particles", BindingFlags.GetField | BindingFlags.Instance | BindingFlags.NonPublic);
+    
         public MoveBlockBarrier(EntityData data, Vector2 offset) : base(data, offset) {
+        }
+
+        public override void Added(Scene scene) {
+            base.Added(scene);
+            scene.Tracker.GetEntity<SeekerBarrierRenderer>().Untrack(this);
+            scene.Tracker.GetEntity<MoveBlockBarrierRenderer>().Track(this);
+        }
+
+        public override void Removed(Scene scene) {
+            base.Removed(scene);
+            scene.Tracker.GetEntity<MoveBlockBarrierRenderer>().Untrack(this);
+        }
+
+        public override void Render() {
+            List<Vector2> particles = (List<Vector2>) particlesInfo.GetValue(this);
+            Color color = Color.Pink * 0.5f;
+            foreach (Vector2 particle in particles) {
+                Draw.Pixel.Draw(Position + particle, Vector2.Zero, color);
+            }
+            if (Flashing) {
+                Draw.Rect(base.Collider, Color.Pink * Flash * 0.5f);
+            }
         }
 
         public static void Load() {

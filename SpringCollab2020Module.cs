@@ -14,6 +14,7 @@ namespace Celeste.Mod.SpringCollab2020 {
             NoRefillField.Load();
             FloatierSpaceBlock.Load();
             MoveBlockBarrier.Load();
+            MoveBlockBarrierRenderer.Load();
             RemoveLightSourcesTrigger.Load();
         }
 
@@ -21,6 +22,7 @@ namespace Celeste.Mod.SpringCollab2020 {
             NoRefillField.Unload();
             FloatierSpaceBlock.Unload();
             MoveBlockBarrier.Unload();
+            MoveBlockBarrierRenderer.Unload();
             RemoveLightSourcesTrigger.Unload();
         }
     }
