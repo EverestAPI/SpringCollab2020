@@ -16,6 +16,7 @@ namespace Celeste.Mod.SpringCollab2020 {
             RemoveLightSourcesTrigger.Load();
             SafeRespawnCrumble.Load();
             UpsideDownJumpThru.Load();
+            SidewaysJumpThru.Load();
         }
 
         public override void Unload() {
@@ -24,6 +25,7 @@ namespace Celeste.Mod.SpringCollab2020 {
             RemoveLightSourcesTrigger.Unload();
             SafeRespawnCrumble.Unload();
             UpsideDownJumpThru.Unload();
+            SidewaysJumpThru.Unload();
         }
     }
 }
