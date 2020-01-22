@@ -47,4 +47,4 @@ placements.entities.SpringCollab2020/UpsideDownJumpThru.tooltips.texture=Changes
 
 # Sideways Jump Thru
 placements.entities.SpringCollab2020/SidewaysJumpThru.tooltips.texture=Changes the appearance of the platform.
-placements.entities.SpringCollab2020/SidewaysJumpThru.tooltips.allowLeftToRight=Changes the orientation of the platform. If checked, it will allow the player to go from left to right.
+placements.entities.SpringCollab2020/SidewaysJumpThru.tooltips.left=Whether the solid side of the jumpthru is the left side.

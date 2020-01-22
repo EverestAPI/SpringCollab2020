@@ -220,8 +220,7 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
             return result;
         }
 
-
-
+        // ======== Begin of entity code ========
 
         private int lines;
         private string overrideTexture;
@@ -244,7 +243,7 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
         }
 
         public SidewaysJumpThru(EntityData data, Vector2 offset)
-            : this(data.Position + offset, data.Height, data.Bool("allowLeftToRight"), data.Attr("texture", "default")) {
+            : this(data.Position + offset, data.Height, !data.Bool("left"), data.Attr("texture", "default")) {
         }
 
         public override void Awake(Scene scene) {

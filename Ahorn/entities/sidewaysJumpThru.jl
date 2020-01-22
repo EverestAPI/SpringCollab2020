@@ -3,18 +3,29 @@ module SpringCollab2020SidewaysJumpThru
 using ..Ahorn, Maple
 
 @mapdef Entity "SpringCollab2020/SidewaysJumpThru" SidewaysJumpThru(x::Integer, y::Integer, height::Integer=Maple.defaultBlockHeight, 
-	allowLeftToRight::Bool=true, texture::String="wood")
+    left::Bool=true, texture::String="wood")
 
 textures = ["wood", "dream", "temple", "templeB", "cliffside", "reflection", "core", "moon"]
-const placements = Ahorn.PlacementDict(
-    "Sideways Jump Through ($(uppercasefirst(texture))) (Spring Collab 2020)" => Ahorn.EntityPlacement(
+const placements = Ahorn.PlacementDict()
+
+for texture in textures
+	placements["Sideways Jump Through ($(uppercasefirst(texture)), Left) (Spring Collab 2020)"] = Ahorn.EntityPlacement(
         SidewaysJumpThru,
         "rectangle",
         Dict{String, Any}(
-            "texture" => texture
+            "texture" => texture,
+            "left" => true
         )
-    ) for texture in textures
-)
+    )
+    placements["Sideways Jump Through ($(uppercasefirst(texture)), Right) (Spring Collab 2020)"] = Ahorn.EntityPlacement(
+        SidewaysJumpThru,
+        "rectangle",
+        Dict{String, Any}(
+            "texture" => texture,
+            "left" => false
+        )
+    )
+end
 
 quads = Tuple{Integer, Integer, Integer, Integer}[
     (0, 0, 8, 7) (8, 0, 8, 7) (16, 0, 8, 7);
@@ -44,8 +55,8 @@ function Ahorn.render(ctx::Ahorn.Cairo.CairoContext, entity::SidewaysJumpThru, r
     y = Int(get(entity.data, "y", 0))
 
     height = Int(get(entity.data, "height", 8))
-	allowLeftToRight = get(entity.data, "allowLeftToRight", true)
-	
+    left = get(entity.data, "left", true)
+    
     startX = div(x, 8) + 1
     startY = div(y, 8) + 1
     stopY = startY + div(height, 8) - 1
@@ -53,10 +64,10 @@ function Ahorn.render(ctx::Ahorn.Cairo.CairoContext, entity::SidewaysJumpThru, r
     Ahorn.Cairo.save(ctx)
     
     Ahorn.rotate(ctx, pi / 2)
-	
-	if !allowLeftToRight
-		Ahorn.scale(ctx, 1, -1)
-	end
+    
+    if left
+        Ahorn.scale(ctx, 1, -1)
+    end
 
     len = stopY - startY
     for i in 0:len
@@ -72,7 +83,7 @@ function Ahorn.render(ctx::Ahorn.Cairo.CairoContext, entity::SidewaysJumpThru, r
         end
 
         quad = quads[2 - connected, qx]
-        Ahorn.drawImage(ctx, "objects/jumpthru/$(texture)", 8 * i, allowLeftToRight ? -8 : 0, quad...)
+        Ahorn.drawImage(ctx, "objects/jumpthru/$(texture)", 8 * i, left ? 0 : -8, quad...)
     end
     
     Ahorn.Cairo.restore(ctx)
