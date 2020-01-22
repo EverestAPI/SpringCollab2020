@@ -13,6 +13,8 @@ namespace Celeste.Mod.SpringCollab2020 {
         public override void Load() {
             NoRefillField.Load();
             FloatierSpaceBlock.Load();
+            MoveBlockBarrier.Load();
+            MoveBlockBarrierRenderer.Load();
             RemoveLightSourcesTrigger.Load();
             SafeRespawnCrumble.Load();
             UpsideDownJumpThru.Load();
@@ -26,6 +28,8 @@ namespace Celeste.Mod.SpringCollab2020 {
         public override void Unload() {
             NoRefillField.Unload();
             FloatierSpaceBlock.Unload();
+            MoveBlockBarrier.Unload();
+            MoveBlockBarrierRenderer.Unload();
             RemoveLightSourcesTrigger.Unload();
             SafeRespawnCrumble.Unload();
             GlassBerry.Unload();
