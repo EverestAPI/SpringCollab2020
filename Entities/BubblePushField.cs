@@ -7,10 +7,6 @@ using Monocle;
 namespace Celeste.Mod.SpringCollab2020.Entities {
     [CustomEntity("SpringCollab2020/bubblePushField")]
     class BubblePushField : Entity {
-        public new int Width;
-
-        public new int Height;
-
         public float Strength;
 
         public float UpwardStrength;
@@ -42,8 +38,6 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
 
         public BubblePushField(Vector2 position, int width, int height, float strength, float upwardStrength, string direction, bool water) {
             Position = position;
-            Width = width;
-            Height = height;
             Strength = strength;
             UpwardStrength = upwardStrength;
             _water = water;
@@ -90,7 +84,7 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
                     else
                         WindMovers.Add(mover, 0f);
                 } else {
-                    if(WindMovers.ContainsKey(mover)) {
+                    if (WindMovers.ContainsKey(mover)) {
                         WindMovers[mover] = Calc.Approach(WindMovers[mover], 0f, Engine.DeltaTime / 0.3f);
                         if (WindMovers[mover] == 0f)
                             WindMovers.Remove(mover);
@@ -157,6 +151,8 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
 
         private Vector2 Origin, End;
 
+        private static readonly string[] TextureNames = new string[] { "a", "b" };
+
         public BubbleParticle(bool active, bool visible) : base(active, visible) { }
 
         public override void Added(Entity entity) {
@@ -166,7 +162,7 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
             Position = BubbleField.Position;
 
             Rand = BubbleField.Rand;
-            Texture = GFX.Game["particles/SpringCollab2020/bubble_" + new string[] { "a", "b" }[Rand.Next(0, 1)]];
+            Texture = GFX.Game["particles/SpringCollab2020/bubble_" + TextureNames[Rand.Next(0, 1)]];
 
             // Determine bubble spawn point
             switch (BubbleField.Direction) {
