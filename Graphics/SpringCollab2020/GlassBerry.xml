@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Sprites>
+  <springCollabGlassBerry path="collectables/SpringCollab2020/glassBerry/">
+    <Center />
+    <Loop id="idle"         path="idle" delay=".1"  frames="0-6,0-6,0-6,0-6,7-13" />
+    <Loop id="idleGhost"    path="ghost" delay=".1"  frames="0-6,0-6,0-6,0-6,7-13" />
+    <Anim id="collect"      path="idle" delay=".07" frames="14-18" />
+    <Anim id="collectGhost" path="ghost" delay=".07" frames="14-18" />
+  </springCollabGlassBerry>
+</Sprites>

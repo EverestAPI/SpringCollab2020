@@ -47,3 +47,10 @@ placements.entities.SpringCollab2020/bubblePushField.tooltips.strength=The stren
 placements.entities.SpringCollab2020/bubblePushField.tooltips.upwardStrength=How much the bubbles push the player up to compensate for gravity.
 placements.entities.SpringCollab2020/bubblePushField.tooltips.direction=The direction the bubbles push the player.
 placements.entities.SpringCollab2020/bubblePushField.tooltips.water=If the bubble field will create a Water entity to make its presence visible.
+
+# Upside Down Jump Thru
+placements.entities.SpringCollab2020/UpsideDownJumpThru.tooltips.texture=Changes the appearance of the platform.
+
+# Sideways Jump Thru
+placements.entities.SpringCollab2020/SidewaysJumpThru.tooltips.texture=Changes the appearance of the platform.
+placements.entities.SpringCollab2020/SidewaysJumpThru.tooltips.left=Whether the solid side of the jumpthru is the left side.

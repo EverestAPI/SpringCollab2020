@@ -13,15 +13,29 @@ namespace Celeste.Mod.SpringCollab2020 {
         public override void Load() {
             NoRefillField.Load();
             FloatierSpaceBlock.Load();
+            MoveBlockBarrier.Load();
+            MoveBlockBarrierRenderer.Load();
             RemoveLightSourcesTrigger.Load();
             SafeRespawnCrumble.Load();
+            UpsideDownJumpThru.Load();
+            SidewaysJumpThru.Load();
+        }
+
+        public override void LoadContent(bool firstLoad) {
+            base.LoadContent(firstLoad);
+            GlassBerry.LoadContent();
         }
 
         public override void Unload() {
             NoRefillField.Unload();
             FloatierSpaceBlock.Unload();
+            MoveBlockBarrier.Unload();
+            MoveBlockBarrierRenderer.Unload();
             RemoveLightSourcesTrigger.Unload();
             SafeRespawnCrumble.Unload();
+            GlassBerry.Unload();
+            UpsideDownJumpThru.Unload();
+            SidewaysJumpThru.Unload();
         }
     }
 }
