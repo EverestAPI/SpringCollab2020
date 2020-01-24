@@ -19,6 +19,7 @@ namespace Celeste.Mod.SpringCollab2020 {
             SafeRespawnCrumble.Load();
             UpsideDownJumpThru.Load();
             BubbleReturnBerry.Load();
+            SidewaysJumpThru.Load();
         }
 
         public override void LoadContent(bool firstLoad) {
@@ -36,6 +37,7 @@ namespace Celeste.Mod.SpringCollab2020 {
             GlassBerry.Unload();
             UpsideDownJumpThru.Unload();
             BubbleReturnBerry.Unload();
+            SidewaysJumpThru.Unload();
         }
     }
 }
