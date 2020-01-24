@@ -3,8 +3,6 @@ using Microsoft.Xna.Framework;
 using Monocle;
 using System;
 using System.Collections;
-using MonoMod.Cil;
-using Mono.Cecil.Cil;
 
 namespace Celeste.Mod.SpringCollab2020.Entities {
     [RegisterStrawberry(true, false)]
