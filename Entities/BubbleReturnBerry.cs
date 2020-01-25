@@ -1,22 +1,41 @@
-﻿using Celeste;
-using Celeste.Mod.Entities;
+﻿using Celeste.Mod.Entities;
 using Microsoft.Xna.Framework;
 using Monocle;
 using System;
 using System.Collections;
 
 namespace Celeste.Mod.SpringCollab2020.Entities {
-    [CustomEntity("SpringCollab2020/returnBerry")]
     [RegisterStrawberry(true, false)]
+    [CustomEntity("SpringCollab2020/returnBerry")]
     class BubbleReturnBerry : Strawberry {
         public BubbleReturnBerry(EntityData data, Vector2 position, EntityID gid) : base(data, position, gid) {
             Add(collider = new PlayerCollider(new Action<Player>(OnPlayer)));
         }
 
-        public new void OnPlayer(Player player) {
-            Add(new Coroutine(Return(player), true));
+        public static void Load() {
+            On.Celeste.Player.OnSquish += ModOnSquish;
+        }
 
-            Collidable = false;
+        public static void Unload() {
+            On.Celeste.Player.OnSquish -= ModOnSquish;
+        }
+
+        public new void OnPlayer(Player player) {
+            base.OnPlayer(player);
+
+            if (!WaitingOnSeeds) {
+                Add(new Coroutine(Return(player), true));
+                Collidable = false;
+            }
+        }
+
+        private static void ModOnSquish(On.Celeste.Player.orig_OnSquish orig, Player player, CollisionData data) {
+            // State 21 is the state where the player is located within the Cassette Bubble.
+            // They shouldn't be squished by moving blocks inside of it, so we prevent that.
+            if (player.StateMachine.State == 21)
+                return;
+
+            orig(player, data);
         }
 
         private IEnumerator Return(Player player) {

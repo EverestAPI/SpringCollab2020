@@ -18,6 +18,7 @@ namespace Celeste.Mod.SpringCollab2020 {
             RemoveLightSourcesTrigger.Load();
             SafeRespawnCrumble.Load();
             UpsideDownJumpThru.Load();
+            BubbleReturnBerry.Load();
             SidewaysJumpThru.Load();
         }
 
@@ -35,6 +36,7 @@ namespace Celeste.Mod.SpringCollab2020 {
             SafeRespawnCrumble.Unload();
             GlassBerry.Unload();
             UpsideDownJumpThru.Unload();
+            BubbleReturnBerry.Unload();
             SidewaysJumpThru.Unload();
         }
     }
