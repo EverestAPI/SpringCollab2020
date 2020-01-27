@@ -33,7 +33,7 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
 
         public float SmallWaveAmplitude = 1f;
         public float BigWaveAmplitude = 4f;
-        public float CurveAmplitude = 12f;
+        public float CurveAmplitude = 7f;
         public float UpdateMultiplier = 1f;
 
         public Color SurfaceColor = Color.White;
@@ -163,7 +163,7 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
             if (step % 2 == 0) {
                 waveOffset += Spikey;
             }
-            waveOffset += (1f - Calc.YoYo((float) stepOffset / length)) * CurveAmplitude;
+            waveOffset += (1f - Calc.YoYo(stepOffset / length)) * CurveAmplitude;
             return waveOffset;
         }
 

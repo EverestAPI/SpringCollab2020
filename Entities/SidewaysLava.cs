@@ -269,7 +269,6 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
             if (sandwichHasToSetPosition) {
                 sandwichHasToSetPosition = false;
 
-                // place the sandwich relative to the camera, so that both sides are just off-screen.
                 // should be 20px to the right, so that the right rect is at 300px and both rects have the same on-screen size (20px).
                 X = SceneAs<Level>().Camera.Left + 20f;
             }
@@ -299,7 +298,7 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
                     }
                 }
 
-                if ((player == null || !player.JustRespawned)) {
+                if (player == null || !player.JustRespawned) {
                     waiting = false;
                 }
             } else {
