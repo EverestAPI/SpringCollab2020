@@ -5,7 +5,7 @@ namespace Celeste.Mod.SpringCollab2020 {
     public class SpringCollab2020Module : EverestModule {
 
         public static SpringCollab2020Module Instance;
-        
+
         public SpringCollab2020Module() {
             Instance = this;
         }
@@ -20,6 +20,7 @@ namespace Celeste.Mod.SpringCollab2020 {
             UpsideDownJumpThru.Load();
             BubbleReturnBerry.Load();
             SidewaysJumpThru.Load();
+            SidewaysLava.Load();
         }
 
         public override void LoadContent(bool firstLoad) {
@@ -38,6 +39,7 @@ namespace Celeste.Mod.SpringCollab2020 {
             UpsideDownJumpThru.Unload();
             BubbleReturnBerry.Unload();
             SidewaysJumpThru.Unload();
+            SidewaysLava.Unload();
         }
     }
 }
