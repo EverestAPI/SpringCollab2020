@@ -54,3 +54,7 @@ placements.entities.SpringCollab2020/UpsideDownJumpThru.tooltips.texture=Changes
 # Sideways Jump Thru
 placements.entities.SpringCollab2020/SidewaysJumpThru.tooltips.texture=Changes the appearance of the platform.
 placements.entities.SpringCollab2020/SidewaysJumpThru.tooltips.left=Whether the solid side of the jumpthru is the left side.
+
+# Non-Badeline Moving Blocks
+placements.entities.SpringCollab2020/nonBadelineMovingBlock.tooltips.tiletype=Changes the visual appearance of the block before it starts moving.
+placements.entities.SpringCollab2020/nonBadelineMovingBlock.tooltips.highlightTiletype=Changes the visual appearance of the block once it starts moving.
