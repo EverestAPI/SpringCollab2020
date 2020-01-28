@@ -4,7 +4,7 @@ using ..Ahorn, Maple
 
 @mapdef Entity "SpringCollab2020/SidewaysLava" SidewaysLava(x::Integer, y::Integer, intro::Bool=false, lavaMode::String="LeftToRight", speedMultiplier::Number=1)
 
-const lavaModes = ["LeftToRight", "RightToLeft", "Sandwich"];
+const lavaModes = String["LeftToRight", "RightToLeft", "Sandwich"]
 
 const placements = Ahorn.PlacementDict(
     "Sideways Lava (Spring Collab 2020)" => Ahorn.EntityPlacement(
