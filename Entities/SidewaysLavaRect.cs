@@ -278,8 +278,8 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
                     else
                         x = 1f - Wave(bubbleOffset, Height);
 
-                    surfaceBubbleTexture.DrawJustified(rectPosition + 
-                        new Vector2(x,  OnlyMode == OnlyModes.OnlyRight ? Height - bubbleOffset * SurfaceStep : bubbleOffset * SurfaceStep),
+                    surfaceBubbleTexture.DrawJustified(rectPosition +
+                        new Vector2(x, OnlyMode == OnlyModes.OnlyRight ? Height - bubbleOffset * SurfaceStep : bubbleOffset * SurfaceStep),
                         new Vector2(1f, 0.5f), SurfaceColor);
                 }
             }

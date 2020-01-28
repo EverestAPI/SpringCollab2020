@@ -1,9 +1,9 @@
 ﻿using Celeste.Mod.Entities;
 using Microsoft.Xna.Framework;
 using Monocle;
-using MonoMod.Utils;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 
 namespace Celeste.Mod.SpringCollab2020.Entities {
     /// <summary>
@@ -16,40 +16,16 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
     /// </summary>
     [CustomEntity("SpringCollab2020/SidewaysLava")]
     class SidewaysLava : Entity {
-
-        private static List<DynData<SidewaysLava>> sidewaysLavas = new List<DynData<SidewaysLava>>();
-
-        public static void Load() {
-            On.Celeste.Mod.Entities.LavaBlockerTrigger.Awake += onLavaBlockerTriggerAwake;
-            On.Celeste.Mod.Entities.LavaBlockerTrigger.OnStay += onLavaBlockerTriggerStay;
-        }
-
-        public static void Unload() {
-            On.Celeste.Mod.Entities.LavaBlockerTrigger.Awake -= onLavaBlockerTriggerAwake;
-            On.Celeste.Mod.Entities.LavaBlockerTrigger.OnStay -= onLavaBlockerTriggerStay;
-        }
-
-        private static void onLavaBlockerTriggerAwake(On.Celeste.Mod.Entities.LavaBlockerTrigger.orig_Awake orig, LavaBlockerTrigger self, Scene scene) {
-            orig(self, scene);
-
-            // look up for sideways lavas as well.
-            sidewaysLavas = scene.Entities.FindAll<SidewaysLava>().Select(lava => new DynData<SidewaysLava>(lava as SidewaysLava)).ToList();
-        }
-
-        private static void onLavaBlockerTriggerStay(On.Celeste.Mod.Entities.LavaBlockerTrigger.orig_OnStay orig, LavaBlockerTrigger self, Player player) {
-            orig(self, player);
-
-            // block sideways lava as well.
-            foreach (DynData<SidewaysLava> data in sidewaysLavas)
-                if (data.IsAlive)
-                    data.Set("waiting", true);
-        }
+        private static FieldInfo lavaBlockerTriggerEnabled = typeof(LavaBlockerTrigger).GetField("enabled", BindingFlags.NonPublic | BindingFlags.Instance);
 
         private enum LavaMode {
             LeftToRight, RightToLeft, Sandwich
         }
 
         private const float Speed = 30f;
+
+        // if the player collides with one of those, lava should be forced into waiting.
+        private List<LavaBlockerTrigger> lavaBlockerTriggers;
 
         // atrributes
         private bool intro;
@@ -132,8 +108,12 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
                             sandwichLeaving = true;
                             Collidable = false;
                             Alarm.Set(this, 2f, () => RemoveSelf());
+                        } else {
+                            sandwichTransferred = false;
+
+                            // look up for all lava blocker triggers in the next room.
+                            lavaBlockerTriggers = Scene.Entities.OfType<LavaBlockerTrigger>().ToList();
                         }
-                        sandwichTransferred = false;
                     },
                     OnOut = progress => {
                         if (Scene != null) {
@@ -228,6 +208,9 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
             if (intro) {
                 Visible = true;
             }
+
+            // look up for all lava blocker triggers in the room.
+            lavaBlockerTriggers = scene.Entities.OfType<LavaBlockerTrigger>().ToList();
         }
 
         private void OnChangeMode(Session.CoreModes mode) {
@@ -278,9 +261,18 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
             base.Update();
             Visible = true;
 
+            Player player = Scene.Tracker.GetEntity<Player>();
+            if (player != null) {
+                LavaBlockerTrigger collidedTrigger = lavaBlockerTriggers.Find(trigger => player.CollideCheck(trigger));
+
+                if (collidedTrigger != null && (bool) lavaBlockerTriggerEnabled.GetValue(collidedTrigger)) {
+                    // player is in a lava blocker trigger and it is enabled; block the lava.
+                    waiting = true;
+                }
+            }
+
             if (waiting) {
                 loopSfx.Param("rising", 0f);
-                Player player = Scene.Tracker.GetEntity<Player>();
 
                 // the sandwich lava fade in animation is not handled here.
                 if (lavaMode != LavaMode.Sandwich) {
