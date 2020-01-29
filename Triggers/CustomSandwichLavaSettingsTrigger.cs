@@ -1,12 +1,6 @@
 ﻿using Celeste.Mod.Entities;
 using Celeste.Mod.SpringCollab2020.Entities;
 using Microsoft.Xna.Framework;
-using Monocle;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Celeste.Mod.SpringCollab2020.Triggers {
     [CustomEntity("SpringCollab2020/CustomSandwichLavaSettingsTrigger")]
