@@ -54,3 +54,8 @@ placements.entities.SpringCollab2020/UpsideDownJumpThru.tooltips.texture=Changes
 # Sideways Jump Thru
 placements.entities.SpringCollab2020/SidewaysJumpThru.tooltips.texture=Changes the appearance of the platform.
 placements.entities.SpringCollab2020/SidewaysJumpThru.tooltips.left=Whether the solid side of the jumpthru is the left side.
+
+# Custom Sandwich Lava
+placements.entities.SpringCollab2020/CustomSandwichLava.tooltips.direction=Changes the sandwich lava direction. CoreModeBased is the same behaviour as vanilla, depending on core mode.
+placements.entities.SpringCollab2020/CustomSandwichLava.tooltips.speed=Changes the speed the lava is moving at, in pixels per second. Vanilla value is 20.
+placements.entities.SpringCollab2020/CustomSandwichLava.tooltips.sandwichGap=The gap in pixels between both sides of the lava. Vanilla value is 160.
