@@ -13,42 +13,43 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
     /// - has customizable speed and gap.
     /// </summary>
     [CustomEntity("SpringCollab2020/CustomSandwichLava")]
+    [Tracked]
     class CustomSandwichLava : Entity {
         private static FieldInfo lavaBlockerTriggerEnabled = typeof(LavaBlockerTrigger).GetField("enabled", BindingFlags.NonPublic | BindingFlags.Instance);
 
         // if the player collides with one of those, lava should be forced into waiting.
         private List<LavaBlockerTrigger> lavaBlockerTriggers;
 
-        private enum Direction {
+        public enum DirectionMode {
             AlwaysUp, AlwaysDown, CoreModeBased
         };
 
         private const float TopOffset = -160f;
 
-        private bool iceMode;
-
+        // parameters
         private float startX;
-        private Direction direction;
-        private float speed;
+        public DirectionMode Direction;
+        public float Speed;
         // the extra pixels each side has to be shifted towards each other compared to vanilla
         // to comply with the "sandwichGap" setting.
         private float sandwichDisplacement;
 
+        // state
+        private bool iceMode;
         private float lerp;
+        public bool Waiting;
+        private bool leaving = false;
+        private float delay = 0f;
+        private bool persistent;
+        private bool entering = true;
 
+        // during a transition, those hold the Y positions of lava parts from the beginning of the transition.
         private float transitionStartY;
         private float transitionStartTopRectY;
         private float transitionStartBottomRectY;
 
-        public bool Waiting;
-        private bool leaving = false;
-        private float delay = 0f;
-
         private LavaRect bottomRect;
         private LavaRect topRect;
-
-        private bool persistent;
-        private bool entering = true;
 
         private SoundSource loopSfx;
 
@@ -57,11 +58,11 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
 
         public CustomSandwichLava(EntityData data, Vector2 offset) {
             startX = data.Position.X + offset.X;
-            direction = data.Enum("direction", Direction.CoreModeBased);
-            speed = data.Float("speed", 20f);
+            Direction = data.Enum("direction", DirectionMode.CoreModeBased);
+            Speed = data.Float("speed", 20f);
 
             // vanilla is 160. so, setting sandwichGap to 120 requires each side to be shifted by 20 pixels towards the other ((160 - 120) / 2).
-            sandwichDisplacement = (160 - data.Float("sandwichGap", 160f)) / 2;
+            sandwichDisplacement = (160f - data.Float("sandwichGap", 160f)) / 2;
 
             Depth = -1000000;
             Collider = new ColliderList(new Hitbox(340f, 120f, 0f, -sandwichDisplacement), new Hitbox(340f, 120f, 0f, -280f + sandwichDisplacement));
@@ -85,10 +86,13 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
 
             Add(new TransitionListener {
                 OnOutBegin = () => {
+                    // save the Y positions
                     transitionStartY = Y;
                     transitionStartTopRectY = topRect.Position.Y;
                     transitionStartBottomRectY = bottomRect.Position.Y;
+
                     if (persistent && Scene != null && Scene.Entities.FindAll<CustomSandwichLava>().Count <= 1) {
+                        // no lava in the next room: leave
                         Leave();
                     } else {
                         // look up for all lava blocker triggers in the next room.
@@ -99,17 +103,21 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
                     if (Scene != null) {
                         X = (Scene as Level).Camera.X;
                         if (!leaving) {
+                            // make the lava elements transition smoothly to their expected positions.
                             Y = MathHelper.Lerp(transitionStartY, centerY, progress);
                             topRect.Position.Y = MathHelper.Lerp(transitionStartTopRectY, TopOffset - topRect.Height + sandwichDisplacement, progress);
                             bottomRect.Position.Y = MathHelper.Lerp(transitionStartBottomRectY, -sandwichDisplacement, progress);
                         }
                     }
-                    if ((progress > 0.95f) & leaving) {
+
+                    if ((progress > 0.95f) && leaving) {
+                        // lava is leaving, transition is over soon => remove it
                         RemoveSelf();
                     }
                 },
                 OnInEnd = () => {
                     if (entering) {
+                        // transition is over. grab the camera position now since it's done moving.
                         Y = centerY;
                         entering = false;
                     }
@@ -136,13 +144,14 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
 
             bool removedSelf = false;
             if (!persistent && existingLavas.Count >= 2) {
+                // another lava entity already exists.
                 CustomSandwichLava sandwichLava = (existingLavas[0] == this) ? existingLavas[1] : existingLavas[0];
                 if (!sandwichLava.leaving) {
                     // transfer new settings to the existing lava.
                     sandwichLava.startX = startX;
                     sandwichLava.Waiting = true;
-                    sandwichLava.direction = direction;
-                    sandwichLava.speed = speed;
+                    sandwichLava.Direction = Direction;
+                    sandwichLava.Speed = Speed;
                     sandwichLava.sandwichDisplacement = sandwichDisplacement;
                     sandwichLava.Collider = Collider;
                     entering = false;
@@ -152,14 +161,19 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
             }
 
             if (!removedSelf) {
+                // turn the lava persistent, so that it animates during room transitions
+                // and deals smoothly with successive rooms with sandwich lava.
                 persistent = true;
                 Tag = Tags.Persistent;
+
                 if ((scene as Level).LastIntroType != Player.IntroTypes.Respawn) {
-                    topRect.Position.Y -= 60f;
-                    bottomRect.Position.Y += 60f;
+                    // throw the two lava parts off-screen.
+                    topRect.Position.Y -= 60f + sandwichDisplacement;
+                    bottomRect.Position.Y += 60f + sandwichDisplacement;
                 } else {
                     Visible = true;
                 }
+
                 loopSfx.Play("event:/game/09_core/rising_threat", "room_state", iceMode ? 1 : 0);
                 loopSfx.Position = new Vector2(Width / 2f, 0f);
 
@@ -180,15 +194,19 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
             if (SaveData.Instance.Assists.Invincible) {
                 if (delay <= 0f) {
                     int direction = (player.Y > Y + bottomRect.Position.Y - 32f) ? 1 : -1;
+
                     float from = Y;
                     float to = Y + (direction * 48);
                     player.Speed.Y = -direction * 200;
+
                     if (direction > 0) {
                         player.RefillDash();
                     }
-                    Tween.Set(this, Tween.TweenMode.Oneshot, 0.4f, Ease.CubeOut, delegate (Tween t) {
-                        Y = MathHelper.Lerp(from, to, t.Eased);
+
+                    Tween.Set(this, Tween.TweenMode.Oneshot, 0.4f, Ease.CubeOut, tween => {
+                        Y = MathHelper.Lerp(from, to, tween.Eased);
                     });
+
                     delay = 0.5f;
                     loopSfx.Param("rising", 0f);
                     Audio.Play("event:/game/general/assist_screenbottom", player.Position);
@@ -209,6 +227,7 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
 
         public override void Update() {
             if (entering) {
+                // set the Y position again on the first Update call, since the camera is finished being set up.
                 Y = centerY;
                 entering = false;
             }
@@ -231,16 +250,17 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
 
             if (Waiting) {
                 Y = Calc.Approach(Y, centerY, 128f * Engine.DeltaTime);
+
                 loopSfx.Param("rising", 0f);
                 if (player != null && player.X >= startX && !player.JustRespawned && player.StateMachine.State != 11) {
                     Waiting = false;
                 }
             } else if (!leaving && delay <= 0f) {
                 loopSfx.Param("rising", 1f);
-                if (direction == Direction.AlwaysDown || (direction == Direction.CoreModeBased && iceMode)) {
-                    Y += speed * Engine.DeltaTime;
+                if (Direction == DirectionMode.AlwaysDown || (Direction == DirectionMode.CoreModeBased && iceMode)) {
+                    Y += Speed * Engine.DeltaTime;
                 } else {
-                    Y -= speed * Engine.DeltaTime;
+                    Y -= Speed * Engine.DeltaTime;
                 }
             }
 
