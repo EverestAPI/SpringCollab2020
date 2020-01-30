@@ -64,3 +64,8 @@ placements.entities.SpringCollab2020/CustomSandwichLava.tooltips.sandwichGap=The
 placements.triggers.SpringCollab2020/CustomSandwichLavaSettingsTrigger.tooltips.onlyOnce=If enabled, the settings will change only on the first time the player enters the trigger.
 placements.triggers.SpringCollab2020/CustomSandwichLavaSettingsTrigger.tooltips.direction=Changes the sandwich lava direction. CoreModeBased is the same behaviour as vanilla, depending on core mode.
 placements.triggers.SpringCollab2020/CustomSandwichLavaSettingsTrigger.tooltips.speed=Changes the speed the lava is moving at, in pixels per second. Vanilla value is 20.
+
+# Sideways Lava
+placements.entities.SpringCollab2020/SidewaysLava.tooltips.intro=Determines whether the lava moves into the screen or starts already present on the screen. Not suitable for sandwich lava.
+placements.entities.SpringCollab2020/SidewaysLava.tooltips.lavaMode=Determines which side(s) of the screen the lava comes from.
+placements.entities.SpringCollab2020/SidewaysLava.tooltips.speedMultiplier=Modifies the lava speed. 1 is vanilla lava speed, 2 is twice as fast.

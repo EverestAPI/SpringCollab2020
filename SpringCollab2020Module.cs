@@ -5,7 +5,7 @@ namespace Celeste.Mod.SpringCollab2020 {
     public class SpringCollab2020Module : EverestModule {
 
         public static SpringCollab2020Module Instance;
-        
+
         public SpringCollab2020Module() {
             Instance = this;
         }
