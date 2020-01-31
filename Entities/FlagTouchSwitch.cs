@@ -116,6 +116,8 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
                 activated = true;
 
                 icon.Rate = 4f;
+                icon.Color = activeColor;
+                ease = 1f;
             }
         }
 
