@@ -5,7 +5,7 @@ namespace Celeste.Mod.SpringCollab2020 {
     public class SpringCollab2020Module : EverestModule {
 
         public static SpringCollab2020Module Instance;
-        
+
         public SpringCollab2020Module() {
             Instance = this;
         }
@@ -38,6 +38,12 @@ namespace Celeste.Mod.SpringCollab2020 {
             UpsideDownJumpThru.Unload();
             BubbleReturnBerry.Unload();
             SidewaysJumpThru.Unload();
+        }
+
+        public override void PrepareMapDataProcessors(MapDataFixup context) {
+            base.PrepareMapDataProcessors(context);
+
+            context.Add<SpringCollab2020MapDataProcessor>();
         }
     }
 }

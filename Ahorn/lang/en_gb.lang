@@ -54,3 +54,20 @@ placements.entities.SpringCollab2020/UpsideDownJumpThru.tooltips.texture=Changes
 # Sideways Jump Thru
 placements.entities.SpringCollab2020/SidewaysJumpThru.tooltips.texture=Changes the appearance of the platform.
 placements.entities.SpringCollab2020/SidewaysJumpThru.tooltips.left=Whether the solid side of the jumpthru is the left side.
+
+# Flag Touch Switch
+placements.entities.SpringCollab2020/FlagTouchSwitch.tooltips.flag=The session flag this touch switch sets. Give the same to multiple touch switches and switch gates to group them.
+placements.entities.SpringCollab2020/FlagTouchSwitch.tooltips.icon=The name of the icon for the touch switch (relative to objects/SpringCollab2020/flagTouchSwitch), or "vanilla" for the default one.
+placements.entities.SpringCollab2020/FlagTouchSwitch.tooltips.persistent=If enabled, the touch switch will stay active when the player dies or changes rooms.
+placements.entities.SpringCollab2020/FlagTouchSwitch.tooltips.inactiveColor=The switch colour when not triggered yet.
+placements.entities.SpringCollab2020/FlagTouchSwitch.tooltips.activeColor=The switch colour when triggered, but the group is not complete yet.
+placements.entities.SpringCollab2020/FlagTouchSwitch.tooltips.finishColor=The switch colour when the group is complete.
+
+# Flag Switch Gate
+placements.entities.SpringCollab2020/FlagSwitchGate.tooltips.flag=The session flag this switch gate reacts to. Give the same to multiple touch switches and switch gates to group them.
+placements.entities.SpringCollab2020/FlagSwitchGate.tooltips.icon=The name of the icon for the switch gate (relative to objects/SpringCollab2020/flagSwitchGate), or "vanilla" for the default one.
+placements.entities.SpringCollab2020/FlagSwitchGate.tooltips.persistent=If enabled, the switch gate will stay open when the player dies or changes rooms.
+placements.entities.SpringCollab2020/FlagSwitchGate.tooltips.inactiveColor=The gate icon colour when not triggered yet.
+placements.entities.SpringCollab2020/FlagSwitchGate.tooltips.activeColor=The gate icon colour when triggered, but the group is not complete yet.
+placements.entities.SpringCollab2020/FlagSwitchGate.tooltips.finishColor=The gate icon colour when the group is complete.
+placements.entities.SpringCollab2020/FlagSwitchGate.tooltips.sprite=The texture for the gate block.
