@@ -9,29 +9,37 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
     [Tracked(false)]
     [CustomEntity("SpringCollab2020/crystalBombDetonator")]
     public class CrystalBombDetonator : Solid {
+        // Duration of flashing anim
+        public float Flash = 0f;
+
+        // Used in the shape of the "wave" on the renderer
+        public float Solidify = 0f;
+        private float solidifyDelay = 0f;
+
+        // Used to propagate state
+        private List<CrystalBombDetonator> adjacent = new List<CrystalBombDetonator>();
+
+        // If the field is currently in its flashing state (used to propagate Flashing state to adjacent fields)
+        public bool Flashing = false;
+
+        // Particle array and a list of speeds
+        private List<Vector2> particles = new List<Vector2>();
+        private readonly static float[] speeds = new float[] {
+            12f,
+            20f,
+            40f
+        };
+
+        // Cached method reference, first calculated in Update
+        private static MethodInfo bombExplosionMethod;
+
         public CrystalBombDetonator(Vector2 position, float width, float height) : base(position, width, height, false) {
-            Flash = 0f;
-            Solidify = 0f;
-            Flashing = false;
-            solidifyDelay = 0f;
-            particles = new List<Vector2>();
-            adjacent = new List<CrystalBombDetonator>();
-            speeds = new float[]
-            {
-                12f,
-                20f,
-                40f
-            };
             Collidable = false;
-            int num = 0;
-            while ((float) num < Width * Height / 16f) {
+            for (int num = 0; (float) num < Width * Height / 16f; num++)
                 particles.Add(new Vector2(Calc.Random.NextFloat(Width - 1f), Calc.Random.NextFloat(Height - 1f)));
-                num++;
-            }
         }
 
-        public CrystalBombDetonator(EntityData data, Vector2 offset) : this(data.Position + offset, (float) data.Width, (float) data.Height) {
-        }
+        public CrystalBombDetonator(EntityData data, Vector2 offset) : this(data.Position + offset, (float) data.Width, (float) data.Height) { }
 
         public override void Added(Scene scene) {
             base.Added(scene);
@@ -44,33 +52,22 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
         }
 
         public override void Update() {
-            bool flashing = Flashing;
-            if (flashing) {
+            if (Flashing) {
                 Flash = Calc.Approach(Flash, 0f, Engine.DeltaTime * 4f);
-                bool flag = Flash <= 0f;
-                if (flag) {
+                if (Flash <= 0f) {
                     Flashing = false;
                 }
             } else {
-                bool flag2 = solidifyDelay > 0f;
-                if (flag2) {
+                if (solidifyDelay > 0f)
                     solidifyDelay -= Engine.DeltaTime;
-                } else {
-                    bool flag3 = Solidify > 0f;
-                    if (flag3) {
-                        Solidify = Calc.Approach(Solidify, 0f, Engine.DeltaTime);
-                    }
-                }
+                else if (Solidify > 0f)
+                    Solidify = Calc.Approach(Solidify, 0f, Engine.DeltaTime);
             }
-            int num = speeds.Length;
-            float height = Height;
-            int i = 0;
-            int count = particles.Count;
-            while (i < count) {
-                Vector2 value = particles[i] + Vector2.UnitY * speeds[i % num] * Engine.DeltaTime;
-                value.Y %= height - 1f;
-                particles[i] = value;
-                i++;
+
+            for (int i = 0; i < particles.Count; i++) {
+                Vector2 newPosition = particles[i] + Vector2.UnitY * speeds[i % speeds.Length] * Engine.DeltaTime;
+                newPosition.Y %= Height - 1f;
+                particles[i] = newPosition;
             }
             base.Update();
 
@@ -111,15 +108,5 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
                 }
             }
         }
-
-        public float Flash;
-        public float Solidify;
-        public bool Flashing;
-        private float solidifyDelay;
-        private List<Vector2> particles;
-        private List<CrystalBombDetonator> adjacent;
-        private float[] speeds;
-
-        private static MethodInfo bombExplosionMethod;
     }
 }
