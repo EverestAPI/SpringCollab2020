@@ -41,5 +41,11 @@ namespace Celeste.Mod.SpringCollab2020 {
             SidewaysJumpThru.Unload();
             CrystalBombDetonatorRenderer.Unload();
         }
+
+        public override void PrepareMapDataProcessors(MapDataFixup context) {
+            base.PrepareMapDataProcessors(context);
+
+            context.Add<SpringCollab2020MapDataProcessor>();
+        }
     }
 }
