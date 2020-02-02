@@ -24,6 +24,9 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
         // We'll want to declare the SafeRespawnCrumble as "safe ground" so that Return Strawberries can be collected on it.
         public SafeRespawnCrumble(EntityData data, Vector2 offset) : base(data.Position + offset, (float) data.Width, 8f, true) {
             EnableAssistModeChecks = false;
+
+            // make sure the platform is not collidable by default.
+            Collidable = false;
         }
 
         public override void Added(Scene scene) {
