@@ -59,7 +59,7 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
                 Position = pressedTarget - pressDirection * 2f;
                 pressed = true;
                 Collidable = false;
-                Add(new Coroutine(Lightning.RemoveRoutine(SceneAs<Level>(), new Action(RemoveSelf)), true));
+                Add(new Coroutine(Lightning.RemoveRoutine(SceneAs<Level>()), true));
             }
         }
 
@@ -103,7 +103,7 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
                 MoveTo(pressedTarget);
                 Collidable = false;
                 Position -= pressDirection * 2f;
-                Add(new Coroutine(Lightning.RemoveRoutine(SceneAs<Level>(), new Action(RemoveSelf)), true));
+                Add(new Coroutine(Lightning.RemoveRoutine(SceneAs<Level>()), true));
             }
             return DashCollisionResults.NormalCollision;
         }
