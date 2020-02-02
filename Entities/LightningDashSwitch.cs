@@ -110,18 +110,10 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
 
         private string FlagName {
             get {
-                return GetFlagName(id);
+                return " LDashSwitch_" + id.Key;
             }
         }
 
-        public static string GetFlagName(EntityID id) {
-            return " LDashSwitch_" + id.Key;
-        }
-
-        public static ParticleType P_PressA;
-        public static ParticleType P_PressB;
-        public static ParticleType P_PressAMirror;
-        public static ParticleType P_PressBMirror;
         private Sides side;
         private Vector2 pressedTarget;
         private bool pressed;
@@ -132,7 +124,6 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
         private EntityID id;
         private bool mirrorMode;
         private bool playerWasOn;
-        private bool allGates;
         private Sprite sprite;
         public enum Sides {
             Up,

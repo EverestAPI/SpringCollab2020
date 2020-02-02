@@ -3,31 +3,31 @@ module SpringCollabLightningDashSwitch
 using ..Ahorn, Maple
 
 sides = String[
-	"left",
-	"right",
-	"up",
-	"down"
+    "left",
+    "right",
+    "up",
+    "down"
 ]
 
 textures = String[
-	"default",
-	"mirror"
+    "default",
+    "mirror"
 ]
 
 @mapdef Entity "SpringCollab2020/LightningDashSwitch" LDashSwitch(x::Integer, y::Integer, side::String="up", persistent::Bool=false, sprite::String="default")
 
 const placements = Ahorn.PlacementDict(
-	"Lightning Dash Switch ($(uppercasefirst(side))) (Spring Collab 2020)" => Ahorn.EntityPlacement(
+    "Lightning Dash Switch ($(uppercasefirst(side))) (Spring Collab 2020)" => Ahorn.EntityPlacement(
         LDashSwitch,
         "rectangle",
-		Dict{String, Any}(
-			"side" => side
-		)
-	) for side in sides
+        Dict{String, Any}(
+            "side" => side
+        )
+    ) for side in sides
 )
 
 Ahorn.editingOptions(entity::LDashSwitch) = Dict{String, Any}(
-	"side" => sides
+    "side" => sides
 )
 
 function Ahorn.selection(entity::LDashSwitch)
@@ -40,7 +40,7 @@ function Ahorn.selection(entity::LDashSwitch)
         return Ahorn.Rectangle(x - 2, y, 10, 16)
     elseif side == "down"
         return Ahorn.Rectangle(x, y, 16, 12)
-	elseif side == "up"
+    elseif side == "up"
         return Ahorn.Rectangle(x, y - 4, 16, 12)
     end
 end
