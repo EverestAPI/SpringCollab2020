@@ -3,7 +3,7 @@
 using ..Ahorn, Maple
 
 @pardef FlagSwitchGate(x1::Integer, y1::Integer, x2::Integer=x1+16, y2::Integer=y1, width::Integer=Maple.defaultBlockWidth, height::Integer=Maple.defaultBlockHeight,
-    sprite::String="block", persistent::Bool=false, flag::String="flag_touch_switch", icon::String="vanilla", inactiveColor::String="5FCDE4", activeColor::String="FFFFFF", finishColor="F141DF") =
+    sprite::String="block", persistent::Bool=false, flag::String="flag_touch_switch", icon::String="vanilla", inactiveColor::String="5FCDE4", activeColor::String="FFFFFF", finishColor::String="F141DF") =
     Entity("SpringCollab2020/FlagSwitchGate", x=x1, y=y1, nodes=Tuple{Int, Int}[(x2, y2)], width=width, height=height, sprite=sprite, persistent=persistent, flag=flag, icon=icon,
     inactiveColor=inactiveColor, activeColor=activeColor, finishColor=finishColor)
 
@@ -52,10 +52,10 @@ end
 
 function renderGateSwitch(ctx::Ahorn.Cairo.CairoContext, entity::FlagSwitchGate, x::Number, y::Number, width::Number, height::Number, sprite::String)
     icon = get(entity.data, "icon", "vanilla")
-	
+    
     iconResource = "objects/switchgate/icon00"
     if icon != "vanilla"
-	    iconResource = "objects/SpringCollab2020/flagSwitchGate/$(icon)/icon00"
+        iconResource = "objects/SpringCollab2020/flagSwitchGate/$(icon)/icon00"
     end
 
     iconSprite = Ahorn.getSprite(iconResource, "Gameplay")
