@@ -110,7 +110,7 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
 
         private string FlagName {
             get {
-                return " LDashSwitch_" + id.Key;
+                return "LDashSwitch_" + id.Key;
             }
         }
 
