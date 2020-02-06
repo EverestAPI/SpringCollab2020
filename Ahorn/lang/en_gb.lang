@@ -90,3 +90,6 @@ placements.entities.SpringCollab2020/FlagSwitchGate.tooltips.inactiveColor=The g
 placements.entities.SpringCollab2020/FlagSwitchGate.tooltips.activeColor=The gate icon colour when triggered, but the group is not complete yet.
 placements.entities.SpringCollab2020/FlagSwitchGate.tooltips.finishColor=The gate icon colour when the group is complete.
 placements.entities.SpringCollab2020/FlagSwitchGate.tooltips.sprite=The texture for the gate block.
+
+# Disable Ice Physics Trigger
+placements.triggers.SpringCollab2020/DisableIcePhysicsTrigger.tooltips.disableIcePhysics=Check to disable ice physics when entering the trigger. Uncheck to enable them again.
