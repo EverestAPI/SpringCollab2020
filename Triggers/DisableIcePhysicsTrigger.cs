@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework;
 using MonoMod.Cil;
 using System;
 
-namespace Celeste.Mod.SpringCollab2020.Entities {
+namespace Celeste.Mod.SpringCollab2020.Triggers {
     [CustomEntity("SpringCollab2020/DisableIcePhysicsTrigger")]
     class DisableIcePhysicsTrigger : Trigger {
         public static void Load() {
