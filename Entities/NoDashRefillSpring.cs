@@ -2,11 +2,7 @@
 using Microsoft.Xna.Framework;
 using Monocle;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Celeste.Mod.SpringCollab2020.Entities {
     [CustomEntity("SpringCollab2020/NoDashRefillSpring", "SpringCollab2020/NoDashRefillSpringLeft", "SpringCollab2020/NoDashRefillSpringRight")]
@@ -18,15 +14,15 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
             : base(data.Position + offset, GetOrientationFromName(data.Name), data.Bool("playerCanUse", true)) {
 
             // remove the vanilla player collider. this is the one thing we want to mod here.
-            foreach(Component component in this) {
-                if(component.GetType() == typeof(PlayerCollider)) {
+            foreach (Component component in this) {
+                if (component.GetType() == typeof(PlayerCollider)) {
                     Remove(component);
                     break;
                 }
             }
 
             // replace it with our own collider.
-            if(data.Bool("playerCanUse", true)) {
+            if (data.Bool("playerCanUse", true)) {
                 Add(new PlayerCollider(OnCollide));
             }
         }
