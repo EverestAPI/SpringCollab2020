@@ -18,12 +18,6 @@ groupedTriggerSpikes = Dict{String, Type}(
 
 groupedTriggerSpikesUnion = Union{GroupedTriggerSpikesUp, GroupedTriggerSpikesDown, GroupedTriggerSpikesLeft, GroupedTriggerSpikesRight}
 
-triggerSpikeColors = [
-    (242, 90, 16, 255) ./ 255,
-    (255, 0, 0, 255) ./ 255,
-    (242, 16, 103, 255) ./ 255
-]
-
 for variant in Maple.spike_types
     if variant != "tentacles"
         for (dir, entity) in groupedTriggerSpikes
@@ -64,13 +58,6 @@ groupedTriggerSpikesOffsets = Dict{String, Tuple{Integer, Integer}}(
     "right" => (-4, 0),
 )
 
-groupedTriggerRotationOffsets = Dict{String, Tuple{Number, Number}}(
-    "up" => (3, -1),
-    "right" => (4, 3),
-    "down" => (5, 5),
-    "left" => (-1, 4),
-)
-
 rotations = Dict{String, Number}(
     "up" => 0,
     "right" => pi / 2,
@@ -106,10 +93,6 @@ function Ahorn.selection(entity::groupedTriggerSpikesUnion)
         height = Int(get(entity.data, "height", 8))
 
         direction = get(directions, entity.name, "up")
-        variant = get(entity.data, "type", "default")
-
-        width = Int(get(entity.data, "width", 8))
-        height = Int(get(entity.data, "height", 8))
 
         ox, oy = offsets[direction]
 
@@ -121,7 +104,6 @@ Ahorn.minimumSize(entity::groupedTriggerSpikesUnion) = 8, 8
 
 function Ahorn.resizable(entity::groupedTriggerSpikesUnion)
     if haskey(directions, entity.name)
-        variant = get(entity.data, "type", "default")
         direction = get(directions, entity.name, "up")
 
         return resizeDirections[direction]

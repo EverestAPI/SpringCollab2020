@@ -1,12 +1,7 @@
-﻿using FMOD.Studio;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Monocle;
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Celeste.Mod.Entities {
     /// <summary>
@@ -216,16 +211,6 @@ namespace Celeste.Mod.Entities {
             }
         }
 
-        private bool PlayerCheck() {
-            Player player = CollideFirst<Player>();
-            if (player == null) {
-                return false;
-            }
-
-            GetPlayerCollideIndex(player, out int minIndex, out int maxIndex);
-            return minIndex != -1 && maxIndex != -1;
-        }
-
         private static int GetSize(EntityData data, Directions dir) {
             return
                 dir > Directions.Down ?
@@ -240,7 +225,7 @@ namespace Celeste.Mod.Entities {
                 if (DelayTimer > 0f) {
                     DelayTimer -= Engine.DeltaTime;
                     if (DelayTimer <= 0f) {
-                        if (PlayerCheck()) {
+                        if (CollideCheck<Player>()) {
                             DelayTimer = 0.05f;
                         } else {
                             Audio.Play("event:/game/03_resort/fluff_tendril_emerge", Position + spikePositions[spikePositions.Length / 2]);
