@@ -24,11 +24,9 @@ namespace Celeste.Mod.Entities {
         public static Entity LoadRight(Level level, LevelData levelData, Vector2 offset, EntityData entityData)
             => new GroupedTriggerSpikes(entityData, offset, Directions.Right);
 
-        private const float RetractTime = 6f;
         private const float DelayTime = 0.4f;
 
         public bool Triggered = false;
-        public float RetractTimer;
         public float DelayTimer;
         public float Lerp;
 
@@ -171,7 +169,6 @@ namespace Celeste.Mod.Entities {
                 Audio.Play("event:/game/03_resort/fluff_tendril_touch", Position + spikePositions[minIndex]);
                 Triggered = true;
                 DelayTimer = DelayTime;
-                RetractTimer = RetractTime;
             } else if (Lerp >= 1f) {
                 player.Die(outwards);
             }
