@@ -90,3 +90,9 @@ placements.entities.SpringCollab2020/FlagSwitchGate.tooltips.inactiveColor=The g
 placements.entities.SpringCollab2020/FlagSwitchGate.tooltips.activeColor=The gate icon colour when triggered, but the group is not complete yet.
 placements.entities.SpringCollab2020/FlagSwitchGate.tooltips.finishColor=The gate icon colour when the group is complete.
 placements.entities.SpringCollab2020/FlagSwitchGate.tooltips.sprite=The texture for the gate block.
+
+# Grouped Trigger Spikes
+placements.entities.SpringCollab2020/GroupedTriggerSpikesUp.tooltips.type=Changes the visual appearance of the spikes.
+placements.entities.SpringCollab2020/GroupedTriggerSpikesDown.tooltips.type=Changes the visual appearance of the spikes.
+placements.entities.SpringCollab2020/GroupedTriggerSpikesLeft.tooltips.type=Changes the visual appearance of the spikes.
+placements.entities.SpringCollab2020/GroupedTriggerSpikesRight.tooltips.type=Changes the visual appearance of the spikes.
