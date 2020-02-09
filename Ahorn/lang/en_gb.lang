@@ -106,3 +106,6 @@ placements.entities.SpringCollab2020/GroupedTriggerSpikesRight.tooltips.type=Cha
 placements.entities.SpringCollab2020/MoveBlockCustomSpeed.tooltips.canSteer=Determines whether the move block can be moved by the player.
 placements.entities.SpringCollab2020/MoveBlockCustomSpeed.tooltips.direction=Determines the direction the move block moves in upon activation.
 placements.entities.SpringCollab2020/MoveBlockCustomSpeed.tooltips.moveSpeed=The block speed, in pixels per second. Vanilla speeds are 60 for "slow", 75 for "fast".
+
+# Disable Ice Physics Trigger
+placements.triggers.SpringCollab2020/DisableIcePhysicsTrigger.tooltips.disableIcePhysics=Check to disable ice physics when entering the trigger. Uncheck to enable them again.
