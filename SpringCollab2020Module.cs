@@ -25,6 +25,7 @@ namespace Celeste.Mod.SpringCollab2020 {
             BubbleReturnBerry.Load();
             SidewaysJumpThru.Load();
             CrystalBombDetonatorRenderer.Load();
+            FlagTouchSwitch.Load();
             DisableIcePhysicsTrigger.Load();
         }
 
@@ -45,6 +46,7 @@ namespace Celeste.Mod.SpringCollab2020 {
             BubbleReturnBerry.Unload();
             SidewaysJumpThru.Unload();
             CrystalBombDetonatorRenderer.Unload();
+            FlagTouchSwitch.Unload();
             DisableIcePhysicsTrigger.Unload();
         }
 
