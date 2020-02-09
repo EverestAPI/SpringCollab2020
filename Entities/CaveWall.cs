@@ -164,11 +164,27 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
 
         private void OnTransitionInBegin() {
             Level level = SceneAs<Level>();
-            if (level.PreviousBounds.HasValue && Collide.CheckRect(this, level.PreviousBounds.Value)) {
-                transitionFade = true;
-                tiles.Alpha = 0f;
-            } else {
-                transitionFade = false;
+            if (MasterOfGroup) {
+                Player player = null;
+                foreach (CaveWall entity in Group) {
+                    if (level.PreviousBounds.HasValue && Collide.CheckRect(entity, level.PreviousBounds.Value)) {
+                        entity.transitionFade = true;
+                        entity.tiles.Alpha = 0f;
+                    } else {
+                        entity.transitionFade = false;
+                    }
+                    player = entity.CollideFirst<Player>();
+                    if (player != null) {
+                        break;
+                    }
+                }
+
+                if (player != null) {
+                    foreach (CaveWall entity in Group) {
+                        entity.transitionFade = false;
+                        entity.tiles.Alpha = 0f;
+                    }
+                }
             }
         }
 

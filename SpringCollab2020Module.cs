@@ -21,6 +21,7 @@ namespace Celeste.Mod.SpringCollab2020 {
             BubbleReturnBerry.Load();
             SidewaysJumpThru.Load();
             CrystalBombDetonatorRenderer.Load();
+            FlagTouchSwitch.Load();
         }
 
         public override void LoadContent(bool firstLoad) {
@@ -40,6 +41,7 @@ namespace Celeste.Mod.SpringCollab2020 {
             BubbleReturnBerry.Unload();
             SidewaysJumpThru.Unload();
             CrystalBombDetonatorRenderer.Unload();
+            FlagTouchSwitch.Unload();
         }
 
         public override void PrepareMapDataProcessors(MapDataFixup context) {
