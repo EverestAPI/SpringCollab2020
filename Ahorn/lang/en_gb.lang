@@ -109,3 +109,6 @@ placements.entities.SpringCollab2020/MoveBlockCustomSpeed.tooltips.moveSpeed=The
 
 # Disable Ice Physics Trigger
 placements.triggers.SpringCollab2020/DisableIcePhysicsTrigger.tooltips.disableIcePhysics=Check to disable ice physics when entering the trigger. Uncheck to enable them again.
+
+# No Dash Refill Spring
+placements.entities.SpringCollab2020/NoDashRefillSpring.tooltips.playerCanUse=Determines whether the player is able to interact with the spring.
