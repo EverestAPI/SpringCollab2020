@@ -2,8 +2,10 @@
 using Microsoft.Xna.Framework;
 using Monocle;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -20,6 +22,32 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
     [CustomEntity("SpringCollab2020/FlagTouchSwitch")]
     [Tracked]
     class FlagTouchSwitch : Entity {
+        private static FieldInfo seekerPushRadius = typeof(Seeker).GetField("pushRadius", BindingFlags.NonPublic | BindingFlags.Instance);
+        private static FieldInfo seekerPhysicsHitbox = typeof(Seeker).GetField("physicsHitbox", BindingFlags.NonPublic | BindingFlags.Instance);
+
+        public static void Load() {
+            On.Celeste.Seeker.RegenerateCoroutine += onSeekerRegenerateCoroutine;
+        }
+
+        public static void Unload() {
+            On.Celeste.Seeker.RegenerateCoroutine -= onSeekerRegenerateCoroutine;
+        }
+
+        private static IEnumerator onSeekerRegenerateCoroutine(On.Celeste.Seeker.orig_RegenerateCoroutine orig, Seeker self) {
+            IEnumerator origEnum = orig(self);
+            while (origEnum.MoveNext()) {
+                yield return origEnum.Current;
+            }
+
+            // make the seeker check for flag touch switches as well.
+            self.Collider = (Collider) seekerPushRadius.GetValue(self);
+            foreach (FlagTouchSwitch touchSwitch in self.Scene.Tracker.GetEntities<FlagTouchSwitch>()) {
+                if (self.CollideCheck(touchSwitch)) {
+                    touchSwitch.turnOn();
+                }
+            }
+            self.Collider = (Collider) seekerPhysicsHitbox.GetValue(self);
+        }
 
         private ParticleType P_RecoloredFire;
 
