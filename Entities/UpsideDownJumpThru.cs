@@ -17,6 +17,7 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
 
         private static FieldInfo actorMovementCounter = typeof(Actor).GetField("movementCounter", BindingFlags.Instance | BindingFlags.NonPublic);
         private static FieldInfo playerVarJumpTimer = typeof(Player).GetField("varJumpTimer", BindingFlags.Instance | BindingFlags.NonPublic);
+        private static FieldInfo playerOnCollideV = typeof(Player).GetField("onCollideV", BindingFlags.Instance | BindingFlags.NonPublic);
 
         private static ILHook playerOrigUpdateHook;
 
@@ -28,7 +29,7 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
             }
 
             // fix player specific behavior allowing them to go through upside-down jumpthrus.
-            On.Celeste.Player.OnCollideV += onPlayerOnCollideV;
+            On.Celeste.Player.ctor += onPlayerConstructor;
 
             // block player if they try to climb past an upside-down jumpthru.
             IL.Celeste.Player.ClimbUpdate += patchPlayerClimbUpdate;
@@ -43,7 +44,7 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
             On.Celeste.Actor.MoveVExact -= onActorMoveVExact;
             On.Celeste.Platform.MoveVExactCollideSolids -= onPlatformMoveVExactCollideSolids;
 
-            On.Celeste.Player.OnCollideV -= onPlayerOnCollideV;
+            On.Celeste.Player.ctor -= onPlayerConstructor;
             IL.Celeste.Player.ClimbUpdate -= patchPlayerClimbUpdate;
 
             playerOrigUpdateHook?.Dispose();
@@ -164,19 +165,27 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
             return platform != null;
         }
 
-        private static void onPlayerOnCollideV(On.Celeste.Player.orig_OnCollideV orig, Player self, CollisionData data) {
-            // we just want to kill a piece of code that executes in these conditions (supposed to push the player left or right when hitting a wall angle).
-            if (self.StateMachine.State != 19 && self.StateMachine.State != 3 && self.StateMachine.State != 9 && self.Speed.Y < 0
-                && self.CollideCheckOutside<UpsideDownJumpThru>(self.Position - Vector2.UnitY)) {
+        private static void onPlayerConstructor(On.Celeste.Player.orig_ctor orig, Player self, Vector2 position, PlayerSpriteMode spriteMode) {
+            orig(self, position, spriteMode);
 
-                // kill the player's vertical speed.
-                self.Speed.Y = 0;
+            Collision originalOnCollideV = (Collision) playerOnCollideV.GetValue(self);
 
-                // reset varJumpTimer to prevent a weird "stuck on ceiling" effect.
-                playerVarJumpTimer.SetValue(self, 0);
-            }
+            Collision patchedOnCollideV = collisionData => {
+                // we just want to kill a piece of code that executes in these conditions (supposed to push the player left or right when hitting a wall angle).
+                if (self.StateMachine.State != 19 && self.StateMachine.State != 3 && self.StateMachine.State != 9 && self.Speed.Y < 0
+                    && self.CollideCheckOutside<UpsideDownJumpThru>(self.Position - Vector2.UnitY)) {
 
-            orig(self, data);
+                    // kill the player's vertical speed.
+                    self.Speed.Y = 0;
+
+                    // reset varJumpTimer to prevent a weird "stuck on ceiling" effect.
+                    playerVarJumpTimer.SetValue(self, 0);
+                }
+
+                originalOnCollideV(collisionData);
+            };
+
+            playerOnCollideV.SetValue(self, patchedOnCollideV);
         }
 
         private static void filterOutJumpThrusFromCollideChecks(ILContext il) {

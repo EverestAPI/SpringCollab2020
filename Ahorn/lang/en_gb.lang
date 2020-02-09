@@ -90,3 +90,22 @@ placements.entities.SpringCollab2020/FlagSwitchGate.tooltips.inactiveColor=The g
 placements.entities.SpringCollab2020/FlagSwitchGate.tooltips.activeColor=The gate icon colour when triggered, but the group is not complete yet.
 placements.entities.SpringCollab2020/FlagSwitchGate.tooltips.finishColor=The gate icon colour when the group is complete.
 placements.entities.SpringCollab2020/FlagSwitchGate.tooltips.sprite=The texture for the gate block.
+
+# Instant Falling Block
+placements.entities.SpringCollab2020/InstantFallingBlock.tooltips.climbFall=After a delay, the block will physically fall down until it comes into contact with another block.
+placements.entities.SpringCollab2020/InstantFallingBlock.tooltips.tiletype=Changes the visual appearance of the falling block.
+placements.entities.SpringCollab2020/InstantFallingBlock.tooltips.behind=Whether the block should visually be further behind in the scene or not.
+
+# Grouped Trigger Spikes
+placements.entities.SpringCollab2020/GroupedTriggerSpikesUp.tooltips.type=Changes the visual appearance of the spikes.
+placements.entities.SpringCollab2020/GroupedTriggerSpikesDown.tooltips.type=Changes the visual appearance of the spikes.
+placements.entities.SpringCollab2020/GroupedTriggerSpikesLeft.tooltips.type=Changes the visual appearance of the spikes.
+placements.entities.SpringCollab2020/GroupedTriggerSpikesRight.tooltips.type=Changes the visual appearance of the spikes.
+
+# Move Block with Customizable Speed
+placements.entities.SpringCollab2020/MoveBlockCustomSpeed.tooltips.canSteer=Determines whether the move block can be moved by the player.
+placements.entities.SpringCollab2020/MoveBlockCustomSpeed.tooltips.direction=Determines the direction the move block moves in upon activation.
+placements.entities.SpringCollab2020/MoveBlockCustomSpeed.tooltips.moveSpeed=The block speed, in pixels per second. Vanilla speeds are 60 for "slow", 75 for "fast".
+
+# Disable Ice Physics Trigger
+placements.triggers.SpringCollab2020/DisableIcePhysicsTrigger.tooltips.disableIcePhysics=Check to disable ice physics when entering the trigger. Uncheck to enable them again.
