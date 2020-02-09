@@ -101,3 +101,8 @@ placements.entities.SpringCollab2020/GroupedTriggerSpikesUp.tooltips.type=Change
 placements.entities.SpringCollab2020/GroupedTriggerSpikesDown.tooltips.type=Changes the visual appearance of the spikes.
 placements.entities.SpringCollab2020/GroupedTriggerSpikesLeft.tooltips.type=Changes the visual appearance of the spikes.
 placements.entities.SpringCollab2020/GroupedTriggerSpikesRight.tooltips.type=Changes the visual appearance of the spikes.
+
+# Move Block with Customizable Speed
+placements.entities.SpringCollab2020/MoveBlockCustomSpeed.tooltips.canSteer=Determines whether the move block can be moved by the player.
+placements.entities.SpringCollab2020/MoveBlockCustomSpeed.tooltips.direction=Determines the direction the move block moves in upon activation.
+placements.entities.SpringCollab2020/MoveBlockCustomSpeed.tooltips.moveSpeed=The block speed, in pixels per second. Vanilla speeds are 60 for "slow", 75 for "fast".
