@@ -28,8 +28,10 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
                 On.Celeste.Platform.MoveVExactCollideSolids += onPlatformMoveVExactCollideSolids;
             }
 
-            // fix player specific behavior allowing them to go through upside-down jumpthrus.
-            On.Celeste.Player.ctor += onPlayerConstructor;
+            using (new DetourContext { After = { "*" } }) {
+                // fix player specific behavior allowing them to go through upside-down jumpthrus.
+                On.Celeste.Player.ctor += onPlayerConstructor;
+            }
 
             // block player if they try to climb past an upside-down jumpthru.
             IL.Celeste.Player.ClimbUpdate += patchPlayerClimbUpdate;
