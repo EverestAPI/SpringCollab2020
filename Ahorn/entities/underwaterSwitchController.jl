@@ -16,6 +16,6 @@ function Ahorn.selection(entity::UnderwaterSwitchController)
     return Ahorn.Rectangle(x - 12, y - 12, 24, 24)
 end
 
-Ahorn.render(ctx::Ahorn.Cairo.CairoContext, entity::UnderwaterSwitchController, room::Maple.Room) = Ahorn.drawImage(ctx, Ahorn.Assets.northernLights, -12, -12)
+Ahorn.render(ctx::Ahorn.Cairo.CairoContext, entity::UnderwaterSwitchController, room::Maple.Room) = Ahorn.drawSprite(ctx, "ahorn/SpringCollab2020/underwater_switch", 0, 0)
 
 end

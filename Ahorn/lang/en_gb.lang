@@ -92,4 +92,4 @@ placements.entities.SpringCollab2020/FlagSwitchGate.tooltips.finishColor=The gat
 placements.entities.SpringCollab2020/FlagSwitchGate.tooltips.sprite=The texture for the gate block.
 
 # Underwater Switch Controller
-placements.entities.SpringCollab2020/UnderwaterSwitchController.tooltips.flag=When this session flag is set, the whole room will be covered with water.
+placements.entities.SpringCollab2020/UnderwaterSwitchController.tooltips.flag=The session flag the controller is listening to. Activating this flag will flood the room with water, deactivating it will remove that water.
