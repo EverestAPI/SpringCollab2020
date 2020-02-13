@@ -1,10 +1,14 @@
 using Celeste.Mod.SpringCollab2020.Entities;
 using Celeste.Mod.SpringCollab2020.Triggers;
+using System;
 
 namespace Celeste.Mod.SpringCollab2020 {
     public class SpringCollab2020Module : EverestModule {
 
         public static SpringCollab2020Module Instance;
+
+        public override Type SessionType => typeof(SpringCollab2020Session);
+        public SpringCollab2020Session Session => (SpringCollab2020Session) _Session;
 
         public SpringCollab2020Module() {
             Instance = this;
@@ -21,6 +25,8 @@ namespace Celeste.Mod.SpringCollab2020 {
             BubbleReturnBerry.Load();
             SidewaysJumpThru.Load();
             CrystalBombDetonatorRenderer.Load();
+            FlagTouchSwitch.Load();
+            DisableIcePhysicsTrigger.Load();
         }
 
         public override void LoadContent(bool firstLoad) {
@@ -40,6 +46,8 @@ namespace Celeste.Mod.SpringCollab2020 {
             BubbleReturnBerry.Unload();
             SidewaysJumpThru.Unload();
             CrystalBombDetonatorRenderer.Unload();
+            FlagTouchSwitch.Unload();
+            DisableIcePhysicsTrigger.Unload();
         }
 
         public override void PrepareMapDataProcessors(MapDataFixup context) {
