@@ -112,3 +112,6 @@ placements.triggers.SpringCollab2020/DisableIcePhysicsTrigger.tooltips.disableIc
 
 # No Dash Refill Spring
 placements.entities.SpringCollab2020/NoDashRefillSpring.tooltips.playerCanUse=Determines whether the player is able to interact with the spring.
+
+# Underwater Switch Controller
+placements.entities.SpringCollab2020/UnderwaterSwitchController.tooltips.flag=The session flag the controller is listening to. Activating this flag will flood the room with water, deactivating it will remove that water.
