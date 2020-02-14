@@ -115,3 +115,15 @@ placements.entities.SpringCollab2020/NoDashRefillSpring.tooltips.playerCanUse=De
 
 # Underwater Switch Controller
 placements.entities.SpringCollab2020/UnderwaterSwitchController.tooltips.flag=The session flag the controller is listening to. Activating this flag will flood the room with water, deactivating it will remove that water.
+
+# Custom Bird Tutorial
+placements.entities.SpringCollab2020/CustomBirdTutorial.tooltips.birdId=An identifier for the bird. Used to tie the bird to its trigger if there are multiple birds in a same room.
+placements.entities.SpringCollab2020/CustomBirdTutorial.tooltips.info=The bubble "title". Can either be a dialog ID, or a path to a texture in the Gui atlas.
+placements.entities.SpringCollab2020/CustomBirdTutorial.tooltips.caw=Whether the bird should caw upon displaying the bubble.
+placements.entities.SpringCollab2020/CustomBirdTutorial.tooltips.faceLeft=Whether the bird should face left or right.
+placements.entities.SpringCollab2020/CustomBirdTutorial.tooltips.onlyOnce=If enabled, the bird won't respawn once it flew away, even if the player dies in the room.
+placements.entities.SpringCollab2020/CustomBirdTutorial.tooltips.controls=The controls to display in the bubble, separated by commas. Each part can be:\n- a path to a texture in the Gui atlas (for example "tinyarrow")\n- a direction: Down, DownRight, Right, UpRight, Up, UpLeft, Left, DownLeft\n- a button: Jump, Dash, Grab, Talk, ESC, Pause, MenuLeft, MenuRight, MenuUp, MenuDown, MenuConfirm, MenuCancel, MenuJournal, QuickRestart\n- a dialog ID, if you prefix it with "dialog:" (for example, "dialog:TUTORIAL_DREAMJUMP")\n- plain text
+
+# Custom Bird Tutorial Trigger
+placements.triggers.SpringCollab2020/CustomBirdTutorialTrigger.tooltips.birdId=The ID of the bird this trigger is controlling.
+placements.triggers.SpringCollab2020/CustomBirdTutorialTrigger.tooltips.showTutorial=If checked, the trigger will make the bird show the tutorial bubble. If unchecked, the trigger will make the bird fly away.
