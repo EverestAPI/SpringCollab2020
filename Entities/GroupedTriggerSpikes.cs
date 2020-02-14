@@ -1,9 +1,10 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Celeste.Mod.Entities;
+using Microsoft.Xna.Framework;
 using Monocle;
 using System;
 using System.Collections.Generic;
 
-namespace Celeste.Mod.Entities {
+namespace Celeste.Mod.SpringCollab2020.Entities {
     /// <summary>
     /// TriggerSpikes that all come out when leaving the group.
     /// </summary>
@@ -161,7 +162,7 @@ namespace Celeste.Mod.Entities {
 
         private void OnCollide(Player player) {
             GetPlayerCollideIndex(player, out int minIndex, out int maxIndex);
-            if (maxIndex < 0 || minIndex >= spikePositions.Length) {
+            if (minIndex < 0 || minIndex >= spikePositions.Length) {
                 return;
             }
 
