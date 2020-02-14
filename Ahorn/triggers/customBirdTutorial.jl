@@ -6,7 +6,7 @@ using ..Ahorn, Maple
     birdId::String="birdId", showTutorial::Bool=true)
 
 const placements = Ahorn.PlacementDict(
-    "Custom Bird Tutorial Trigger (Spring Collab 2020)" => Ahorn.EntityPlacement(
+    "Custom Bird Tutorial (Spring Collab 2020)" => Ahorn.EntityPlacement(
         CustomBirdTutorialTrigger,
         "rectangle"
     )
