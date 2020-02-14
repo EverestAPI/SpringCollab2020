@@ -14,16 +14,13 @@ const placements = Ahorn.PlacementDict(
 sprite = "characters/bird/crow00"
 
 function Ahorn.selection(entity::CustomBirdTutorial)
-    nodes = get(entity.data, "nodes", ())
     x, y = Ahorn.position(entity)
-    key = lowercase(get(entity.data, "mode", "Sleeping"))
     scaleX = get(entity.data, "faceLeft", true) ? -1 : 1
 
     return Ahorn.Rectangle[Ahorn.getSpriteRectangle(sprite, x, y, sx=scaleX, jx=0.5, jy=1.0)]
 end
 
 function Ahorn.render(ctx::Ahorn.Cairo.CairoContext, entity::CustomBirdTutorial, room::Maple.Room)
-    key = lowercase(get(entity.data, "mode", "Sleeping"))
     scaleX = get(entity.data, "faceLeft", true) ? -1 : 1
     
     Ahorn.drawSprite(ctx, sprite, 0, 0, sx=scaleX, jx=0.5, jy=1.0)

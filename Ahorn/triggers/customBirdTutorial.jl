@@ -9,7 +9,7 @@ const placements = Ahorn.PlacementDict(
     "Custom Bird Tutorial Trigger (Spring Collab 2020)" => Ahorn.EntityPlacement(
         CustomBirdTutorialTrigger,
         "rectangle"
-    ),
+    )
 )
 
 end
