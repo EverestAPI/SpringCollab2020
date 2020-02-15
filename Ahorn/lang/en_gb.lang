@@ -9,6 +9,11 @@ placements.entities.SpringCollab2020/returnBerry.tooltips.winged=Whether or not 
 placements.entities.SpringCollab2020/returnBerry.tooltips.order=The order within a checkpoint. When -1, Everest automatically sets it.
 placements.entities.SpringCollab2020/returnBerry.tooltips.checkpointID=The checkpoint the berry is located within. When -1, Everest automatically sets it.
 
+# Glass Berry
+
+placements.entities.SpringCollab2020/glassBerry.tooltips.order=The order within a checkpoint. When -1, Everest automatically sets it.
+placements.entities.SpringCollab2020/glassBerry.tooltips.checkpointID=The checkpoint the berry is located within. When -1, Everest automatically sets it.
+
 ﻿# Cave Wall
 placements.entities.SpringCollab2020/caveWall.tooltips.tiletype=Changes the visual appearance of the wall.
 
