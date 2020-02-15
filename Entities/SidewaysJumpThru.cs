@@ -85,6 +85,7 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
                 if (didCollide) {
                     Vector2 movementCounter = (Vector2) actorMovementCounter.GetValue(self);
                     movementCounter.X = 0f;
+                    actorMovementCounter.SetValue(self, movementCounter);
                     onCollide?.Invoke(new CollisionData {
                         Direction = Vector2.UnitX * moveDirection,
                         Moved = Vector2.UnitX * moveAmount,
