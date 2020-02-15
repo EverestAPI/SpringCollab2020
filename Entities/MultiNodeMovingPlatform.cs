@@ -62,7 +62,7 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
             base.Added(scene);
 
             // read the matching texture
-            if (overrideTexture == "default") {
+            if (string.IsNullOrEmpty(overrideTexture)) {
                 overrideTexture = AreaData.Get(scene).WoodPlatform;
             }
             MTexture platformTexture = GFX.Game["objects/woodPlatform/" + overrideTexture];
