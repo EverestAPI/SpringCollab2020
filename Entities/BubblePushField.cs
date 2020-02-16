@@ -30,8 +30,8 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
 
         public PushDirection Direction;
 
-        public ActivationMode activationMode;
-        public string flag;
+        private ActivationMode activationMode;
+        private string flag;
 
         public BubblePushField(EntityData data, Vector2 offset) : this(
             data.Position + offset,
