@@ -47,6 +47,8 @@ placements.entities.SpringCollab2020/bubblePushField.tooltips.strength=The stren
 placements.entities.SpringCollab2020/bubblePushField.tooltips.upwardStrength=How much the bubbles push the player up to compensate for gravity.
 placements.entities.SpringCollab2020/bubblePushField.tooltips.direction=The direction the bubbles push the player.
 placements.entities.SpringCollab2020/bubblePushField.tooltips.water=If the bubble field will create a Water entity to make its presence visible.
+placements.entities.SpringCollab2020/bubblePushField.tooltips.activationMode=Determines on which condition the bubble column activates.
+placements.entities.SpringCollab2020/bubblePushField.tooltips.flag=The session flag this bubble push field reacts to (when Activation Mode is "only if flag (in)active").
 
 # Upside Down Jump Thru
 placements.entities.SpringCollab2020/UpsideDownJumpThru.tooltips.texture=Changes the appearance of the platform.

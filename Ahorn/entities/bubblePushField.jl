@@ -2,7 +2,8 @@
 
 using ..Ahorn, Maple
 
-@mapdef Entity "SpringCollab2020/bubblePushField" BubblePushField(x::Integer, y::Integer, width::Integer=Maple.defaultBlockWidth, height::Integer=Maple.defaultBlockHeight, strength::Number=1, upwardStrength::Number=1, direction::String="Right", water::Bool=true)
+@mapdef Entity "SpringCollab2020/bubblePushField" BubblePushField(x::Integer, y::Integer, width::Integer=Maple.defaultBlockWidth, height::Integer=Maple.defaultBlockHeight,
+	strength::Number=1, upwardStrength::Number=1, direction::String="Right", water::Bool=true, flag::String="bubble_push_field", activationMode::String="Always")
 
 const placements = Ahorn.PlacementDict(
 	"Bubble Column (Spring Collab 2020)" => Ahorn.EntityPlacement(
@@ -12,7 +13,8 @@ const placements = Ahorn.PlacementDict(
 )
 
 Ahorn.editingOptions(entity::BubblePushField) = Dict{String,Any}(
-	"direction" => ["Up", "Down", "Left", "Right"]
+	"direction" => ["Up", "Down", "Left", "Right"],
+	"activationMode" => ["Always", "OnlyWhenFlagActive", "OnlyWhenFlagInactive"]
 )
 
 Ahorn.minimumSize(entity::BubblePushField) = 8, 8
