@@ -7,7 +7,7 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
     [CustomEntity("SpringCollab2020/MultiNodeMovingPlatform")]
     class MultiNodeMovingPlatform : JumpThru {
         private enum Mode {
-            BackAndForth, BackAndForthNoPause, Loop, TeleportBack
+            BackAndForth, BackAndForthNoPause, Loop, LoopNoPause, TeleportBack
         }
 
         // settings
@@ -16,8 +16,10 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
         private float pauseTime;
         private string overrideTexture;
         private Mode mode;
+        private bool easing;
 
         private MTexture[] textures;
+        private float[] nodePercentages;
 
         private string lastSfx;
         private SoundSource sfx;
@@ -39,8 +41,9 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
             // read attributes
             moveTime = data.Float("moveTime", 2f);
             pauseTime = data.Float("pauseTime");
-            overrideTexture = data.Attr("texture");
-            mode = data.Enum<Mode>("mode");
+            overrideTexture = data.Attr("texture", "default");
+            mode = data.Enum("mode", Mode.Loop);
+            easing = data.Bool("easing", true);
 
             // read nodes
             nodes = new Vector2[data.Nodes.Length + 1];
@@ -56,6 +59,30 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
                 "event:/game/03_resort/platform_horiz_left" : "event:/game/03_resort/platform_horiz_right";
 
             Add(new LightOcclude(0.2f));
+
+            if (mode == Mode.BackAndForthNoPause || mode == Mode.LoopNoPause) {
+                nodePercentages = new float[mode == Mode.LoopNoPause ? nodes.Length : nodes.Length - 1];
+                float totalDistance = 0;
+
+                // compute the distance between each node.
+                for (int i = 0; i < nodes.Length - 1; i++) {
+                    float distance = Vector2.Distance(nodes[i], nodes[i + 1]);
+                    nodePercentages[i] = totalDistance + distance;
+                    totalDistance += distance;
+                }
+
+                // if looping, also compute the distance between the last node and the first one.
+                if (mode == Mode.LoopNoPause) {
+                    float distance = Vector2.Distance(nodes[nodes.Length - 1], nodes[0]);
+                    nodePercentages[nodes.Length - 1] = totalDistance + distance;
+                    totalDistance += distance;
+                }
+
+                // turn them into percentages.
+                for (int i = 0; i < nodePercentages.Length; i++) {
+                    nodePercentages[i] /= totalDistance;
+                }
+            }
         }
 
         public override void Added(Scene scene) {
@@ -79,7 +106,7 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
                     scene.Add(new MovingPlatformLine(nodes[i] + lineOffset, nodes[i + 1] + lineOffset));
                 }
 
-                if (mode == Mode.Loop) {
+                if (mode == Mode.Loop || mode == Mode.LoopNoPause) {
                     scene.Add(new MovingPlatformLine(nodes[nodes.Length - 1] + lineOffset, nodes[0] + lineOffset));
                 }
             }
@@ -132,25 +159,45 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
                 // move forward...
                 percent = Calc.Approach(percent, 1f, Engine.DeltaTime / moveTime);
 
-                if (mode == Mode.BackAndForthNoPause) {
+                if (mode == Mode.BackAndForthNoPause || mode == Mode.LoopNoPause) {
+                    // NO PAUSE MODES: the "percentage" is the progress for the whole track, including all nodes.
+
                     if (percent == 1f) {
                         // we reached the last node.
-                        prevNodeIndex = direction == 1 ? nodes.Length - 1 : 0;
-                        MoveTo(nodes[prevNodeIndex] + new Vector2(0f, addY));
-
-                        // go the other way round now.
-                        direction = -direction;
+                        // pause, then start over.
                         percent = 0f;
                         pauseTimer = pauseTime;
+
+                        if (mode == Mode.BackAndForthNoPause) {
+                            // the current node we're stopped at is either the last node, or the first one, depending on the direction.
+                            prevNodeIndex = direction == 1 ? nodes.Length - 1 : 0;
+
+                            // go the other way round now.
+                            direction = -direction;
+                        }
+
+                        MoveTo(nodes[prevNodeIndex] + new Vector2(0f, addY));
                     } else {
-                        // compute global progress among all nodes, then lerp between the two right nodes.
-                        float progress = MathHelper.Lerp(0, nodes.Length - 1, Ease.SineInOut(direction == 1 ? percent : 1 - percent));
-                        int nodeIndex = (int) progress;
-                        MoveTo(Vector2.Lerp(nodes[nodeIndex], nodes[nodeIndex + 1], progress - nodeIndex) + new Vector2(0f, addY));
+                        // OTHER MODES: the "percentage" is the progress between the current node and the next one.
+
+                        float easedPercentage = applyEase(direction == 1 ? percent : 1 - percent);
+
+                        // for example, if node percentages are 0.2 and 1, and easedPercentage is 0.6, nextNodeIndex = 1.
+                        int nextNodeIndex = 0;
+                        while (nodePercentages[nextNodeIndex] < easedPercentage) {
+                            nextNodeIndex++;
+                        }
+
+                        // in this case, previousNodePercentage = 0.2 and nextNodePercentage = 1. ClampedMap will remap 0.6 to 0.5 since this is halfway between 0.2 and 1.
+                        float previousNodePercentage = nextNodeIndex == 0 ? 0 : nodePercentages[nextNodeIndex - 1];
+                        float nextNodePercentage = nodePercentages[nextNodeIndex];
+
+                        MoveTo(Vector2.Lerp(nodes[nextNodeIndex], nodes[(nextNodeIndex + 1) % nodes.Length],
+                            Calc.ClampedMap(easedPercentage, previousNodePercentage, nextNodePercentage)) + new Vector2(0f, addY));
                     }
                 } else {
                     // lerp between the previous node and the next one.
-                    MoveTo(Vector2.Lerp(nodes[prevNodeIndex], nodes[nextNodeIndex], Ease.SineInOut(percent)) + new Vector2(0f, addY));
+                    MoveTo(Vector2.Lerp(nodes[prevNodeIndex], nodes[nextNodeIndex], applyEase(percent)) + new Vector2(0f, addY));
 
                     if (percent == 1f) {
                         // reached the end. start waiting before moving again, and switch the target to the next node.
@@ -180,6 +227,17 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
                     }
                 }
             }
+        }
+
+        /// <summary>
+        /// Apply easing if the "easing" attribute is true, else don't modify the value.
+        /// </summary>
+        private float applyEase(float rawValue) {
+            if (easing) {
+                return Ease.SineInOut(rawValue);
+            }
+
+            return rawValue;
         }
     }
 }

@@ -131,5 +131,6 @@ placements.triggers.SpringCollab2020/CustomBirdTutorialTrigger.tooltips.showTuto
 # Multi-Node Moving Platform
 placements.entities.SpringCollab2020/MultiNodeMovingPlatform.tooltips.moveTime=The time the platform takes to move between two successive positions. Default is 2 seconds.
 placements.entities.SpringCollab2020/MultiNodeMovingPlatform.tooltips.pauseTime=The time the platform stops at each position. Default is 0 seconds.
-placements.entities.SpringCollab2020/MultiNodeMovingPlatform.tooltips.mode=Determines the way the platform will move between its nodes. For example, with 3 nodes A, B, C:\n- Loop: A > B > C > A\n- BackAndForth: A > B > C > B > A\n- BackAndForthNoPause: A > C > A (going through B)\n- TeleportBack: A > B > C, then the platform teleports to A upon reaching C
+placements.entities.SpringCollab2020/MultiNodeMovingPlatform.tooltips.mode=Determines the way the platform will move between its nodes. For example, with 3 nodes A, B, C:\n- Loop: A > B > C > A\n- LoopNoPause: A > A (going through B and C)\n- BackAndForth: A > B > C > B > A\n- BackAndForthNoPause: A > C > A (going through B)\n- TeleportBack: A > B > C, then the platform teleports to A upon reaching C
 placements.entities.SpringCollab2020/MultiNodeMovingPlatform.tooltips.texture=What texture to use for the platform.
+placements.entities.SpringCollab2020/MultiNodeMovingPlatform.tooltips.easing=Whether the platform movement should be eased (speedup/slowdown around each position).

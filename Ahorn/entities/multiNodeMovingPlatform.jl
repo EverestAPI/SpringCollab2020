@@ -2,12 +2,12 @@ module SpringCollab2020MultiNodeMovingPlatform
 
 using ..Ahorn, Maple
 
-@pardef MultiNodeMovingPlatform(x::Integer, y::Integer, width::Integer=Maple.defaultBlockWidth, mode::String="Loop", texture::String="default", moveTime::Number=2.0, pauseTime::Number=0.0) =
-    Entity("SpringCollab2020/MultiNodeMovingPlatform", x=x, y=y, nodes=Tuple{Int, Int}[], width=width, mode=mode, texture=texture, moveTime=moveTime, pauseTime=pauseTime)
+@pardef MultiNodeMovingPlatform(x::Integer, y::Integer, width::Integer=Maple.defaultBlockWidth, mode::String="Loop", texture::String="default", moveTime::Number=2.0, pauseTime::Number=0.0, easing::Bool=true) =
+    Entity("SpringCollab2020/MultiNodeMovingPlatform", x=x, y=y, nodes=Tuple{Int, Int}[], width=width, mode=mode, texture=texture, moveTime=moveTime, pauseTime=pauseTime, easing=easing)
 
 const placements = Ahorn.PlacementDict()
 
-const modes = ["Loop", "BackAndForth", "BackAndForthNoPause", "TeleportBack"]
+const modes = ["Loop", "LoopNoPause", "BackAndForth", "BackAndForthNoPause", "TeleportBack"]
 
 for texture in Maple.wood_platform_textures
     placements["Platform (Moving, Multi-Node, $(uppercasefirst(texture))) (Spring Collab 2020)"] = Ahorn.EntityPlacement(
@@ -115,7 +115,7 @@ function Ahorn.renderAbs(ctx::Ahorn.Cairo.CairoContext, entity::MultiNodeMovingP
         previousNodeX, previousNodeY = nodeX, nodeY
     end
 
-    if mode == "Loop"
+    if mode == "Loop" || mode == "LoopNoPause"
         renderConnection(ctx, previousNodeX, previousNodeY, firstNodeX, firstNodeY, width)
     end
 
@@ -139,7 +139,7 @@ function Ahorn.renderSelectedAbs(ctx::Ahorn.Cairo.CairoContext, entity::MultiNod
         previousNodeX, previousNodeY = nodeX, nodeY
     end
     
-    if mode == "Loop"
+    if mode == "Loop" || mode == "LoopNoPause"
         Ahorn.drawArrow(ctx, previousNodeX + width / 2, previousNodeY, firstNodeX + width / 2, firstNodeY, Ahorn.colors.selection_selected_fc, headLength=6)
     end
 end
