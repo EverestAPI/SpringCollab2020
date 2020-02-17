@@ -24,13 +24,16 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
     class FlagTouchSwitch : Entity {
         private static FieldInfo seekerPushRadius = typeof(Seeker).GetField("pushRadius", BindingFlags.NonPublic | BindingFlags.Instance);
         private static FieldInfo seekerPhysicsHitbox = typeof(Seeker).GetField("physicsHitbox", BindingFlags.NonPublic | BindingFlags.Instance);
+        private static FieldInfo pufferPushRadius = typeof(Puffer).GetField("pushRadius", BindingFlags.NonPublic | BindingFlags.Instance);
 
         public static void Load() {
             On.Celeste.Seeker.RegenerateCoroutine += onSeekerRegenerateCoroutine;
+            On.Celeste.Puffer.Explode += onPufferExplode;
         }
 
         public static void Unload() {
             On.Celeste.Seeker.RegenerateCoroutine -= onSeekerRegenerateCoroutine;
+            On.Celeste.Puffer.Explode -= onPufferExplode;
         }
 
         private static IEnumerator onSeekerRegenerateCoroutine(On.Celeste.Seeker.orig_RegenerateCoroutine orig, Seeker self) {
@@ -41,12 +44,26 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
 
             // make the seeker check for flag touch switches as well.
             self.Collider = (Collider) seekerPushRadius.GetValue(self);
+            turnOnTouchSwitchesCollidingWith(self);
+            self.Collider = (Collider) seekerPhysicsHitbox.GetValue(self);
+        }
+
+        private static void onPufferExplode(On.Celeste.Puffer.orig_Explode orig, Puffer self) {
+            orig(self);
+
+            // make the puffer check for flag touch switches as well.
+            Collider oldCollider = self.Collider;
+            self.Collider = (Collider) pufferPushRadius.GetValue(self);
+            turnOnTouchSwitchesCollidingWith(self);
+            self.Collider = oldCollider;
+        }
+
+        private static void turnOnTouchSwitchesCollidingWith(Entity self) {
             foreach (FlagTouchSwitch touchSwitch in self.Scene.Tracker.GetEntities<FlagTouchSwitch>()) {
                 if (self.CollideCheck(touchSwitch)) {
                     touchSwitch.turnOn();
                 }
             }
-            self.Collider = (Collider) seekerPhysicsHitbox.GetValue(self);
         }
 
         private ParticleType P_RecoloredFire;
