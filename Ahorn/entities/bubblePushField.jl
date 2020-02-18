@@ -3,7 +3,7 @@
 using ..Ahorn, Maple
 
 @mapdef Entity "SpringCollab2020/bubblePushField" BubblePushField(x::Integer, y::Integer, width::Integer=Maple.defaultBlockWidth, height::Integer=Maple.defaultBlockHeight,
-	strength::Number=1, upwardStrength::Number=1, direction::String="Right", water::Bool=true, flag::String="bubble_push_field", activationMode::String="Always")
+	strength::Number=1.0, upwardStrength::Number=1.0, direction::String="Right", water::Bool=true, flag::String="bubble_push_field", activationMode::String="Always")
 
 const placements = Ahorn.PlacementDict(
 	"Bubble Column (Spring Collab 2020)" => Ahorn.EntityPlacement(

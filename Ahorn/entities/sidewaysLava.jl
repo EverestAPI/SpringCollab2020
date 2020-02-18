@@ -2,7 +2,7 @@ module SpringCollab2020SidewaysLava
 
 using ..Ahorn, Maple
 
-@mapdef Entity "SpringCollab2020/SidewaysLava" SidewaysLava(x::Integer, y::Integer, intro::Bool=false, lavaMode::String="LeftToRight", speedMultiplier::Number=1)
+@mapdef Entity "SpringCollab2020/SidewaysLava" SidewaysLava(x::Integer, y::Integer, intro::Bool=false, lavaMode::String="LeftToRight", speedMultiplier::Number=1.0)
 
 const lavaModes = String["LeftToRight", "RightToLeft", "Sandwich"]
 
