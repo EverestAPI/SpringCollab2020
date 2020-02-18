@@ -136,3 +136,9 @@ placements.entities.SpringCollab2020/MultiNodeMovingPlatform.tooltips.pauseTime=
 placements.entities.SpringCollab2020/MultiNodeMovingPlatform.tooltips.mode=Determines the way the platform will move between its nodes. For example, with 3 nodes A, B, C:\n- Loop: A > B > C > A\n- LoopNoPause: A > A (going through B and C)\n- BackAndForth: A > B > C > B > A\n- BackAndForthNoPause: A > C > A (going through B)\n- TeleportBack: A > B > C, then the platform teleports to A upon reaching C
 placements.entities.SpringCollab2020/MultiNodeMovingPlatform.tooltips.texture=What texture to use for the platform.
 placements.entities.SpringCollab2020/MultiNodeMovingPlatform.tooltips.easing=Whether the platform movement should be eased (speedup/slowdown around each position).
+
+# Cassette-Friendly Strawberry
+placements.entities.SpringCollab2020/CassetteFriendlyStrawberry.tooltips.winged=The strawberry attempts to vertically rise offscreen when the player dashes.
+placements.entities.SpringCollab2020/CassetteFriendlyStrawberry.tooltips.checkpointID=Manually determine what checkpoint section strawberries are visually grouped up in, showing up on the start menu during gameplay and level select. Overrides Everest's automatic berry IDs. (Default= -1)
+placements.entities.SpringCollab2020/CassetteFriendlyStrawberry.tooltips.order=Manually determine what order strawberries are visually placed in on the start menu during gameplay and level select. Overrides Everest's automatic berry IDs. (Default= -1)
+placements.entities.SpringCollab2020/CassetteFriendlyStrawberry.tooltips.moon=Makes the strawberry render as a space berry.\nDoes not work with wings or nodes in the base game.
