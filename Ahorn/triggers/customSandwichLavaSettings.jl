@@ -3,7 +3,7 @@ module SpringCollab2020CustomSandwichLavaSettingsTrigger
 using ..Ahorn, Maple
 
 @mapdef Trigger "SpringCollab2020/CustomSandwichLavaSettingsTrigger" CustomSandwichLavaSettingsTrigger(x::Integer, y::Integer, width::Integer=Maple.defaultTriggerWidth, height::Integer=Maple.defaultTriggerHeight,
-    onlyOnce::Bool=false, direction::String="CoreModeBased", speed::Number=20)
+    onlyOnce::Bool=false, direction::String="CoreModeBased", speed::Number=20.0)
 
 const directions = String["AlwaysUp", "AlwaysDown", "CoreModeBased"]
 
