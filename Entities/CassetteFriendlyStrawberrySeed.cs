@@ -1,17 +1,16 @@
 ﻿using Microsoft.Xna.Framework;
 using Monocle;
-using System;
 using System.Linq;
-using System.Reflection;
 
 namespace Celeste.Mod.SpringCollab2020.Entities {
     /// <summary>
     /// Strawberry seeds that deal nicer with being hidden in cassette blocks.
-    /// They appear when the cassette block disappears, and keep a normal hitbox.
+    /// - Their depth is adjusted to appear in front of disabled cassette blocks, but behind enabled ones.
+    /// - They are not "attached", meaning they won't disappear when the cassette block disappears.
     /// </summary>
     class CassetteFriendlyStrawberrySeed : StrawberrySeed {
 
-        bool isInCassetteBlock;
+        private bool isInCassetteBlock;
 
         public CassetteFriendlyStrawberrySeed(Strawberry strawberry, Vector2 position, int index, bool ghost)
             : base(strawberry, position, index, ghost) { }
@@ -21,8 +20,8 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
                 // our seed is entirely inside a cassette block: look for the static mover.
                 foreach (Component component in this) {
                     if (component is StaticMover mover) {
-                        Remove(mover);
-                        Depth = 11; // just below active cassette blocks
+                        Remove(mover); // get rid of behavior like "disappear with cassette block" or "get double-size hitbox"
+                        Depth = 11; // display just below active cassette blocks
                         isInCassetteBlock = true;
                         break;
                     }

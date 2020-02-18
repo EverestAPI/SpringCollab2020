@@ -26,8 +26,6 @@ sprites = Dict{Tuple{Bool, Bool, Bool}, String}(
 
 seedSprite = "collectables/strawberry/seed00"
 
-fallback = "collectables/strawberry/normal00"
-
 Ahorn.nodeLimits(entity::CassetteFriendlyStrawberry) = 0, -1
 
 function Ahorn.selection(entity::CassetteFriendlyStrawberry)
