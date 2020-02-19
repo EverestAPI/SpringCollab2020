@@ -127,3 +127,6 @@ placements.entities.SpringCollab2020/CustomBirdTutorial.tooltips.controls=The co
 # Custom Bird Tutorial Trigger
 placements.triggers.SpringCollab2020/CustomBirdTutorialTrigger.tooltips.birdId=The ID of the bird this trigger is controlling.
 placements.triggers.SpringCollab2020/CustomBirdTutorialTrigger.tooltips.showTutorial=If checked, the trigger will make the bird show the tutorial bubble. If unchecked, the trigger will make the bird fly away.
+
+# Troll Strawberry
+placements.entities.SpringCollab2020/trollStrawberry.tooltips.winged=The strawberry attempts to vertically rise offscreen when the player dashes.
