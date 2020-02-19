@@ -1,6 +1,7 @@
 ﻿using Celeste.Mod.Entities;
 using Monocle;
 using Microsoft.Xna.Framework;
+using System.Reflection;
 
 namespace Celeste.Mod.SpringCollab2020.Triggers {
     [CustomEntity("SpringCollab2020/RemoveLightSourcesTrigger")]
@@ -29,17 +30,21 @@ namespace Celeste.Mod.SpringCollab2020.Triggers {
             EnableLightRender();
         }
 
-        private static void LightRendererHook(On.Celeste.LightingRenderer.orig_Render orig, LightingRenderer self, Scene scene) { }
-
         private static void BloomRendererHook(On.Celeste.BloomRenderer.orig_Apply orig, BloomRenderer self, VirtualRenderTarget target, Scene scene) { }
 
+        private static void LightHook(On.Celeste.VertexLight.orig_Update orig, VertexLight self) {
+            if (self.SceneAs<Level>().Session.GetFlag("lightsDisabled"))
+                self.Alpha = 0f;
+            orig(self);
+        }
+
         private static void EnableLightRender() {
-            On.Celeste.LightingRenderer.Render -= LightRendererHook;
+            On.Celeste.VertexLight.Update -= LightHook;
             On.Celeste.BloomRenderer.Apply -= BloomRendererHook;
         }
 
         private static void DisableLightRender() {
-            On.Celeste.LightingRenderer.Render += LightRendererHook;
+            On.Celeste.VertexLight.Update += LightHook;
             On.Celeste.BloomRenderer.Apply += BloomRendererHook;
         }
 
