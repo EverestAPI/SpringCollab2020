@@ -54,6 +54,8 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
         }
 
         static bool Platform_MoveHCollideSolids(On.Celeste.Platform.orig_MoveHCollideSolids orig, Platform self, float moveH, bool thruDashBlocks, Action<Vector2, Vector2, Platform> onCollide) {
+            if (self.Scene == null || self.Scene.Tracker == null)
+                return orig(self, moveH, thruDashBlocks, onCollide);
             bool barrierWasCollidable = self.Scene.Tracker.GetEntity<MoveBlockBarrier>()?.Collidable ?? false;
             if (self is MoveBlock) {
                 foreach (Entity barrier in self.Scene.Tracker.GetEntities<MoveBlockBarrier>()) {
@@ -72,6 +74,8 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
         }
 
         static bool Platform_MoveVCollideSolids(On.Celeste.Platform.orig_MoveVCollideSolids orig, Platform self, float moveV, bool thruDashBlocks, Action<Vector2, Vector2, Platform> onCollide) {
+            if (self.Scene == null || self.Scene.Tracker == null)
+                return orig(self, moveV, thruDashBlocks, onCollide);
             bool barrierWasCollidable = self.Scene.Tracker.GetEntity<MoveBlockBarrier>()?.Collidable ?? false;
             if (self is MoveBlock) {
                 foreach (Entity barrier in self.Scene.Tracker.GetEntities<MoveBlockBarrier>()) {
@@ -91,6 +95,8 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
 
 
         static bool Actor_MoveHExact(On.Celeste.Actor.orig_MoveHExact orig, Actor self, int moveH, Collision onCollide, Solid pusher) {
+            if (self.Scene == null || self.Scene.Tracker == null)
+                return orig(self, moveH, onCollide, pusher);
             bool barrierWasCollidable = self.Scene.Tracker.GetEntity<MoveBlockBarrier>()?.Collidable ?? false;
             foreach (Entity barrier in self.Scene.Tracker.GetEntities<MoveBlockBarrier>()) {
                 barrier.Collidable = false;
@@ -106,6 +112,8 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
         }
 
         static bool Actor_MoveVExact(On.Celeste.Actor.orig_MoveVExact orig, Actor self, int moveV, Collision onCollide, Solid pusher) {
+            if (self.Scene == null || self.Scene.Tracker == null)
+                return orig(self, moveV, onCollide, pusher);
             bool barrierWasCollidable = self.Scene.Tracker.GetEntity<MoveBlockBarrier>()?.Collidable ?? false;
             foreach (Entity barrier in self.Scene.Tracker.GetEntities<MoveBlockBarrier>()) {
                 barrier.Collidable = false;
@@ -122,6 +130,8 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
 
         // Make the barrier temporarily collidable while checking MoveBlock collisions
         static bool MoveBlock_MoveCheck(On.Celeste.MoveBlock.orig_MoveCheck orig, MoveBlock self, Vector2 speed) {
+            if (self.Scene == null || self.Scene.Tracker == null)
+                return orig(self, speed);
             foreach (Entity barrier in self.Scene.Tracker.GetEntities<MoveBlockBarrier>()) {
                 barrier.Collidable = true;
             }
