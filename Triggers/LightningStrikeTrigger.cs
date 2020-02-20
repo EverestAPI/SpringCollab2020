@@ -8,7 +8,7 @@ using System.Collections;
 namespace Celeste.Mod.SpringCollab2020.Triggers {
     [CustomEntity("SpringCollab2020/LightningStrikeTrigger")]
     class LightningStrikeTrigger : Trigger {
-        public bool Activated { get; private set;
+        public bool Activated { get; private set; }
 
         private float PlayerOffset;
 
