@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework;
 using Monocle;
 using Celeste.Mod.Entities;
 using System.Reflection;
+using System;
 
 /*
  * Safe Respawn Crumble (Spring Collab 2020)
@@ -45,7 +46,7 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
                 outlineTiles.Add(toDraw);
             } else {
                 // Select left, middle, or right
-                for (int tile = 0; (float)tile < base.Width; tile += 8) {
+                for (int tile = 0; (float) tile < base.Width; tile += 8) {
                     int tileTex;
                     if (tile == 0)
                         tileTex = 0;
@@ -92,7 +93,7 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
         }
 
         private IEnumerator Sequence() {
-            for (;;) {
+            for (; ; ) {
                 // Wait until activated
                 Collidable = false;
                 while (!activated)
@@ -153,18 +154,23 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
 
         // Bubble and player detection hooks
         public static void Load() {
-            On.Celeste.Player.CassetteFlyEnd += SafeActivatorCasetteFly;
+            On.Celeste.Player.CassetteFlyCoroutine += SafeActivatorCassetteFly;
             On.Celeste.Player.IntroRespawnBegin += SafeActivatorRespawn;
         }
+
         public static void Unload() {
-            On.Celeste.Player.CassetteFlyEnd -= SafeActivatorCasetteFly;
+            On.Celeste.Player.CassetteFlyCoroutine -= SafeActivatorCassetteFly;
             On.Celeste.Player.IntroRespawnBegin -= SafeActivatorRespawn;
         }
 
-        private static void SafeActivatorCasetteFly(On.Celeste.Player.orig_CassetteFlyEnd orig, Player self) {
-            orig(self);
+        private static IEnumerator SafeActivatorCassetteFly(On.Celeste.Player.orig_CassetteFlyCoroutine orig, Player self) {
+            IEnumerator origEnum = orig(self);
+            while (origEnum.MoveNext())
+                yield return origEnum.Current;
+
             SafeActivate(self, false);
         }
+
         private static void SafeActivatorRespawn(On.Celeste.Player.orig_IntroRespawnBegin orig, Player self) {
             orig(self);
             SafeActivate(self, true);

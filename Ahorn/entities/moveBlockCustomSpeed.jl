@@ -3,7 +3,7 @@
 using ..Ahorn, Maple
 
 @mapdef Entity "SpringCollab2020/MoveBlockCustomSpeed" MoveBlockCustomSpeed(x::Integer, y::Integer, width::Integer=Maple.defaultBlockWidth, height::Integer=Maple.defaultBlockHeight,
-    direction::String="Up", canSteer::Bool=false, moveSpeed::Number=60)
+    direction::String="Up", canSteer::Bool=false, moveSpeed::Number=60.0)
 
 const placements = Ahorn.PlacementDict()
 

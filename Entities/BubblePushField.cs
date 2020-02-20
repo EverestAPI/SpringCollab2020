@@ -7,6 +7,10 @@ using Monocle;
 namespace Celeste.Mod.SpringCollab2020.Entities {
     [CustomEntity("SpringCollab2020/bubblePushField")]
     class BubblePushField : Entity {
+        public enum ActivationMode {
+            Always, OnlyWhenFlagActive, OnlyWhenFlagInactive
+        }
+
         public float Strength;
 
         public float UpwardStrength;
@@ -26,6 +30,9 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
 
         public PushDirection Direction;
 
+        private ActivationMode activationMode;
+        private string flag;
+
         public BubblePushField(EntityData data, Vector2 offset) : this(
             data.Position + offset,
             data.Width,
@@ -33,14 +40,18 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
             data.Float("strength", 1f),
             data.Float("upwardStrength", 1f),
             data.Attr("direction", "right"),
-            data.Bool("water", true)
+            data.Bool("water", true),
+            data.Enum("activationMode", ActivationMode.Always),
+            data.Attr("flag", "bubble_push_field")
             ) { }
 
-        public BubblePushField(Vector2 position, int width, int height, float strength, float upwardStrength, string direction, bool water) {
+        public BubblePushField(Vector2 position, int width, int height, float strength, float upwardStrength, string direction, bool water, ActivationMode activationMode, string flag) {
             Position = position;
             Strength = strength;
             UpwardStrength = upwardStrength;
             _water = water;
+            this.activationMode = activationMode;
+            this.flag = flag;
 
             Rand = new Random();
 
@@ -69,6 +80,14 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
 
         public override void Update() {
             base.Update();
+
+            Session session = SceneAs<Level>().Session;
+            if ((activationMode == ActivationMode.OnlyWhenFlagActive && !session.GetFlag(flag)) 
+                || (activationMode == ActivationMode.OnlyWhenFlagInactive && session.GetFlag(flag))) {
+
+                // the bubble push field is currently turned off by a session flag.
+                return;
+            }
 
             FramesSinceSpawn++;
             if (FramesSinceSpawn == SpawnFrame) {

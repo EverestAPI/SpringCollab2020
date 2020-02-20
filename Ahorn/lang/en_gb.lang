@@ -1,13 +1,26 @@
 ﻿# Diagonal Winged Strawberry
-
 placements.entities.SpringCollab2020/diagonalWingedStrawberry.tooltips.order=The order within a checkpoint. When -1, Everest automatically sets it.
 placements.entities.SpringCollab2020/diagonalWingedStrawberry.tooltips.checkpointID=The checkpoint the berry is located within. When -1, Everest automatically sets it.
+
+# Bubble Return Strawberry
+placements.entities.SpringCollab2020/returnBerry.tooltips.winged=Flies away upon dashing.
+placements.entities.SpringCollab2020/returnBerry.tooltips.checkpointID=Manually determine what checkpoint section strawberries are visually grouped up in, showing up on the start menu during gameplay and level select. Overrides Everest's automatic berry IDs. (Default = -1)
+placements.entities.SpringCollab2020/returnBerry.tooltips.order=Manually determine what order strawberries are visually placed in on the start menu during gameplay and level select. Overrides Everest's automatic berry IDs. (Default = -1)
+
+# Glass Berry
+placements.entities.SpringCollab2020/glassBerry.tooltips.checkpointID=Manually determine what checkpoint section strawberries are visually grouped up in, showing up on the start menu during gameplay and level select. Overrides Everest's automatic berry IDs. (Default = -1)
+placements.entities.SpringCollab2020/glassBerry.tooltips.order=Manually determine what order strawberries are visually placed in on the start menu during gameplay and level select. Overrides Everest's automatic berry IDs. (Default = -1)
+
+# Lightning Dash Switch
+placements.entities.SpringCollab2020/LightningDashSwitch.tooltips.side=Which direction the switch is facing.
+placements.entities.SpringCollab2020/LightningDashSwitch.tooltips.sprite=Changes the visual appearance of the switch.
+placements.entities.SpringCollab2020/LightningDashSwitch.tooltips.persistent=Whether or not the switch will stay pressed upon leaving the room.
+
 
 ﻿# Cave Wall
 placements.entities.SpringCollab2020/caveWall.tooltips.tiletype=Changes the visual appearance of the wall.
 
 # Variable Crumble Blocks
-
 placements.entities.SpringCollab2020/variableCrumbleBlock.tooltips.texture=The texture of the blocks that are crumbling.2
 placements.entities.SpringCollab2020/variableCrumbleBlock.tooltips.timer=How long the blocks will shake for before falling.
 
@@ -47,6 +60,8 @@ placements.entities.SpringCollab2020/bubblePushField.tooltips.strength=The stren
 placements.entities.SpringCollab2020/bubblePushField.tooltips.upwardStrength=How much the bubbles push the player up to compensate for gravity.
 placements.entities.SpringCollab2020/bubblePushField.tooltips.direction=The direction the bubbles push the player.
 placements.entities.SpringCollab2020/bubblePushField.tooltips.water=If the bubble field will create a Water entity to make its presence visible.
+placements.entities.SpringCollab2020/bubblePushField.tooltips.activationMode=Determines on which condition the bubble column activates.
+placements.entities.SpringCollab2020/bubblePushField.tooltips.flag=The session flag this bubble push field reacts to (when Activation Mode is "only if flag (in)active").
 
 # Upside Down Jump Thru
 placements.entities.SpringCollab2020/UpsideDownJumpThru.tooltips.texture=Changes the appearance of the platform.
@@ -130,3 +145,10 @@ placements.triggers.SpringCollab2020/CustomBirdTutorialTrigger.tooltips.showTuto
 
 # Troll Strawberry
 placements.entities.SpringCollab2020/trollStrawberry.tooltips.winged=The strawberry attempts to vertically rise offscreen when the player dashes.
+
+# Multi-Node Moving Platform
+placements.entities.SpringCollab2020/MultiNodeMovingPlatform.tooltips.moveTime=The time the platform takes to move between two successive positions. Default is 2 seconds.
+placements.entities.SpringCollab2020/MultiNodeMovingPlatform.tooltips.pauseTime=The time the platform stops at each position. Default is 0 seconds.
+placements.entities.SpringCollab2020/MultiNodeMovingPlatform.tooltips.mode=Determines the way the platform will move between its nodes. For example, with 3 nodes A, B, C:\n- Loop: A > B > C > A\n- LoopNoPause: A > A (going through B and C)\n- BackAndForth: A > B > C > B > A\n- BackAndForthNoPause: A > C > A (going through B)\n- TeleportBack: A > B > C, then the platform teleports to A upon reaching C
+placements.entities.SpringCollab2020/MultiNodeMovingPlatform.tooltips.texture=What texture to use for the platform.
+placements.entities.SpringCollab2020/MultiNodeMovingPlatform.tooltips.easing=Whether the platform movement should be eased (speedup/slowdown around each position).

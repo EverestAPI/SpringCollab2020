@@ -1,6 +1,7 @@
 ﻿using Celeste.Mod.Entities;
 using Microsoft.Xna.Framework;
 using Monocle;
+using MonoMod.RuntimeDetour;
 using System;
 using System.Collections;
 
@@ -13,11 +14,31 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
         }
 
         public static void Load() {
-            On.Celeste.Player.OnSquish += ModOnSquish;
+            using (new DetourContext { After = { "*" } }) {
+                // fix player specific behavior allowing them to go through upside-down jumpthrus.
+                On.Celeste.Player.ctor += onPlayerConstructor;
+            }
         }
 
         public static void Unload() {
-            On.Celeste.Player.OnSquish -= ModOnSquish;
+            On.Celeste.Player.ctor -= onPlayerConstructor;
+        }
+
+        private static void onPlayerConstructor(On.Celeste.Player.orig_ctor orig, Player self, Vector2 position, PlayerSpriteMode spriteMode) {
+            orig(self, position, spriteMode);
+
+            Collision originalSquishCallback = self.SquishCallback;
+
+            Collision patchedSquishCallback = collisionData => {
+                // State 21 is the state where the player is located within the Cassette Bubble.
+                // They shouldn't be squished by moving blocks inside of it, so we prevent that.
+                if (self.StateMachine.State == 21)
+                    return;
+
+                originalSquishCallback(collisionData);
+            };
+
+            self.SquishCallback = patchedSquishCallback;
         }
 
         public new void OnPlayer(Player player) {
@@ -27,15 +48,6 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
                 Add(new Coroutine(Return(player), true));
                 Collidable = false;
             }
-        }
-
-        private static void ModOnSquish(On.Celeste.Player.orig_OnSquish orig, Player player, CollisionData data) {
-            // State 21 is the state where the player is located within the Cassette Bubble.
-            // They shouldn't be squished by moving blocks inside of it, so we prevent that.
-            if (player.StateMachine.State == 21)
-                return;
-
-            orig(player, data);
         }
 
         private IEnumerator Return(Player player) {

@@ -3,7 +3,7 @@
 using ..Ahorn, Maple
 
 @mapdef Entity "SpringCollab2020/CustomSandwichLava" CustomSandwichLava(x::Integer, y::Integer, 
-    direction::String="CoreModeBased", speed::Number=20, sandwichGap::Number=160)
+    direction::String="CoreModeBased", speed::Number=20.0, sandwichGap::Number=160.0)
 
 const directions = String["AlwaysUp", "AlwaysDown", "CoreModeBased"]
 
