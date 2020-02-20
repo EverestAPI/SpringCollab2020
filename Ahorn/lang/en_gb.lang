@@ -1,13 +1,26 @@
 ﻿# Diagonal Winged Strawberry
-
 placements.entities.SpringCollab2020/diagonalWingedStrawberry.tooltips.order=The order within a checkpoint. When -1, Everest automatically sets it.
 placements.entities.SpringCollab2020/diagonalWingedStrawberry.tooltips.checkpointID=The checkpoint the berry is located within. When -1, Everest automatically sets it.
+
+# Bubble Return Strawberry
+placements.entities.SpringCollab2020/returnBerry.tooltips.winged=Flies away upon dashing.
+placements.entities.SpringCollab2020/returnBerry.tooltips.checkpointID=Manually determine what checkpoint section strawberries are visually grouped up in, showing up on the start menu during gameplay and level select. Overrides Everest's automatic berry IDs. (Default = -1)
+placements.entities.SpringCollab2020/returnBerry.tooltips.order=Manually determine what order strawberries are visually placed in on the start menu during gameplay and level select. Overrides Everest's automatic berry IDs. (Default = -1)
+
+# Glass Berry
+placements.entities.SpringCollab2020/glassBerry.tooltips.checkpointID=Manually determine what checkpoint section strawberries are visually grouped up in, showing up on the start menu during gameplay and level select. Overrides Everest's automatic berry IDs. (Default = -1)
+placements.entities.SpringCollab2020/glassBerry.tooltips.order=Manually determine what order strawberries are visually placed in on the start menu during gameplay and level select. Overrides Everest's automatic berry IDs. (Default = -1)
+
+# Lightning Dash Switch
+placements.entities.SpringCollab2020/LightningDashSwitch.tooltips.side=Which direction the switch is facing.
+placements.entities.SpringCollab2020/LightningDashSwitch.tooltips.sprite=Changes the visual appearance of the switch.
+placements.entities.SpringCollab2020/LightningDashSwitch.tooltips.persistent=Whether or not the switch will stay pressed upon leaving the room.
+
 
 ﻿# Cave Wall
 placements.entities.SpringCollab2020/caveWall.tooltips.tiletype=Changes the visual appearance of the wall.
 
 # Variable Crumble Blocks
-
 placements.entities.SpringCollab2020/variableCrumbleBlock.tooltips.texture=The texture of the blocks that are crumbling.2
 placements.entities.SpringCollab2020/variableCrumbleBlock.tooltips.timer=How long the blocks will shake for before falling.
 
