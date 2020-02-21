@@ -20,6 +20,13 @@ placements.entities.SpringCollab2020/LightningDashSwitch.tooltips.persistent=Whe
 ﻿# Cave Wall
 placements.entities.SpringCollab2020/caveWall.tooltips.tiletype=Changes the visual appearance of the wall.
 
+# Lightning Strike Trigger
+placements.triggers.SpringCollab2020/LightningStrikeTrigger.tooltips.playerOffset=The X offset of the lightning relative to the player's position.
+placements.triggers.SpringCollab2020/LightningStrikeTrigger.tooltips.seed=The seed for the randomizer which generates the lightning strike.
+placements.triggers.SpringCollab2020/LightningStrikeTrigger.tooltips.delay=The delay, in seconds, between the player entering the trigger and the appearance of the lightning strike.
+placements.triggers.SpringCollab2020/LightningStrikeTrigger.tooltips.rain=Upon lightning strike, rain will begin falling in the level.
+placements.triggers.SpringCollab2020/LightningStrikeTrigger.tooltips.flash=Upon lightning strike, the screen will flash white.
+
 # Variable Crumble Blocks
 placements.entities.SpringCollab2020/variableCrumbleBlock.tooltips.texture=The texture of the blocks that are crumbling.2
 placements.entities.SpringCollab2020/variableCrumbleBlock.tooltips.timer=How long the blocks will shake for before falling.
