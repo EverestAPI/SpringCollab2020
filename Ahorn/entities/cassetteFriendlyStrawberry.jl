@@ -33,7 +33,7 @@ function Ahorn.selection(entity::CassetteFriendlyStrawberry)
 
     nodes = get(entity.data, "nodes", ())
     moon = get(entity.data, "moon", false)
-    winged = get(entity.data, "winged", false) || entity.name == "memorialTextController"
+    winged = get(entity.data, "winged", false)
     hasPips = length(nodes) > 0
 
     sprite = sprites[(winged, hasPips, moon)]
@@ -64,7 +64,7 @@ function Ahorn.renderAbs(ctx::Ahorn.Cairo.CairoContext, entity::CassetteFriendly
 
     nodes = get(entity.data, "nodes", ())
     moon = get(entity.data, "moon", false)
-    winged = get(entity.data, "winged", false) || entity.name == "memorialTextController"
+    winged = get(entity.data, "winged", false)
     hasPips = length(nodes) > 0
 
     sprite = sprites[(winged, hasPips, moon)]
