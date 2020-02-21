@@ -8,6 +8,11 @@ namespace Celeste.Mod.SpringCollab2020 {
         public static List<List<Dictionary<string, List<EntityID>>>> FlagTouchSwitches = new List<List<Dictionary<string, List<EntityID>>>>();
         private string levelName;
 
+        // we want to match multi-room strawberry seeds with the strawberry that has the same name.
+        private Dictionary<string, List<BinaryPacker.Element>> multiRoomStrawberrySeedsByName = new Dictionary<string, List<BinaryPacker.Element>>();
+        private Dictionary<string, EntityID> multiRoomStrawberryIDsByName = new Dictionary<string, EntityID>();
+        private Dictionary<string, BinaryPacker.Element> multiRoomStrawberriesByName = new Dictionary<string, BinaryPacker.Element>();
+
         public override Dictionary<string, Action<BinaryPacker.Element>> Init() {
             return new Dictionary<string, Action<BinaryPacker.Element>> {
                 {
@@ -36,6 +41,31 @@ namespace Celeste.Mod.SpringCollab2020 {
                         // add this flag touch switch to the dictionary.
                         entityIDs.Add(new EntityID(levelName, flagTouchSwitch.AttrInt("id")));
                     }
+                },
+                {
+                    "entity:SpringCollab2020/MultiRoomStrawberrySeed", strawberrySeed => {
+                        // auto-attribute indices for seeds, and save them.
+                        string berryName = strawberrySeed.Attr("strawberryName");
+                        if (multiRoomStrawberrySeedsByName.ContainsKey(berryName)) {
+                            if (strawberrySeed.AttrInt("index") < 0) {
+                                strawberrySeed.SetAttr("index", multiRoomStrawberrySeedsByName[berryName].Count);
+                            }
+                            multiRoomStrawberrySeedsByName[berryName].Add(strawberrySeed);
+                        } else {
+                            if (strawberrySeed.AttrInt("index") < 0) {
+                                strawberrySeed.SetAttr("index", 0);
+                            }
+                            multiRoomStrawberrySeedsByName[berryName] = new List<BinaryPacker.Element>() { strawberrySeed };
+                        }
+                    }
+                },
+                {
+                    "entity:SpringCollab2020/MultiRoomStrawberry", strawberry => {
+                        // save the strawberry IDs.
+                        string berryName = strawberry.Attr("name");
+                        multiRoomStrawberryIDsByName[berryName] = new EntityID(levelName, strawberry.AttrInt("id"));
+                        multiRoomStrawberriesByName[berryName] = strawberry;
+                    }
                 }
             };
         }
@@ -55,7 +85,24 @@ namespace Celeste.Mod.SpringCollab2020 {
         }
 
         public override void End() {
-            // nothing required.
+            foreach (string strawberryName in multiRoomStrawberrySeedsByName.Keys) {
+                if (!multiRoomStrawberryIDsByName.ContainsKey(strawberryName)) {
+                    Logger.Log(LogLevel.Warn, "SpringCollab2020MapDataProcessor", $"Multi-room strawberry seeds with name {strawberryName} didn't match any multi-room strawberry");
+                } else {
+                    // give the strawberry ID to the seeds.
+                    EntityID strawberryID = multiRoomStrawberryIDsByName[strawberryName];
+                    foreach (BinaryPacker.Element strawberrySeed in multiRoomStrawberrySeedsByName[strawberryName]) {
+                        strawberrySeed.SetAttr("berryLevel", strawberryID.Level);
+                        strawberrySeed.SetAttr("berryID", strawberryID.ID);
+                    }
+
+                    // and give the expected seed count to the strawberry.
+                    multiRoomStrawberriesByName[strawberryName].SetAttr("seedCount", multiRoomStrawberrySeedsByName[strawberryName].Count);
+                }
+            }
+
+            multiRoomStrawberrySeedsByName.Clear();
+            multiRoomStrawberryIDsByName.Clear();
         }
     }
 }
