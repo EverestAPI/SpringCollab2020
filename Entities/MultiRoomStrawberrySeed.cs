@@ -1,18 +1,22 @@
 ﻿using Celeste.Mod.Entities;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Monocle;
 using System;
 using System.Reflection;
 
 namespace Celeste.Mod.SpringCollab2020.Entities {
     [CustomEntity("SpringCollab2020/MultiRoomStrawberrySeed")]
+    [Tracked]
     class MultiRoomStrawberrySeed : StrawberrySeed {
         public static void Load() {
             On.Celeste.Level.LoadLevel += onLoadLevel;
+            On.Celeste.LightingRenderer.BeforeRender += onLightingBeforeRender;
         }
 
         public static void Unload() {
             On.Celeste.Level.LoadLevel -= onLoadLevel;
+            On.Celeste.LightingRenderer.BeforeRender -= onLightingBeforeRender;
         }
 
         private static void onLoadLevel(On.Celeste.Level.orig_LoadLevel orig, Level self, Player.IntroTypes playerIntro, bool isFromLoader) {
@@ -34,6 +38,20 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
             }
         }
 
+        private static void onLightingBeforeRender(On.Celeste.LightingRenderer.orig_BeforeRender orig, LightingRenderer self, Scene scene) {
+            orig(self, scene);
+
+            Draw.SpriteBatch.GraphicsDevice.SetRenderTarget(GameplayBuffers.Light);
+            Draw.SpriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullNone, null, Matrix.Identity);
+            foreach (MultiRoomStrawberrySeed seed in scene.Tracker.GetEntities<MultiRoomStrawberrySeed>()) {
+                if (seed.cutoutTexture != null) {
+                    Draw.SpriteBatch.Draw(seed.cutoutTexture.Texture.Texture, seed.Position + seed.spriteObject.Position - (scene as Level).Camera.Position
+                        - new Vector2(seed.cutoutTexture.Width / 2, seed.cutoutTexture.Height / 2), Color.White);
+                }
+            }
+            Draw.SpriteBatch.End();
+        }
+
         private static FieldInfo seedFollower = typeof(StrawberrySeed).GetField("follower", BindingFlags.NonPublic | BindingFlags.Instance);
         private static FieldInfo seedCanLoseTimer = typeof(StrawberrySeed).GetField("canLoseTimer", BindingFlags.NonPublic | BindingFlags.Instance);
         private static FieldInfo seedSprite = typeof(StrawberrySeed).GetField("sprite", BindingFlags.NonPublic | BindingFlags.Instance);
@@ -48,10 +66,17 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
         private string sprite;
         private bool ghost;
 
-        public MultiRoomStrawberrySeed(Vector2 position, int index, bool ghost, string sprite, string ghostSprite) : base(null, position, index, ghost) {
+        private Sprite spriteObject;
+        private MTexture cutoutTexture;
+
+        public MultiRoomStrawberrySeed(Vector2 position, int index, bool ghost, string sprite, string ghostSprite, bool ignoreLighting) : base(null, position, index, ghost) {
             this.index = index;
             this.ghost = ghost;
             this.sprite = ghost ? ghostSprite : sprite;
+
+            if (ignoreLighting) {
+                cutoutTexture = GFX.Game["collectables/" + sprite + "_cutout"];
+            }
 
             foreach (Component component in this) {
                 if (component is PlayerCollider playerCollider) {
@@ -62,19 +87,21 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
 
         public MultiRoomStrawberrySeed(EntityData data, Vector2 offset) : this(data.Position + offset, data.Int("index"),
             SaveData.Instance.CheckStrawberry(new EntityID(data.Attr("berryLevel"), data.Int("berryID"))),
-            data.Attr("sprite", "strawberry/seed"), data.Attr("ghostSprite", "ghostberry/seed")) {
+            data.Attr("sprite", "strawberry/seed"), data.Attr("ghostSprite", "ghostberry/seed"), data.Bool("ignoreLighting")) {
 
             BerryID = new EntityID(data.Attr("berryLevel"), data.Int("berryID"));
         }
 
         private MultiRoomStrawberrySeed(Player player, Vector2 position, SpringCollab2020Session.MultiRoomStrawberrySeedInfo sessionSeedInfo)
-            : this(position, sessionSeedInfo.Index, SaveData.Instance.CheckStrawberry(sessionSeedInfo.BerryID), sessionSeedInfo.Sprite, sessionSeedInfo.Sprite) {
+            : this(position, sessionSeedInfo.Index, SaveData.Instance.CheckStrawberry(sessionSeedInfo.BerryID), sessionSeedInfo.Sprite, sessionSeedInfo.Sprite, sessionSeedInfo.IgnoreLighting) {
 
             BerryID = sessionSeedInfo.BerryID;
 
             // the seed is collected right away.
             this.player = player;
             spawnedAsFollower = true;
+
+            Add(new EffectCutout());
         }
 
         public override void Added(Scene scene) {
@@ -136,6 +163,9 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
                 Depth = -1000000;
                 AddTag(Tags.Persistent);
             }
+
+            // get a reference to the sprite. this will be used to "cut out" the lighting renderer.
+            spriteObject = (Sprite) seedSprite.GetValue(this);
         }
 
         private void OnPlayer(Player player) {
@@ -151,6 +181,7 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
             sessionSeedInfo.Index = index;
             sessionSeedInfo.BerryID = BerryID;
             sessionSeedInfo.Sprite = sprite;
+            sessionSeedInfo.IgnoreLighting = (cutoutTexture != null);
             SpringCollab2020Module.Instance.Session.CollectedMultiRoomStrawberrySeeds.Add(sessionSeedInfo);
         }
 

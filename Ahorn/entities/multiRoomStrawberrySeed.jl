@@ -3,7 +3,10 @@
 using ..Ahorn, Maple
 
 @mapdef Entity "SpringCollab2020/MultiRoomStrawberrySeed" MultiRoomStrawberrySeed(x::Integer, y::Integer,
-    strawberryName::String="multi_room_strawberry", sprite::String="strawberry/seed", ghostSprite::String="ghostberry/seed", index::Int=-1)
+    strawberryName::String="multi_room_strawberry", sprite::String="strawberry/seed", ghostSprite::String="ghostberry/seed", index::Int=-1, ignoreLighting::Bool=false)
+    
+const bundledSprites = String["strawberry/seed", "SpringCollab2020/miniberry/miniberry"]
+const bundledGhostSprites = String["ghostberry/seed", "SpringCollab2020/miniberry/ghostminiberry"]
 
 const placements = Ahorn.PlacementDict(
     "Multi-Room Strawberry Seed (Spring Collab 2020)" => Ahorn.EntityPlacement(
@@ -11,6 +14,11 @@ const placements = Ahorn.PlacementDict(
     )
 )
 
+
+Ahorn.editingOptions(entity::MultiRoomStrawberrySeed) = Dict{String,Any}(
+    "sprite" => bundledSprites,
+    "ghostSprite" => bundledGhostSprites
+)
 
 function Ahorn.selection(entity::MultiRoomStrawberrySeed) 
     x, y = Ahorn.position(entity)

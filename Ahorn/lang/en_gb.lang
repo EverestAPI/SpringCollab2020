@@ -146,3 +146,17 @@ placements.entities.SpringCollab2020/MultiNodeMovingPlatform.tooltips.pauseTime=
 placements.entities.SpringCollab2020/MultiNodeMovingPlatform.tooltips.mode=Determines the way the platform will move between its nodes. For example, with 3 nodes A, B, C:\n- Loop: A > B > C > A\n- LoopNoPause: A > A (going through B and C)\n- BackAndForth: A > B > C > B > A\n- BackAndForthNoPause: A > C > A (going through B)\n- TeleportBack: A > B > C, then the platform teleports to A upon reaching C
 placements.entities.SpringCollab2020/MultiNodeMovingPlatform.tooltips.texture=What texture to use for the platform.
 placements.entities.SpringCollab2020/MultiNodeMovingPlatform.tooltips.easing=Whether the platform movement should be eased (speedup/slowdown around each position).
+
+# Multi-Room Strawberry Seed
+placements.entities.SpringCollab2020/MultiRoomStrawberrySeed.tooltips.strawberryName=The name of the strawberry this seed belongs to.
+placements.entities.SpringCollab2020/MultiRoomStrawberrySeed.tooltips.sprite=The path to the sprite folder (relative to Graphics/Atlas/Gameplay/collectables).
+placements.entities.SpringCollab2020/MultiRoomStrawberrySeed.tooltips.ghostSprite=The path to the sprite folder (relative to Graphics/Atlas/Gameplay/collectables) used when the strawberry is already collected.
+placements.entities.SpringCollab2020/MultiRoomStrawberrySeed.tooltips.index=The order for this seed (determines the sound played on collection). If left to -1, Everest will auto-assign it.
+placements.entities.SpringCollab2020/MultiRoomStrawberrySeed.tooltips.ignoreLighting=If checked, the berry seed will appear bright at all times, even if the room is dark.
+
+# Multi-Room Strawberry
+placements.entities.SpringCollab2020/MultiRoomStrawberry.tooltips.name=The strawberry name, used to pair it with its seeds.
+placements.entities.SpringCollab2020/MultiRoomStrawberry.tooltips.winged=The strawberry attempts to vertically rise offscreen when the player dashes.
+placements.entities.SpringCollab2020/MultiRoomStrawberry.tooltips.checkpointID=Manually determine what checkpoint section strawberries are visually grouped up in, showing up on the start menu during gameplay and level select. Overrides Everest's automatic berry IDs. (Default= -1)
+placements.entities.SpringCollab2020/MultiRoomStrawberry.tooltips.order=Manually determine what order strawberries are visually placed in on the start menu during gameplay and level select. Overrides Everest's automatic berry IDs. (Default= -1)
+placements.entities.SpringCollab2020/MultiRoomStrawberry.tooltips.moon=Makes the strawberry render as a space berry.\nDoes not work with wings or nodes in the base game.

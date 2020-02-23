@@ -7,6 +7,7 @@ namespace Celeste.Mod.SpringCollab2020 {
             public int Index { get; set; }
             public EntityID BerryID { get; set; }
             public string Sprite { get; set; }
+            public bool IgnoreLighting { get; set; }
         }
 
         public bool IcePhysicsDisabled { get; set; } = false;
