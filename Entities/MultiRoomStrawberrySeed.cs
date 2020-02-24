@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Monocle;
+using MonoMod.Utils;
 using System;
 using System.Reflection;
 
@@ -52,9 +53,7 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
             Draw.SpriteBatch.End();
         }
 
-        private static FieldInfo seedFollower = typeof(StrawberrySeed).GetField("follower", BindingFlags.NonPublic | BindingFlags.Instance);
-        private static FieldInfo seedCanLoseTimer = typeof(StrawberrySeed).GetField("canLoseTimer", BindingFlags.NonPublic | BindingFlags.Instance);
-        private static FieldInfo seedSprite = typeof(StrawberrySeed).GetField("sprite", BindingFlags.NonPublic | BindingFlags.Instance);
+        private DynData<StrawberrySeed> selfStrawberrySeed;
 
         private int index;
         public EntityID BerryID;
@@ -70,6 +69,8 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
         private MTexture cutoutTexture;
 
         public MultiRoomStrawberrySeed(Vector2 position, int index, bool ghost, string sprite, string ghostSprite, bool ignoreLighting) : base(null, position, index, ghost) {
+            selfStrawberrySeed = new DynData<StrawberrySeed>(this);
+
             this.index = index;
             this.ghost = ghost;
             this.sprite = ghost ? ghostSprite : sprite;
@@ -128,7 +129,7 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
 
             if ((ghost && sprite != "ghostberry/seed") || (!ghost && sprite != "strawberry/seed")) {
                 // the sprite is non-default. replace it.
-                Sprite vanillaSprite = (Sprite) seedSprite.GetValue(this);
+                Sprite vanillaSprite = selfStrawberrySeed.Get<Sprite>("sprite");
 
                 // build the new sprite.
                 MTexture frame0 = GFX.Game["collectables/" + sprite + "00"];
@@ -153,11 +154,11 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
                 // and replace it for good
                 Remove(vanillaSprite);
                 Add(modSprite);
-                seedSprite.SetValue(this, modSprite);
+                selfStrawberrySeed["sprite"] = modSprite;
             }
 
             if (spawnedAsFollower) {
-                player.Leader.GainFollower((Follower) seedFollower.GetValue(this));
+                player.Leader.GainFollower(selfStrawberrySeed.Get<Follower>("follower"));
                 canLoseTimerMirror = 0.25f;
                 Collidable = false;
                 Depth = -1000000;
@@ -165,12 +166,12 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
             }
 
             // get a reference to the sprite. this will be used to "cut out" the lighting renderer.
-            spriteObject = (Sprite) seedSprite.GetValue(this);
+            spriteObject = selfStrawberrySeed.Get<Sprite>("sprite");
         }
 
         private void OnPlayer(Player player) {
             Audio.Play("event:/game/general/seed_touch", Position, "count", index);
-            player.Leader.GainFollower((Follower) seedFollower.GetValue(this));
+            player.Leader.GainFollower(selfStrawberrySeed.Get<Follower>("follower"));
             canLoseTimerMirror = 0.25f;
             Collidable = false;
             Depth = -1000000;
@@ -192,7 +193,7 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
             canLoseTimerMirror -= Engine.DeltaTime;
             if (canLoseTimerMirror < 1f) {
                 canLoseTimerMirror = 1000f;
-                seedCanLoseTimer.SetValue(this, 1000f);
+                selfStrawberrySeed["canLoseTimer"] = 1000f;
             }
         }
     }
