@@ -99,8 +99,6 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
             // the seed is collected right away.
             this.player = player;
             spawnedAsFollower = true;
-
-            Add(new EffectCutout());
         }
 
         public override void Added(Scene scene) {
