@@ -3,8 +3,6 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Monocle;
 using MonoMod.Utils;
-using System;
-using System.Reflection;
 
 namespace Celeste.Mod.SpringCollab2020.Entities {
     [CustomEntity("SpringCollab2020/MultiRoomStrawberrySeed")]
