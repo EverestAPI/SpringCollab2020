@@ -49,7 +49,12 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
                             seed.Strawberry = this;
                         }
 
-                        Scene.Add(new CSGEN_StrawberrySeeds(this));
+                        // build the "seed merging" cutscene with a transition listener to prevent it from breaking the game if the player transitions out before time is frozen.
+                        CutsceneEntity seedsCutscene = new CSGEN_StrawberrySeeds(this);
+                        seedsCutscene.Add(new TransitionListener() {
+                            OnOutBegin = () => SceneAs<Level>().SkipCutscene()
+                        });
+                        Scene.Add(seedsCutscene);
 
                         // also clean up the session, since the seeds are now gone.
                         List<SpringCollab2020Session.MultiRoomStrawberrySeedInfo> seedList = SpringCollab2020Module.Instance.Session.CollectedMultiRoomStrawberrySeeds;
