@@ -13,5 +13,7 @@ namespace Celeste.Mod.SpringCollab2020 {
         public bool IcePhysicsDisabled { get; set; } = false;
 
         public List<MultiRoomStrawberrySeedInfo> CollectedMultiRoomStrawberrySeeds { get; set; } = new List<MultiRoomStrawberrySeedInfo>();
+
+        public bool MadelineIsSilhouette { get; set; } = false;
     }
 }
