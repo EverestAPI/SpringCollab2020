@@ -4,10 +4,6 @@ using Mono.Cecil.Cil;
 using Monocle;
 using MonoMod.Cil;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Celeste.Mod.SpringCollab2020.Triggers {
     [CustomEntity("SpringCollab2020/MadelineSilhouetteTrigger")]
@@ -15,11 +11,13 @@ namespace Celeste.Mod.SpringCollab2020.Triggers {
         public static void Load() {
             On.Celeste.Player.Added += onPlayerAdded;
             IL.Celeste.Player.Render += patchPlayerRender;
+            On.Celeste.Player.ResetSprite += onPlayerResetSprite;
         }
 
         public static void Unload() {
             On.Celeste.Player.Added -= onPlayerAdded;
             IL.Celeste.Player.Render -= patchPlayerRender;
+            On.Celeste.Player.ResetSprite -= onPlayerResetSprite;
         }
 
         private static void onPlayerAdded(On.Celeste.Player.orig_Added orig, Player self, Scene scene) {
@@ -33,9 +31,18 @@ namespace Celeste.Mod.SpringCollab2020.Triggers {
         private static void patchPlayerRender(ILContext il) {
             ILCursor cursor = new ILCursor(il);
 
+            // jump to the usage of the Red color
+            if (cursor.TryGotoNext(instr => instr.MatchCall<Color>("get_Red"))) {
+                Logger.Log("SpringCollab2020/MadelineSilhouetteTrigger", $"Patching silhouette hair color at {cursor.Index} in IL code for Player.Render()");
+
+                // when Madeline blinks red, make the hair blink red.
+                cursor.Emit(OpCodes.Ldarg_0);
+                cursor.EmitDelegate<Action<Player>>(player => player.Hair.Color = Color.Red);
+            }
+
             // jump to the usage of the White color
             if (cursor.TryGotoNext(instr => instr.MatchCall<Color>("get_White"))) {
-                Logger.Log("SpringCollab2020/MadelineSilhouetteTrigger", $"Patching player color at {cursor.Index} in IL code for Player.Render()");
+                Logger.Log("SpringCollab2020/MadelineSilhouetteTrigger", $"Patching silhouette color at {cursor.Index} in IL code for Player.Render()");
 
                 // instead of calling Color.White, call getMadelineColor just below.
                 cursor.Emit(OpCodes.Ldarg_0);
@@ -63,6 +70,14 @@ namespace Celeste.Mod.SpringCollab2020.Triggers {
                 player.ResetSpriteNextFrame(targetSpriteMode);
             } else {
                 player.ResetSprite(targetSpriteMode);
+            }
+        }
+
+        private static void onPlayerResetSprite(On.Celeste.Player.orig_ResetSprite orig, Player self, PlayerSpriteMode mode) {
+            // filter all calls to ResetSprite when MadelineIsSilhouette is enabled, only the ones with Playback will go through.
+            // this prevents Madeline from turning back into normal when the Other Self variant is toggled.
+            if (!SpringCollab2020Module.Instance.Session.MadelineIsSilhouette || mode == PlayerSpriteMode.Playback) {
+                orig(self, mode);
             }
         }
 
