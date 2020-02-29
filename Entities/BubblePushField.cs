@@ -135,7 +135,7 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
 
                 if (mover.Entity is Player && mover.Entity.CollideCheck(this) && Strength > 0 && Direction != PushDirection.Down) {
                     Player tempPlayer = (Player) mover.Entity;
-                    if (tempPlayer.Holding != null)
+                    if (tempPlayer.Holding != null || tempPlayer.Dead)
                         return;
                      
                     mover.Move(new Vector2(0f, -UpwardStrength));
