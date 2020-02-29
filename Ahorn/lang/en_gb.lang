@@ -176,3 +176,6 @@ placements.entities.SpringCollab2020/MultiRoomStrawberry.tooltips.winged=The str
 placements.entities.SpringCollab2020/MultiRoomStrawberry.tooltips.checkpointID=Manually determine what checkpoint section strawberries are visually grouped up in, showing up on the start menu during gameplay and level select. Overrides Everest's automatic berry IDs. (Default= -1)
 placements.entities.SpringCollab2020/MultiRoomStrawberry.tooltips.order=Manually determine what order strawberries are visually placed in on the start menu during gameplay and level select. Overrides Everest's automatic berry IDs. (Default= -1)
 placements.entities.SpringCollab2020/MultiRoomStrawberry.tooltips.moon=Makes the strawberry render as a space berry.\nDoes not work with wings or nodes in the base game.
+
+# Madeline Silhouette Trigger
+placements.triggers.SpringCollab2020/MadelineSilhouetteTrigger.tooltips.enable=If checked, the trigger will turn Madeline into a silhouette. If unchecked, it will turn Madeline back to normal.
