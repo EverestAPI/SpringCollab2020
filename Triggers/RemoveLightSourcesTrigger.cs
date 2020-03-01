@@ -16,22 +16,20 @@ namespace Celeste.Mod.SpringCollab2020.Triggers {
 
         private static bool HooksEnabled = false;
 
-        public RemoveLightSourcesTrigger(EntityData data, Vector2 offset) : base(data, offset) {
+        public RemoveLightSourcesTrigger(EntityData data, Vector2 offset) : base(data, offset) { }
+
+        public static void Load() {
+            Everest.Events.Level.OnLoadLevel += LevelLoadHandler;
+            Everest.Events.Level.OnExit += OnExitHandler;
+
             LightsField = typeof(LightingRenderer).GetField("lights", BindingFlags.NonPublic | BindingFlags.Instance);
             BloomField = typeof(Payphone).GetField("bloom", BindingFlags.NonPublic | BindingFlags.Instance);
             LightField = typeof(Payphone).GetField("light", BindingFlags.NonPublic | BindingFlags.Instance);
         }
 
-        public static void Load() {
-            Everest.Events.Level.OnLoadLevel += LevelLoadHandler;
-            Everest.Events.Level.OnExit += OnExitHandler;
-            On.Celeste.Payphone.Update += PayphoneHook;
-        }
-
         public static void Unload() {
             Everest.Events.Level.OnLoadLevel -= LevelLoadHandler;
             Everest.Events.Level.OnExit -= OnExitHandler;
-            On.Celeste.Payphone.Update -= PayphoneHook;
         }
 
         private static void PayphoneHook(On.Celeste.Payphone.orig_Update orig, Payphone self) {
@@ -41,10 +39,8 @@ namespace Celeste.Mod.SpringCollab2020.Triggers {
             BloomPoint tempBloom = (BloomPoint) BloomField.GetValue(self);
             tempBloom.Visible = tempLight.Visible = !tempLight.Visible;
 
-            if(self.SceneAs<Level>().Session.GetFlag("lightsDisabled")) {
-                BloomField.SetValue(self, tempBloom);
-                LightField.SetValue(self, tempLight);
-            }
+            BloomField.SetValue(self, tempBloom);
+            LightField.SetValue(self, tempLight);
         }
 
         private static void LevelLoadHandler(Level loadedLevel, Player.IntroTypes playerIntro, bool isFromLoader) {
@@ -93,6 +89,7 @@ namespace Celeste.Mod.SpringCollab2020.Triggers {
             On.Celeste.LightingRenderer.BeforeRender -= LightHook;
             On.Celeste.BloomRenderer.Apply -= BloomRendererHook;
             On.Celeste.Level.TransitionTo -= TransitionHook;
+            On.Celeste.Payphone.Update -= PayphoneHook;
             HooksEnabled = false;
         }
 
@@ -103,6 +100,7 @@ namespace Celeste.Mod.SpringCollab2020.Triggers {
             On.Celeste.LightingRenderer.BeforeRender += LightHook;
             On.Celeste.BloomRenderer.Apply += BloomRendererHook;
             On.Celeste.Level.TransitionTo += TransitionHook;
+            On.Celeste.Payphone.Update += PayphoneHook;
             HooksEnabled = true;
         }
 
