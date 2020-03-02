@@ -37,7 +37,11 @@ namespace Celeste.Mod.SpringCollab2020.Triggers {
 
                 // when Madeline blinks red, make the hair blink red.
                 cursor.Emit(OpCodes.Ldarg_0);
-                cursor.EmitDelegate<Action<Player>>(player => player.Hair.Color = Color.Red);
+                cursor.EmitDelegate<Action<Player>>(player => {
+                    if (SpringCollab2020Module.Instance.Session.MadelineIsSilhouette) {
+                        player.Hair.Color = Color.Red;
+                    }
+                });
             }
 
             // jump to the usage of the White color
