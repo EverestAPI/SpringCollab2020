@@ -179,3 +179,7 @@ placements.entities.SpringCollab2020/MultiRoomStrawberry.tooltips.moon=Makes the
 
 # Madeline Silhouette Trigger
 placements.triggers.SpringCollab2020/MadelineSilhouetteTrigger.tooltips.enable=If checked, the trigger will turn Madeline into a silhouette. If unchecked, it will turn Madeline back to normal.
+
+# Rainbow Spinner Color Controller
+placements.entities.SpringCollab2020/RainbowSpinnerColorController.tooltips.colors=The colours the rainbow spinners in the room will take, separated by commas. For example, if 3 colours A, B and C are specified, the colours will cycle in the following order: A > B > C > B > A.
+placements.entities.SpringCollab2020/RainbowSpinnerColorController.tooltips.gradientSize=The distance required to achieve a complete loop across all colours.
