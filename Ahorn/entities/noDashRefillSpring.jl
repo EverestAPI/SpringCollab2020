@@ -36,10 +36,10 @@ function Ahorn.selection(entity::NoDashRefillSpringRight)
     return Ahorn.Rectangle(x - 4, y - 6, 5, 12)
 end
 
-sprite = "objects/spring/00.png"
+sprite = "objects/SpringCollab2020/noDashRefillSpring/00.png"
 
 Ahorn.render(ctx::Ahorn.Cairo.CairoContext, entity::NoDashRefillSpring, room::Maple.Room) = Ahorn.drawSprite(ctx, sprite, 0, -8)
-Ahorn.render(ctx::Ahorn.Cairo.CairoContext, entity::NoDashRefillSpringLeft, room::Maple.Room) = Ahorn.drawSprite(ctx, sprite, 9, -11, rot=pi / 2)
-Ahorn.render(ctx::Ahorn.Cairo.CairoContext, entity::NoDashRefillSpringRight, room::Maple.Room) = Ahorn.drawSprite(ctx, sprite, 3, 1, rot=-pi / 2)
+Ahorn.render(ctx::Ahorn.Cairo.CairoContext, entity::NoDashRefillSpringLeft, room::Maple.Room) = Ahorn.drawSprite(ctx, sprite, 24, 0, rot=pi / 2)
+Ahorn.render(ctx::Ahorn.Cairo.CairoContext, entity::NoDashRefillSpringRight, room::Maple.Room) = Ahorn.drawSprite(ctx, sprite, -8, 16, rot=-pi / 2)
 
 end

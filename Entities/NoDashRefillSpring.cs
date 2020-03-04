@@ -1,6 +1,7 @@
 ﻿using Celeste.Mod.Entities;
 using Microsoft.Xna.Framework;
 using Monocle;
+using MonoMod.Utils;
 using System;
 using System.Reflection;
 
@@ -12,6 +13,8 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
 
         public NoDashRefillSpring(EntityData data, Vector2 offset)
             : base(data.Position + offset, GetOrientationFromName(data.Name), data.Bool("playerCanUse", true)) {
+
+            DynData<Spring> selfSpring = new DynData<Spring>(this);
 
             // remove the vanilla player collider. this is the one thing we want to mod here.
             foreach (Component component in this) {
@@ -25,6 +28,16 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
             if (data.Bool("playerCanUse", true)) {
                 Add(new PlayerCollider(OnCollide));
             }
+
+            // replace the vanilla sprite with our custom one.
+            Sprite sprite = selfSpring.Get<Sprite>("sprite");
+            sprite.Reset(GFX.Game, "objects/SpringCollab2020/noDashRefillSpring/");
+            sprite.Add("idle", "", 0f, default(int));
+            sprite.Add("bounce", "", 0.07f, "idle", 0, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 4, 5);
+            sprite.Add("disabled", "white", 0.07f);
+            sprite.Play("idle");
+            sprite.Origin.X = sprite.Width / 2f;
+            sprite.Origin.Y = sprite.Height;
         }
 
         private static Orientations GetOrientationFromName(string name) {
