@@ -183,3 +183,9 @@ placements.triggers.SpringCollab2020/MadelineSilhouetteTrigger.tooltips.enable=I
 # Rainbow Spinner Color Controller
 placements.entities.SpringCollab2020/RainbowSpinnerColorController.tooltips.colors=The colours the rainbow spinners in the room will take, separated by commas. For example, if 3 colours A, B and C are specified, the colours will cycle in the following order: A > B > C > B > A.
 placements.entities.SpringCollab2020/RainbowSpinnerColorController.tooltips.gradientSize=The distance required to achieve a complete loop across all colours.
+
+# Music Layer Fade Trigger
+placements.triggers.SpringCollab2020/MusicLayerFadeTrigger.tooltips.layers=Which layers the trigger should change.
+placements.triggers.SpringCollab2020/MusicLayerFadeTrigger.tooltips.fadeA=The first volume for the music layer.
+placements.triggers.SpringCollab2020/MusicLayerFadeTrigger.tooltips.fadeB=The second volume for the music layer.
+placements.triggers.SpringCollab2020/MusicLayerFadeTrigger.tooltips.direction=Which direction the layer volume fades between Fade A and Fade B when the player enters the trigger.
