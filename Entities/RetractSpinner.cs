@@ -8,8 +8,6 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
     [CustomEntity("SpringCollab2020/RetractSpinner")]
     public class RetractSpinner : Entity {
 
-        public bool AttachToSolid;
-
         private float offset;
 
         private Image retractedSprite;
@@ -27,8 +25,7 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
             Add(new HoldableCollider(OnHoldable));
             Add(new LedgeBlocker());
             Depth = 1; // just below Madeline, since the default state is retracted
-            AttachToSolid = data.Bool("attachToSolid");
-            if (AttachToSolid) {
+            if (data.Bool("attachToSolid")) {
                 Add(new StaticMover {
                     OnShake = OnShake,
                     SolidChecker = IsRiding,
@@ -68,8 +65,8 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
 
                 // check if spinners are close enough to the player to get collidable, like the vanilla "spinner cycle"
                 if (Scene.OnInterval(0.05f, offset)) {
-                    Player entity = Scene.Tracker.GetEntity<Player>();
-                    if (entity != null) {
+                    Player player = Scene.Tracker.GetEntity<Player>();
+                    if (player != null) {
                         // those spinners are expanded only when in contact with water.
                         if (isExpanded != CollideCheck<Water>()) {
                             // the state has to be changed.
@@ -86,7 +83,7 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
                         }
 
                         // spinners are collidable if expanded + close enough to the player (same rule as vanilla).
-                        Collidable = isExpanded && Math.Abs(entity.X - X) < 128f && Math.Abs(entity.Y - Y) < 128f;
+                        Collidable = isExpanded && Math.Abs(player.X - X) < 128f && Math.Abs(player.Y - Y) < 128f;
                     }
                 }
             }
