@@ -189,3 +189,6 @@ placements.triggers.SpringCollab2020/MusicLayerFadeTrigger.tooltips.layers=Which
 placements.triggers.SpringCollab2020/MusicLayerFadeTrigger.tooltips.fadeA=The first volume for the music layer.
 placements.triggers.SpringCollab2020/MusicLayerFadeTrigger.tooltips.fadeB=The second volume for the music layer.
 placements.triggers.SpringCollab2020/MusicLayerFadeTrigger.tooltips.direction=Which direction the layer volume fades between Fade A and Fade B when the player enters the trigger.
+
+# Retract Spinner
+placements.entities.SpringCollab2020/RetractSpinner.tooltips.attachToSolid=The spinner attaches to the surface of the entity or block, and can be moved by them.
