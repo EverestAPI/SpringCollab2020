@@ -189,3 +189,15 @@ placements.triggers.SpringCollab2020/MusicLayerFadeTrigger.tooltips.layers=Which
 placements.triggers.SpringCollab2020/MusicLayerFadeTrigger.tooltips.fadeA=The first volume for the music layer.
 placements.triggers.SpringCollab2020/MusicLayerFadeTrigger.tooltips.fadeB=The second volume for the music layer.
 placements.triggers.SpringCollab2020/MusicLayerFadeTrigger.tooltips.direction=Which direction the layer volume fades between Fade A and Fade B when the player enters the trigger.
+
+# Flag Toggle Water
+placements.entities.SpringCollab2020/FlagToggleWater.tooltips.hasBottom=Determines whether or not the water has a bottom.
+placements.entities.SpringCollab2020/FlagToggleWater.tooltips.flag=This entity will only appear if this flag is active.
+
+# Flag Toggle Waterfall
+placements.entities.SpringCollab2020/FlagToggleWaterfall.tooltips.flag=This entity will only appear if this flag is active.
+
+# Flag Toggle Star Track Spinner
+placements.entities.SpringCollab2020/FlagToggleStarTrackSpinner.tooltips.speed=Changes the speed of the spinner's rotation.
+placements.entities.SpringCollab2020/FlagToggleStarTrackSpinner.tooltips.startCenter=The spinner will start at the end of the track.
+placements.entities.SpringCollab2020/FlagToggleStarTrackSpinner.tooltips.flag=This entity will only appear if this flag is active.
