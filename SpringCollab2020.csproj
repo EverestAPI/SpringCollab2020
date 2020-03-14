@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="MonoMod.RuntimeDetour" Version="20.1.1.4" PrivateAssets="all" ExcludeAssets="runtime" />
+    <PackageReference Include="MonoMod.RuntimeDetour" Version="20.3.5.1" PrivateAssets="all" ExcludeAssets="runtime" />
   </ItemGroup>
 
   <ItemGroup>
