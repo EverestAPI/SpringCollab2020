@@ -197,3 +197,15 @@ placements.entities.SpringCollab2020/RetractSpinner.tooltips.attachToSolid=The s
 placements.entities.SpringCollab2020/RespawningJellyfish.tooltips.bubble=Whether the entity should hover in the air before being grabbed.
 placements.entities.SpringCollab2020/RespawningJellyfish.tooltips.tutorial=Whether the entity should show the usage tutorial.
 placements.entities.SpringCollab2020/RespawningJellyfish.tooltips.respawnTime=The jellyfish will respawn at its starting location after this amount of time (in seconds) after being destroyed.
+
+# Flag Toggle Water
+placements.entities.SpringCollab2020/FlagToggleWater.tooltips.hasBottom=Determines whether or not the water has a bottom.
+placements.entities.SpringCollab2020/FlagToggleWater.tooltips.flag=This entity will only appear if this flag is active.
+
+# Flag Toggle Waterfall
+placements.entities.SpringCollab2020/FlagToggleWaterfall.tooltips.flag=This entity will only appear if this flag is active.
+
+# Flag Toggle Star Track Spinner
+placements.entities.SpringCollab2020/FlagToggleStarTrackSpinner.tooltips.speed=Changes the speed of the spinner's rotation.
+placements.entities.SpringCollab2020/FlagToggleStarTrackSpinner.tooltips.startCenter=The spinner will start at the end of the track.
+placements.entities.SpringCollab2020/FlagToggleStarTrackSpinner.tooltips.flag=This entity will only appear if this flag is active.
