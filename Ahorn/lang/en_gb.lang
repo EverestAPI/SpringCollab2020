@@ -192,3 +192,8 @@ placements.triggers.SpringCollab2020/MusicLayerFadeTrigger.tooltips.direction=Wh
 
 # Retract Spinner
 placements.entities.SpringCollab2020/RetractSpinner.tooltips.attachToSolid=The spinner attaches to the surface of the entity or block, and can be moved by them.
+
+# Respawning Jellyfish
+placements.entities.SpringCollab2020/RespawningJellyfish.tooltips.bubble=Whether the entity should hover in the air before being grabbed.
+placements.entities.SpringCollab2020/RespawningJellyfish.tooltips.tutorial=Whether the entity should show the usage tutorial.
+placements.entities.SpringCollab2020/RespawningJellyfish.tooltips.respawnTime=The jellyfish will respawn at its starting location after this amount of time (in seconds) after being destroyed.
