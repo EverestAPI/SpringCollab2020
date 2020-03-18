@@ -3,7 +3,7 @@
 using ..Ahorn, Maple
 
 @mapdef Entity "SpringCollab2020/FlagToggleWater" FlagToggleWater(x::Integer, y::Integer, width::Integer=Maple.defaultBlockWidth,
-    height::Integer=Maple.defaultBlockHeight, hasBottom::Bool=false, flag::String="flag_toggle_water")
+    height::Integer=Maple.defaultBlockHeight, hasBottom::Bool=false, flag::String="flag_toggle_water", inverted::Bool=false)
 
 const placements = Ahorn.PlacementDict(
     "Flag Toggle Water (Spring Collab 2020)" => Ahorn.EntityPlacement(

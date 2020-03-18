@@ -19,7 +19,7 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
             }
 
             // when the water is toggled, toggle the displacement as well.
-            Add(toggle = new FlagToggleComponent(data.Attr("flag"),
+            Add(toggle = new FlagToggleComponent(data.Attr("flag"), data.Bool("inverted"),
                 () => Remove(displacementHook), () => Add(displacementHook)));
         }
 

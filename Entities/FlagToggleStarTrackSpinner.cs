@@ -7,7 +7,7 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
         private FlagToggleComponent toggle;
 
         public FlagToggleStarTrackSpinner(EntityData data, Vector2 offset) : base(data, offset) {
-            Add(toggle = new FlagToggleComponent(data.Attr("flag")));
+            Add(toggle = new FlagToggleComponent(data.Attr("flag"), data.Bool("inverted")));
         }
 
         public override void Update() {

@@ -200,12 +200,15 @@ placements.entities.SpringCollab2020/RespawningJellyfish.tooltips.respawnTime=Th
 
 # Flag Toggle Water
 placements.entities.SpringCollab2020/FlagToggleWater.tooltips.hasBottom=Determines whether or not the water has a bottom.
-placements.entities.SpringCollab2020/FlagToggleWater.tooltips.flag=This entity will only appear if this flag is active.
+placements.entities.SpringCollab2020/FlagToggleWater.tooltips.flag=The flag this entity reacts to.
+placements.entities.SpringCollab2020/FlagToggleWater.tooltips.inverted=If checked, the entity will appear only if the flag is inactive.\nIf unchecked, the entity will appear only if the flag is active.
 
 # Flag Toggle Waterfall
-placements.entities.SpringCollab2020/FlagToggleWaterfall.tooltips.flag=This entity will only appear if this flag is active.
+placements.entities.SpringCollab2020/FlagToggleWaterfall.tooltips.flag=The flag this entity reacts to.
+placements.entities.SpringCollab2020/FlagToggleWaterfall.tooltips.inverted=If checked, the entity will appear only if the flag is inactive.\nIf unchecked, the entity will appear only if the flag is active.
 
 # Flag Toggle Star Track Spinner
 placements.entities.SpringCollab2020/FlagToggleStarTrackSpinner.tooltips.speed=Changes the speed of the spinner's rotation.
 placements.entities.SpringCollab2020/FlagToggleStarTrackSpinner.tooltips.startCenter=The spinner will start at the end of the track.
-placements.entities.SpringCollab2020/FlagToggleStarTrackSpinner.tooltips.flag=This entity will only appear if this flag is active.
+placements.entities.SpringCollab2020/FlagToggleStarTrackSpinner.tooltips.flag=The flag this entity reacts to.
+placements.entities.SpringCollab2020/FlagToggleStarTrackSpinner.tooltips.inverted=If checked, the entity will appear only if the flag is inactive.\nIf unchecked, the entity will appear only if the flag is active.

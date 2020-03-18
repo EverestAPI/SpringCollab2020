@@ -10,9 +10,11 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
         private string flag;
         private Action onDisable;
         private Action onEnable;
+        private bool inverted;
 
-        public FlagToggleComponent(string flag, Action onDisable = null, Action onEnable = null) : base(true, false) {
+        public FlagToggleComponent(string flag, bool inverted, Action onDisable = null, Action onEnable = null) : base(true, false) {
             this.flag = flag;
+            this.inverted = inverted;
             this.onDisable = onDisable;
             this.onEnable = onEnable;
         }
@@ -20,7 +22,9 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
         public override void Update() {
             base.Update();
 
-            if (SceneAs<Level>().Session.GetFlag(flag) != Enabled) {
+            if ((!inverted && SceneAs<Level>().Session.GetFlag(flag) != Enabled)
+                || (inverted && SceneAs<Level>().Session.GetFlag(flag) == Enabled)) {
+
                 if (Enabled) {
                     // disable the entity.
                     Entity.Visible = Entity.Collidable = false;
