@@ -13,7 +13,7 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
         private string enteringSfxEvent;
 
         public FlagToggleWaterfall(EntityData data, Vector2 offset) : base(data, offset) {
-            Add(toggle = new FlagToggleComponent(data.Attr("flag"), () => {
+            Add(toggle = new FlagToggleComponent(data.Attr("flag"), data.Bool("inverted"), () => {
                 // disable the waterfall sound.
                 loopingSfx.Stop();
                 enteringSfx.Stop();

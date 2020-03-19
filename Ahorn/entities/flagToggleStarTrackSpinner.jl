@@ -2,8 +2,8 @@
 
 using ..Ahorn, Maple
 
-@pardef FlagToggleStarTrackSpinner(x1::Integer, y1::Integer, x2::Integer=x1 + 16, y2::Integer=y1, speed::String="Normal", startCenter::Bool=false, flag::String="flag_toggle_star_track_spinner") =
-    Entity("SpringCollab2020/FlagToggleStarTrackSpinner", x=x1, y=y1, nodes=Tuple{Int, Int}[(x2, y2)], speed=speed, startCenter=startCenter, flag=flag)
+@pardef FlagToggleStarTrackSpinner(x1::Integer, y1::Integer, x2::Integer=x1 + 16, y2::Integer=y1, speed::String="Normal", startCenter::Bool=false, flag::String="flag_toggle_star_track_spinner", inverted::Bool=false) =
+    Entity("SpringCollab2020/FlagToggleStarTrackSpinner", x=x1, y=y1, nodes=Tuple{Int, Int}[(x2, y2)], speed=speed, startCenter=startCenter, flag=flag, inverted=inverted)
 
 const placements = Ahorn.PlacementDict(
     "Star (Track, $(uppercasefirst(speed)), Flag Toggle) (Spring Collab 2020)" => Ahorn.EntityPlacement(

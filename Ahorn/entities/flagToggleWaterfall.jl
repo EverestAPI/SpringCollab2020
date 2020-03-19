@@ -2,7 +2,7 @@
 
 using ..Ahorn, Maple
 
-@mapdef Entity "SpringCollab2020/FlagToggleWaterfall" FlagToggleWaterfall(x::Integer, y::Integer, flag::String="flag_toggle_waterfall")
+@mapdef Entity "SpringCollab2020/FlagToggleWaterfall" FlagToggleWaterfall(x::Integer, y::Integer, flag::String="flag_toggle_waterfall", inverted::Bool=false)
 
 const fillColor = Ahorn.XNAColors.LightBlue .* 0.3
 const surfaceColor = Ahorn.XNAColors.LightBlue .* 0.8
