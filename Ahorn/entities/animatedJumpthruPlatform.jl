@@ -28,18 +28,13 @@ end
 
 
 function Ahorn.render(ctx::Ahorn.Cairo.CairoContext, entity::AnimatedJumpthruPlatform, room::Maple.Room)
-    texture = get(entity.data, "animationPath", "wood")
+    texture = get(entity.data, "animationPath", "SpringCollab2020Example/rainbowwood")
 
     # Values need to be system specific integer
     x = Int(get(entity.data, "x", 0))
-
     width = Int(get(entity.data, "width", 8))
 
-    startX = div(x, 8) + 1
-    stopX = startX + div(width, 8) - 1
-    
-    len = stopX - startX
-    for i in 0:len
+    for i in 0:div(width, 8)-1
         Ahorn.drawImage(ctx, "objects/jumpthru/$(texture)00", 8 * i, 0)
     end
 end
