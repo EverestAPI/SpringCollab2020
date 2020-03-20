@@ -291,6 +291,7 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
 
         private int columns;
         private string overrideTexture;
+        private float animationDelay;
 
         public UpsideDownJumpThru(EntityData data, Vector2 offset)
             : base(data.Position + offset, data.Width, false) {
@@ -298,39 +299,52 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
             columns = data.Width / 8;
             Depth = -60;
             overrideTexture = data.Attr("texture", "default");
+            animationDelay = data.Float("animationDelay", 0f);
 
             // shift the hitbox a bit to match the graphic
             Collider.Top += 3;
         }
 
         public override void Awake(Scene scene) {
-            AreaData areaData = AreaData.Get(scene);
-            string jumpthru = areaData.Jumpthru;
-            if (!string.IsNullOrEmpty(overrideTexture) && !overrideTexture.Equals("default")) {
-                jumpthru = overrideTexture;
-            }
-
-            MTexture mTexture = GFX.Game["objects/jumpthru/" + jumpthru];
-            int textureWidthInTiles = mTexture.Width / 8;
-            for (int i = 0; i < columns; i++) {
-                int xTilePosition;
-                int yTilePosition;
-                if (i == 0) {
-                    xTilePosition = 0;
-                    yTilePosition = ((!CollideCheck<Solid>(Position + new Vector2(-1f, 0f))) ? 1 : 0);
-                } else if (i == columns - 1) {
-                    xTilePosition = textureWidthInTiles - 1;
-                    yTilePosition = ((!CollideCheck<Solid>(Position + new Vector2(1f, 0f))) ? 1 : 0);
-                } else {
-                    xTilePosition = 1 + Calc.Random.Next(textureWidthInTiles - 2);
-                    yTilePosition = Calc.Random.Choose(0, 1);
+            if (animationDelay > 0f) {
+                for (int i = 0; i < columns; i++) {
+                    Sprite jumpthruSprite = new Sprite(GFX.Game, "objects/jumpthru/" + overrideTexture);
+                    jumpthruSprite.AddLoop("idle", "", animationDelay);
+                    jumpthruSprite.X = i * 8;
+                    jumpthruSprite.Y = 8;
+                    jumpthruSprite.Scale.Y = -1;
+                    jumpthruSprite.Play("idle");
+                    Add(jumpthruSprite);
+                }
+            } else {
+                AreaData areaData = AreaData.Get(scene);
+                string jumpthru = areaData.Jumpthru;
+                if (!string.IsNullOrEmpty(overrideTexture) && !overrideTexture.Equals("default")) {
+                    jumpthru = overrideTexture;
                 }
 
-                Image image = new Image(mTexture.GetSubtexture(xTilePosition * 8, yTilePosition * 8, 8, 8));
-                image.X = i * 8;
-                image.Y = 8;
-                image.Scale.Y = -1;
-                Add(image);
+                MTexture mTexture = GFX.Game["objects/jumpthru/" + jumpthru];
+                int textureWidthInTiles = mTexture.Width / 8;
+                for (int i = 0; i < columns; i++) {
+                    int xTilePosition;
+                    int yTilePosition;
+                    if (i == 0) {
+                        xTilePosition = 0;
+                        yTilePosition = ((!CollideCheck<Solid>(Position + new Vector2(-1f, 0f))) ? 1 : 0);
+                    } else if (i == columns - 1) {
+                        xTilePosition = textureWidthInTiles - 1;
+                        yTilePosition = ((!CollideCheck<Solid>(Position + new Vector2(1f, 0f))) ? 1 : 0);
+                    } else {
+                        xTilePosition = 1 + Calc.Random.Next(textureWidthInTiles - 2);
+                        yTilePosition = Calc.Random.Choose(0, 1);
+                    }
+
+                    Image image = new Image(mTexture.GetSubtexture(xTilePosition * 8, yTilePosition * 8, 8, 8));
+                    image.X = i * 8;
+                    image.Y = 8;
+                    image.Scale.Y = -1;
+                    Add(image);
+                }
             }
         }
     }
