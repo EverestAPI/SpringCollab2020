@@ -29,6 +29,7 @@ namespace Celeste.Mod.SpringCollab2020 {
             DisableIcePhysicsTrigger.Load();
             MultiRoomStrawberrySeed.Load();
             MadelineSilhouetteTrigger.Load();
+            BlockJellySpawnTrigger.Load();
         }
 
         public override void LoadContent(bool firstLoad) {
@@ -52,6 +53,7 @@ namespace Celeste.Mod.SpringCollab2020 {
             DisableIcePhysicsTrigger.Unload();
             MultiRoomStrawberrySeed.Unload();
             MadelineSilhouetteTrigger.Unload();
+            BlockJellySpawnTrigger.Unload();
         }
 
         public override void PrepareMapDataProcessors(MapDataFixup context) {
