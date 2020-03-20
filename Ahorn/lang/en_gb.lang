@@ -212,3 +212,8 @@ placements.entities.SpringCollab2020/FlagToggleStarTrackSpinner.tooltips.speed=C
 placements.entities.SpringCollab2020/FlagToggleStarTrackSpinner.tooltips.startCenter=The spinner will start at the end of the track.
 placements.entities.SpringCollab2020/FlagToggleStarTrackSpinner.tooltips.flag=The flag this entity reacts to.
 placements.entities.SpringCollab2020/FlagToggleStarTrackSpinner.tooltips.inverted=If checked, the entity will appear only if the flag is inactive.\nIf unchecked, the entity will appear only if the flag is active.
+
+# Flag Toggle Star Rotate Spinner
+placements.entities.SpringCollab2020/FlagToggleStarRotateSpinner.tooltips.clockwise=The spinning blade will run clockwise.
+placements.entities.SpringCollab2020/FlagToggleStarRotateSpinner.tooltips.flag=The flag this entity reacts to.
+placements.entities.SpringCollab2020/FlagToggleStarRotateSpinner.tooltips.inverted=If checked, the entity will appear only if the flag is inactive.\nIf unchecked, the entity will appear only if the flag is active.
