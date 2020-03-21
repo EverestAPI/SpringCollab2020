@@ -10,6 +10,7 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
     public class FloatierSpaceBlock : FloatySpaceBlock {
         public float floatinessBoost;
         public float dashEaseMultiplier;
+        public float dashOffsetMutliplier;
 
         private static FieldInfo sinkTimerInfo = typeof(FloatySpaceBlock).GetField("sinkTimer", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.GetField);
         private static FieldInfo yLerpInfo = typeof(FloatySpaceBlock).GetField("yLerp", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.GetField);
@@ -22,6 +23,7 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
         public FloatierSpaceBlock(EntityData data, Vector2 offset) : base(data, offset) {
             floatinessBoost = data.Float("floatinessMultiplier", 1);
             dashEaseMultiplier = data.Float("bounceBackMultiplier", 1);
+            dashOffsetMutliplier = data.Float("dashOffsetMutliplier", floatinessBoost);
         }
 
         public static void Load() {
@@ -81,7 +83,7 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
 
         private void MoveToTarget() {
             float sineWavePos = (float) Math.Sin((float)sineWaveInfo.GetValue(this)) * 4f;
-            Vector2 dashOffset = Calc.YoYo(Ease.QuadIn((float)dashEaseInfo.GetValue(this))) * (Vector2)dashDirectionInfo.GetValue(this) * 8f * floatinessBoost;
+            Vector2 dashOffset = Calc.YoYo(Ease.QuadIn((float)dashEaseInfo.GetValue(this))) * (Vector2)dashDirectionInfo.GetValue(this) * 8f * dashOffsetMutliplier;
             for (int i = 0; i < 2; i++) {
                 foreach (KeyValuePair<Platform, Vector2> move in Moves) {
                     Platform key = move.Key;

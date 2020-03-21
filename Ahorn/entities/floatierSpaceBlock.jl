@@ -2,7 +2,7 @@ module SpringCollab2020FloatierSpaceBlock
 
 using ..Ahorn, Maple
 
-@mapdef Entity "SpringCollab2020/floatierSpaceBlock" FloatierSpaceBlock(x::Integer, y::Integer, width::Integer=Maple.defaultBlockWidth, height::Integer=Maple.defaultBlockHeight, tiletype::String="3", disableSpawnOffset::Bool=false, floatinessMultiplier::Number=1.0, bounceBackMultiplier::Number=1.0)
+@mapdef Entity "SpringCollab2020/floatierSpaceBlock" FloatierSpaceBlock(x::Integer, y::Integer, width::Integer=Maple.defaultBlockWidth, height::Integer=Maple.defaultBlockHeight, tiletype::String="3", disableSpawnOffset::Bool=false, floatinessMultiplier::Number=1.0, bounceBackMultiplier::Number=1.0, dashOffsetMutliplier::Number=1.0)
 
 const placements = Ahorn.PlacementDict(
     "Floatier Space Block (Spring Collab 2020)" => Ahorn.EntityPlacement(
