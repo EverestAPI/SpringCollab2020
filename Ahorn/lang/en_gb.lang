@@ -68,11 +68,18 @@ placements.entities.SpringCollab2020/bubblePushField.tooltips.water=If the bubbl
 placements.entities.SpringCollab2020/bubblePushField.tooltips.activationMode=Determines on which condition the bubble column activates.
 placements.entities.SpringCollab2020/bubblePushField.tooltips.flag=The session flag this bubble push field reacts to (when Activation Mode is "only if flag (in)active").
 
+# Animated Jump Thru Platform
+placements.entities.SpringCollab2020/AnimatedJumpthruPlatform.tooltips.animationPath=The path to the animation, relative to Graphics/Atlases/Gameplay/objects/jumpthru. Should be a 8x8 image.
+placements.entities.SpringCollab2020/AnimatedJumpthruPlatform.tooltips.animationDelay=The delay in seconds between 2 frames of animation.
+placements.entities.SpringCollab2020/AnimatedJumpthruPlatform.tooltips.surfaceIndex=Footstep sound when walking on the platform.
+
 # Upside Down Jump Thru
-placements.entities.SpringCollab2020/UpsideDownJumpThru.tooltips.texture=Changes the appearance of the platform.
+placements.entities.SpringCollab2020/UpsideDownJumpThru.tooltips.texture=Changes the appearance of the platform. Should be in the same format as vanilla for static jumpthrus, and a 8x8 image for animated ones.
+placements.entities.SpringCollab2020/UpsideDownJumpThru.tooltips.animationDelay=The delay in seconds between 2 frames of animation. Leave to 0 for no animation.
 
 # Sideways Jump Thru
-placements.entities.SpringCollab2020/SidewaysJumpThru.tooltips.texture=Changes the appearance of the platform.
+placements.entities.SpringCollab2020/SidewaysJumpThru.tooltips.texture=Changes the appearance of the platform. Should be in the same format as vanilla for static jumpthrus, and a 8x8 image for animated ones.
+placements.entities.SpringCollab2020/SidewaysJumpThru.tooltips.animationDelay=The delay in seconds between 2 frames of animation. Leave to 0 for no animation.
 placements.entities.SpringCollab2020/SidewaysJumpThru.tooltips.left=Whether the solid side of the jumpthru is the left side.
 
 # Non-Badeline Moving Blocks

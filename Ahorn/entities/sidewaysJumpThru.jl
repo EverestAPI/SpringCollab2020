@@ -3,7 +3,7 @@ module SpringCollab2020SidewaysJumpThru
 using ..Ahorn, Maple
 
 @mapdef Entity "SpringCollab2020/SidewaysJumpThru" SidewaysJumpThru(x::Integer, y::Integer, height::Integer=Maple.defaultBlockHeight, 
-    left::Bool=true, texture::String="wood")
+    left::Bool=true, texture::String="wood", animationDelay::Number=0.0)
 
 textures = ["wood", "dream", "temple", "templeB", "cliffside", "reflection", "core", "moon"]
 const placements = Ahorn.PlacementDict()
@@ -60,6 +60,7 @@ function Ahorn.render(ctx::Ahorn.Cairo.CairoContext, entity::SidewaysJumpThru, r
     startX = div(x, 8) + 1
     startY = div(y, 8) + 1
     stopY = startY + div(height, 8) - 1
+    animated = Number(get(entity.data, "animationDelay", 0)) > 0
     
     Ahorn.Cairo.save(ctx)
     
@@ -71,19 +72,23 @@ function Ahorn.render(ctx::Ahorn.Cairo.CairoContext, entity::SidewaysJumpThru, r
 
     len = stopY - startY
     for i in 0:len
-        connected = false
-        qx = 2
-        if i == 0
-            connected = get(room.fgTiles.data, (startY - 1, startX), false) != '0'
-            qx = 1
+        if animated
+            Ahorn.drawImage(ctx, "objects/jumpthru/$(texture)00", 8 * i, left ? 0 : -8)
+        else
+            connected = false
+            qx = 2
+            if i == 0
+                connected = get(room.fgTiles.data, (startY - 1, startX), false) != '0'
+                qx = 1
 
-        elseif i == len
-            connected = get(room.fgTiles.data, (stopY + 1, startX), false) != '0'
-            qx = 3
+            elseif i == len
+                connected = get(room.fgTiles.data, (stopY + 1, startX), false) != '0'
+                qx = 3
+            end
+
+            quad = quads[2 - connected, qx]
+            Ahorn.drawImage(ctx, "objects/jumpthru/$(texture)", 8 * i, left ? 0 : -8, quad...)
         end
-
-        quad = quads[2 - connected, qx]
-        Ahorn.drawImage(ctx, "objects/jumpthru/$(texture)", 8 * i, left ? 0 : -8, quad...)
     end
     
     Ahorn.Cairo.restore(ctx)

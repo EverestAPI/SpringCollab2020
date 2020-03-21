@@ -2,7 +2,7 @@ module SpringCollab2020UpsideDownJumpThru
 
 using ..Ahorn, Maple
 
-@mapdef Entity "SpringCollab2020/UpsideDownJumpThru" UpsideDownJumpThru(x::Integer, y::Integer, width::Integer=Maple.defaultBlockWidth, texture::String="wood")
+@mapdef Entity "SpringCollab2020/UpsideDownJumpThru" UpsideDownJumpThru(x::Integer, y::Integer, width::Integer=Maple.defaultBlockWidth, texture::String="wood", animationDelay::Number=0.0)
 
 textures = ["wood", "dream", "temple", "templeB", "cliffside", "reflection", "core", "moon"]
 const placements = Ahorn.PlacementDict(
@@ -47,6 +47,7 @@ function Ahorn.render(ctx::Ahorn.Cairo.CairoContext, entity::UpsideDownJumpThru,
     startX = div(x, 8) + 1
     stopX = startX + div(width, 8) - 1
     startY = div(y, 8) + 1
+    animated = Number(get(entity.data, "animationDelay", 0)) > 0
     
     Ahorn.Cairo.save(ctx)
     
@@ -54,19 +55,23 @@ function Ahorn.render(ctx::Ahorn.Cairo.CairoContext, entity::UpsideDownJumpThru,
 
     len = stopX - startX
     for i in 0:len
-        connected = false
-        qx = 2
-        if i == 0
-            connected = get(room.fgTiles.data, (startY, startX - 1), false) != '0'
-            qx = 1
+        if animated
+            Ahorn.drawImage(ctx, "objects/jumpthru/$(texture)00", 8 * i, -8)
+        else
+            connected = false
+            qx = 2
+            if i == 0
+                connected = get(room.fgTiles.data, (startY, startX - 1), false) != '0'
+                qx = 1
 
-        elseif i == len
-            connected = get(room.fgTiles.data, (startY, stopX + 1), false) != '0'
-            qx = 3
+            elseif i == len
+                connected = get(room.fgTiles.data, (startY, stopX + 1), false) != '0'
+                qx = 3
+            end
+
+            quad = quads[2 - connected, qx]
+            Ahorn.drawImage(ctx, "objects/jumpthru/$(texture)", 8 * i, -8, quad...)
         end
-
-        quad = quads[2 - connected, qx]
-        Ahorn.drawImage(ctx, "objects/jumpthru/$(texture)", 8 * i, -8, quad...)
     end
     
     Ahorn.Cairo.restore(ctx)
