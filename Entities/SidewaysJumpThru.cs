@@ -13,9 +13,14 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
     [Tracked]
     class SidewaysJumpThru : Entity {
 
+        private static ILHook hookOnUpdateSprite;
+
         private static FieldInfo actorMovementCounter = typeof(Actor).GetField("movementCounter", BindingFlags.Instance | BindingFlags.NonPublic);
 
         public static void Load() {
+            string updateSpriteMethodToPatch = Everest.Loader.DependencyLoaded(new EverestModuleMetadata { Name = "Everest", Version = new Version(1, 1432) }) ?
+                "orig_UpdateSprite" : "UpdateSprite";
+
             // implement the basic collision between actors/platforms and sideways jumpthrus.
             using (new DetourContext { Before = { "*" } }) { // these don't always call the orig methods, better apply them first.
                 On.Celeste.Actor.MoveHExact += onActorMoveHExact;
@@ -31,9 +36,11 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
             IL.Celeste.Player.ClimbBegin += modCollideChecks; // if not applied, the player will clip through jumpthrus if trying to climb on them
             IL.Celeste.Player.ClimbUpdate += modCollideChecks; // when climbing, jumpthrus are handled like walls
             IL.Celeste.Player.SlipCheck += modCollideChecks; // make climbing on jumpthrus not slippery
-            IL.Celeste.Player.UpdateSprite += modCollideChecks; // have the push animation when Madeline runs against a jumpthru for example
             IL.Celeste.Player.NormalUpdate += modCollideChecks; // get the wall slide effect
             IL.Celeste.Player.OnCollideH += modCollideChecks; // handle dashes against jumpthrus properly, without "shifting" down
+
+            // have the push animation when Madeline runs against a jumpthru for example
+            hookOnUpdateSprite = new ILHook(typeof(Player).GetMethod(updateSpriteMethodToPatch, BindingFlags.NonPublic | BindingFlags.Instance), modCollideChecks);
 
             // one extra hook that kills the player momentum when hitting a jumpthru so that they don't get "stuck" on them.
             On.Celeste.Player.NormalUpdate += onPlayerNormalUpdate;
@@ -50,9 +57,9 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
             IL.Celeste.Player.ClimbBegin -= modCollideChecks;
             IL.Celeste.Player.ClimbUpdate -= modCollideChecks;
             IL.Celeste.Player.SlipCheck -= modCollideChecks;
-            IL.Celeste.Player.UpdateSprite -= modCollideChecks;
             IL.Celeste.Player.NormalUpdate -= modCollideChecks;
             IL.Celeste.Player.OnCollideH -= modCollideChecks;
+            hookOnUpdateSprite?.Dispose();
 
             On.Celeste.Player.NormalUpdate -= onPlayerNormalUpdate;
         }
