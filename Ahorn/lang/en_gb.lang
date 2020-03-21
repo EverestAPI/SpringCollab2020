@@ -36,6 +36,7 @@ placements.entities.SpringCollab2020/floatierSpaceBlock.tooltips.disableSpawnOff
 placements.entities.SpringCollab2020/floatierSpaceBlock.tooltips.floatinessMultiplier=A multiplier for how far the block sinks.
 placements.entities.SpringCollab2020/floatierSpaceBlock.tooltips.tiletype=Determines the visual appearance of the wall.
 placements.entities.SpringCollab2020/floatierSpaceBlock.tooltips.bounceBackMultiplier=A multiplier for how fast the block bounces back when dashed into.
+placements.entities.SpringCollab2020/floatierSpaceBlock.tooltips.dashOffsetMultiplier=A multiplier for how far the block gets pushed back when dashed into.
 
 # Invisible Light Source
 placements.entities.SpringCollab2020/invisibleLightSource.tooltips.alpha=Opacity of the light. Makes the bloom near the light stronger.
