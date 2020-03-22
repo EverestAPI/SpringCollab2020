@@ -24,17 +24,17 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
         private List<Line> lines = new List<Line>();
         private Color lineColor = Color.White;
 
-        public CustomizableGlassBlock(Vector2 position, float width, float height)
+        public CustomizableGlassBlock(Vector2 position, float width, float height, bool behindFgTiles)
             : base(position, width, height, safe: false) {
 
-            Depth = -10000;
+            Depth = behindFgTiles ? -9995 : -10000;
             Add(new LightOcclude());
             Add(new MirrorSurface());
             SurfaceSoundIndex = 32;
         }
 
         public CustomizableGlassBlock(EntityData data, Vector2 offset)
-            : this(data.Position + offset, data.Width, data.Height) { }
+            : this(data.Position + offset, data.Width, data.Height, data.Bool("behindFgTiles")) { }
 
         public override void Awake(Scene scene) {
             base.Awake(scene);

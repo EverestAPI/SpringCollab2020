@@ -2,7 +2,7 @@ module SpringCollab2020CustomizableGlassBlock
 
 using ..Ahorn, Maple
 
-@mapdef Entity "SpringCollab2020/CustomizableGlassBlock" CustomizableGlassBlock(x::Integer, y::Integer, width::Integer=Maple.defaultBlockWidth, height::Integer=Maple.defaultBlockHeight)
+@mapdef Entity "SpringCollab2020/CustomizableGlassBlock" CustomizableGlassBlock(x::Integer, y::Integer, width::Integer=Maple.defaultBlockWidth, height::Integer=Maple.defaultBlockHeight, behindFgTiles::Bool=false)
 
 const placements = Ahorn.PlacementDict(
     "Customizable Glass Block (Spring Collab 2020)" => Ahorn.EntityPlacement(
