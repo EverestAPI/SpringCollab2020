@@ -44,6 +44,8 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
         private Vector2[] spikePositions;
         private List<MTexture> spikeTextures;
 
+        private bool blockingLedge = false;
+
         public GroupedTriggerSpikes(EntityData data, Vector2 offset, Directions dir)
             : this(data.Position + offset, GetSize(data, dir), dir, data.Attr("type", "default")) {
         }
@@ -236,6 +238,24 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
                 Lerp = Calc.Approach(Lerp, 0f, 4f * Engine.DeltaTime);
                 if (Lerp <= 0f) {
                     Triggered = false;
+                }
+            }
+
+            // "climb hopping" should be blocked if trigger spikes are going to kill Madeline (Lerp >= 1).
+            // this is done by adding a LedgeBlocker component.
+            if (blockingLedge != (Lerp >= 1f)) {
+                blockingLedge = !blockingLedge;
+
+                // add or remove the ledge blocker depending on the need.
+                if (blockingLedge) {
+                    Add(new LedgeBlocker());
+                } else {
+                    foreach (Component component in this) {
+                        if (component is LedgeBlocker) {
+                            Remove(component);
+                            break;
+                        }
+                    }
                 }
             }
         }
