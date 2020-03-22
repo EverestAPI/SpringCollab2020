@@ -30,11 +30,13 @@ namespace Celeste.Mod.SpringCollab2020 {
             MultiRoomStrawberrySeed.Load();
             MadelineSilhouetteTrigger.Load();
             BlockJellySpawnTrigger.Load();
+            StrawberryIgnoringLighting.Load();
         }
 
         public override void LoadContent(bool firstLoad) {
             base.LoadContent(firstLoad);
             GlassBerry.LoadContent();
+            StrawberryIgnoringLighting.LoadContent();
         }
 
         public override void Unload() {
@@ -54,6 +56,7 @@ namespace Celeste.Mod.SpringCollab2020 {
             MultiRoomStrawberrySeed.Unload();
             MadelineSilhouetteTrigger.Unload();
             BlockJellySpawnTrigger.Unload();
+            StrawberryIgnoringLighting.Unload();
         }
 
         public override void PrepareMapDataProcessors(MapDataFixup context) {
