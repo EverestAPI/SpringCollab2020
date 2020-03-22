@@ -225,3 +225,7 @@ placements.entities.SpringCollab2020/FlagToggleStarTrackSpinner.tooltips.inverte
 placements.entities.SpringCollab2020/FlagToggleStarRotateSpinner.tooltips.clockwise=The spinning blade will run clockwise.
 placements.entities.SpringCollab2020/FlagToggleStarRotateSpinner.tooltips.flag=The flag this entity reacts to.
 placements.entities.SpringCollab2020/FlagToggleStarRotateSpinner.tooltips.inverted=If checked, the entity will appear only if the flag is inactive.\nIf unchecked, the entity will appear only if the flag is active.
+
+# Strawberry Collection Field
+placements.triggers.SpringCollab2020/StrawberryCollectionField.tooltips.delayBetweenBerries=Whether there should be a 0.3 second delay between each berry collection (like when berries are collected on the ground).
+placements.triggers.SpringCollab2020/StrawberryCollectionField.tooltips.includeGoldens=Whether this trigger should collect golden strawberries and other berries that block normal collection.
