@@ -32,8 +32,8 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
         private static void onStrawberryConstructor(On.Celeste.Strawberry.orig_ctor orig, Strawberry self, EntityData data, Vector2 offset, EntityID gid) {
             orig(self, data, offset, gid);
 
-            // save the value for ignoreLighting to the DynData for the strawberry.
-            new DynData<Strawberry>(self)["ignoreLighting"] = data.Bool("ignoreLighting");
+            // save the value for SpringCollab2020_ignoreLighting to the DynData for the strawberry.
+            new DynData<Strawberry>(self)["SpringCollab2020_ignoreLighting"] = data.Bool("SpringCollab2020_ignoreLighting");
         }
 
         private static void onLightingBeforeRender(On.Celeste.LightingRenderer.orig_BeforeRender orig, LightingRenderer self, Scene scene) {
@@ -44,7 +44,7 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
             foreach (Entity entity in scene.Entities) {
                 if (entity is Strawberry berry) {
                     DynData<Strawberry> berryData = new DynData<Strawberry>(berry);
-                    if (berryData.Get<bool>("ignoreLighting")) {
+                    if (berryData.Get<bool>("SpringCollab2020_ignoreLighting")) {
                         Draw.SpriteBatch.Draw(strawberryCutoutTexture.Texture.Texture, berry.Position + berryData.Get<Sprite>("sprite").Position - (scene as Level).Camera.Position
                             - new Vector2(9, 8), Color.White);
                     }

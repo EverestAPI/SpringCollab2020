@@ -3,7 +3,7 @@
 using ..Ahorn, Maple
 
 @mapdef Entity "SpringCollab2020/returnBerry" ReturnBerry(x::Integer, y::Integer, order::Integer=-1, checkpointID::Integer=-1, winged::Bool=false,
-	nodes::Array{Tuple{Integer, Integer}, 1}=Tuple{Integer, Integer}[], ignoreLighting::Bool=false)
+	nodes::Array{Tuple{Integer, Integer}, 1}=Tuple{Integer, Integer}[], SpringCollab2020_ignoreLighting::Bool=false)
 
 const placements = Ahorn.PlacementDict(
 	"Strawberry (With Return) (Spring Collab 2020)" => Ahorn.EntityPlacement(

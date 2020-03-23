@@ -3,7 +3,7 @@
 using ..Ahorn, Maple
 
 @mapdef Entity "SpringCollab2020/MultiRoomStrawberry" MultiRoomStrawberry(x::Integer, y::Integer,
-    name::String="multi_room_strawberry", winged::Bool=false, moon::Bool=false, checkpointID::Integer=-1, order::Integer=-1, ignoreLighting::Bool=false)
+    name::String="multi_room_strawberry", winged::Bool=false, moon::Bool=false, checkpointID::Integer=-1, order::Integer=-1, SpringCollab2020_ignoreLighting::Bool=false)
 
 const placements = Ahorn.PlacementDict(
     "Multi-Room Strawberry (Spring Collab 2020)" => Ahorn.EntityPlacement(

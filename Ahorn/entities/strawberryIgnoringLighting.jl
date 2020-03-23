@@ -7,7 +7,7 @@ const placements = Ahorn.PlacementDict(
         Maple.Strawberry,
         "point",
         Dict{String, Any}(
-            "ignoreLighting" => true
+            "SpringCollab2020_ignoreLighting" => true
         )
     )
 )
