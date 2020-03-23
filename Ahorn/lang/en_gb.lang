@@ -6,6 +6,8 @@ placements.entities.SpringCollab2020/diagonalWingedStrawberry.tooltips.checkpoin
 placements.entities.SpringCollab2020/returnBerry.tooltips.winged=Flies away upon dashing.
 placements.entities.SpringCollab2020/returnBerry.tooltips.checkpointID=Manually determine what checkpoint section strawberries are visually grouped up in, showing up on the start menu during gameplay and level select. Overrides Everest's automatic berry IDs. (Default = -1)
 placements.entities.SpringCollab2020/returnBerry.tooltips.order=Manually determine what order strawberries are visually placed in on the start menu during gameplay and level select. Overrides Everest's automatic berry IDs. (Default = -1)
+placements.entities.SpringCollab2020/returnBerry.names.SpringCollab2020_ignoreLighting=Ignore Lighting
+placements.entities.SpringCollab2020/returnBerry.tooltips.SpringCollab2020_ignoreLighting=(Spring Collab 2020 attribute) If checked, the berry will appear bright at all times, even if the room is dark.
 
 # Glass Berry
 placements.entities.SpringCollab2020/glassBerry.tooltips.checkpointID=Manually determine what checkpoint section strawberries are visually grouped up in, showing up on the start menu during gameplay and level select. Overrides Everest's automatic berry IDs. (Default = -1)
@@ -187,6 +189,12 @@ placements.entities.SpringCollab2020/MultiRoomStrawberry.tooltips.winged=The str
 placements.entities.SpringCollab2020/MultiRoomStrawberry.tooltips.checkpointID=Manually determine what checkpoint section strawberries are visually grouped up in, showing up on the start menu during gameplay and level select. Overrides Everest's automatic berry IDs. (Default= -1)
 placements.entities.SpringCollab2020/MultiRoomStrawberry.tooltips.order=Manually determine what order strawberries are visually placed in on the start menu during gameplay and level select. Overrides Everest's automatic berry IDs. (Default= -1)
 placements.entities.SpringCollab2020/MultiRoomStrawberry.tooltips.moon=Makes the strawberry render as a space berry.\nDoes not work with wings or nodes in the base game.
+placements.entities.SpringCollab2020/MultiRoomStrawberry.names.SpringCollab2020_ignoreLighting=Ignore Lighting
+placements.entities.SpringCollab2020/MultiRoomStrawberry.tooltips.SpringCollab2020_ignoreLighting=(Spring Collab 2020 attribute) If checked, the berry will appear bright at all times, even if the room is dark.
+
+# Strawberry ignoring lighting
+placements.entities.strawberry.names.SpringCollab2020_ignoreLighting=Ignore Lighting
+placements.entities.strawberry.tooltips.SpringCollab2020_ignoreLighting=(Spring Collab 2020 attribute) If checked, the berry will appear bright at all times, even if the room is dark.
 
 # Madeline Silhouette Trigger
 placements.triggers.SpringCollab2020/MadelineSilhouetteTrigger.tooltips.enable=If checked, the trigger will turn Madeline into a silhouette. If unchecked, it will turn Madeline back to normal.
