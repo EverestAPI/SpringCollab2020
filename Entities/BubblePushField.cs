@@ -206,7 +206,7 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
                 case PushDirection.Left:
                     Origin = new Vector2(BubbleField.CenterRight.X, Rand.Range(BubbleField.BottomRight.Y, BubbleField.TopRight.Y));
                     End = new Vector2(BubbleField.CenterLeft.X, Rand.Range(BubbleField.BottomLeft.Y, BubbleField.TopLeft.Y));
-                    FramesMaxAlive = (int) Rand.Range(20, BubbleField.Height / BubbleField.Strength * .5f);
+                    FramesMaxAlive = (int) Rand.Range(20, BubbleField.Width / BubbleField.Strength * .5f);
                     break;
             }
 
