@@ -21,7 +21,10 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
 
         public override void Update() {
             base.Update();
+            UpdateFlag();
+        }
 
+        public void UpdateFlag() {
             if ((!inverted && SceneAs<Level>().Session.GetFlag(flag) != Enabled)
                 || (inverted && SceneAs<Level>().Session.GetFlag(flag) == Enabled)) {
 
