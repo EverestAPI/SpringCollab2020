@@ -3,12 +3,16 @@ module SpringCollab2020CustomBirdTutorial
 using ..Ahorn, Maple
 
 @mapdef Entity "SpringCollab2020/CustomBirdTutorial" CustomBirdTutorial(x::Integer, y::Integer,
-    birdId::String="birdId", onlyOnce::Bool=false, caw::Bool=true, faceLeft::Bool=true, info::String="tutorial_dreamjump", controls::String="DownRight,+,Dash,tinyarrow,Jump")
+    birdId::String="birdId", onlyOnce::Bool=false, caw::Bool=true, faceLeft::Bool=true, info::String="TUTORIAL_DREAMJUMP", controls::String="DownRight,+,Dash,tinyarrow,Jump")
 
 const placements = Ahorn.PlacementDict(
     "Custom Bird Tutorial (Spring Collab 2020)" => Ahorn.EntityPlacement(
         CustomBirdTutorial
     )
+)
+
+Ahorn.editingOptions(entity::CustomBirdTutorial) = Dict{String, Any}(
+  "info" => String["TUTORIAL_CLIMB", "TUTORIAL_HOLD", "TUTORIAL_DASH", "TUTORIAL_DREAMJUMP", "TUTORIAL_CARRY", "hyperjump/tutorial00", "hyperjump/tutorial01"]
 )
 
 sprite = "characters/bird/crow00"
