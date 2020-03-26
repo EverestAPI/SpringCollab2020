@@ -12,7 +12,7 @@ const placements = Ahorn.PlacementDict(
 )
 
 Ahorn.editingOptions(entity::CustomBirdTutorial) = Dict{String, Any}(
-  "info" => String["TUTORIAL_CLIMB", "TUTORIAL_HOLD", "TUTORIAL_DASH", "TUTORIAL_DREAMJUMP", "TUTORIAL_CARRY", "hyperjump/tutorial00", "hyperjump/tutorial01"]
+    "info" => String["TUTORIAL_CLIMB", "TUTORIAL_HOLD", "TUTORIAL_DASH", "TUTORIAL_DREAMJUMP", "TUTORIAL_CARRY", "hyperjump/tutorial00", "hyperjump/tutorial01"]
 )
 
 sprite = "characters/bird/crow00"
