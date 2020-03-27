@@ -33,6 +33,8 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
             enteringSfx = self.Get<SoundSource>("enteringSfx");
             loopingSfxEvent = loopingSfx.EventName;
             enteringSfxEvent = enteringSfx.EventName;
+
+            toggle.UpdateFlag();
         }
 
         public override void Update() {
