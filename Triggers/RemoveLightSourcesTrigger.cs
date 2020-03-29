@@ -1,115 +1,117 @@
 ﻿using Celeste.Mod.Entities;
 using Monocle;
 using Microsoft.Xna.Framework;
-using System.Reflection;
+using System.Collections.Generic;
+using System;
 
 namespace Celeste.Mod.SpringCollab2020.Triggers {
     [CustomEntity("SpringCollab2020/RemoveLightSourcesTrigger")]
     [Tracked]
     class RemoveLightSourcesTrigger : Trigger {
 
-        private static FieldInfo LightsField;
-
-        private static FieldInfo BloomField;
-
-        private static FieldInfo LightField;
-
-        private static bool HooksEnabled = false;
-
-        public RemoveLightSourcesTrigger(EntityData data, Vector2 offset) : base(data, offset) { }
+        private static float alphaFade = 1f;
 
         public static void Load() {
-            Everest.Events.Level.OnLoadLevel += LevelLoadHandler;
-            Everest.Events.Level.OnExit += OnExitHandler;
-
-            LightsField = typeof(LightingRenderer).GetField("lights", BindingFlags.NonPublic | BindingFlags.Instance);
-            BloomField = typeof(Payphone).GetField("bloom", BindingFlags.NonPublic | BindingFlags.Instance);
-            LightField = typeof(Payphone).GetField("light", BindingFlags.NonPublic | BindingFlags.Instance);
+            On.Celeste.LightingRenderer.BeforeRender += LightHook;
+            On.Celeste.BloomRenderer.Apply += BloomRendererHook;
+            On.Celeste.Level.LoadLevel += OnLoadLevel;
+            On.Celeste.Level.Update += OnLevelUpdate;
         }
 
         public static void Unload() {
-            Everest.Events.Level.OnLoadLevel -= LevelLoadHandler;
-            Everest.Events.Level.OnExit -= OnExitHandler;
+            On.Celeste.LightingRenderer.BeforeRender -= LightHook;
+            On.Celeste.BloomRenderer.Apply -= BloomRendererHook;
+            On.Celeste.Level.LoadLevel -= OnLoadLevel;
+            On.Celeste.Level.Update -= OnLevelUpdate;
         }
 
-        private static void PayphoneHook(On.Celeste.Payphone.orig_Update orig, Payphone self) {
+        private static void OnLoadLevel(On.Celeste.Level.orig_LoadLevel orig, Level self, Player.IntroTypes playerIntro, bool isFromLoader) {
+            orig(self, playerIntro, isFromLoader);
+
+            if (playerIntro != Player.IntroTypes.Transition) {
+                // do not fade and set the alpha right away when spawning into the level.
+                alphaFade = SpringCollab2020Module.Instance.Session.LightSourcesDisabled ? 0f : 1f;
+            }
+        }
+
+        private static void OnLevelUpdate(On.Celeste.Level.orig_Update orig, Level self) {
             orig(self);
 
-            VertexLight tempLight = (VertexLight) LightField.GetValue(self);
-            BloomPoint tempBloom = (BloomPoint) BloomField.GetValue(self);
-            tempBloom.Visible = tempLight.Visible = !tempLight.Visible;
-
-            BloomField.SetValue(self, tempBloom);
-            LightField.SetValue(self, tempLight);
-        }
-
-        private static void LevelLoadHandler(Level loadedLevel, Player.IntroTypes playerIntro, bool isFromLoader) {
-            if (loadedLevel.Session.GetFlag("lightsDisabled"))
-                DisableLightRender();
-            else
-                EnableLightRender();
-        }
-
-        private static void OnExitHandler(Level exitLevel, LevelExit exit, LevelExit.Mode mode, Session session, HiresSnow snow) {
-            EnableLightRender();
+            if (!self.Paused) {
+                // progressively fade in or out.
+                alphaFade = Calc.Approach(alphaFade, SpringCollab2020Module.Instance.Session.LightSourcesDisabled ? 0f : 1f, Engine.DeltaTime * 3f);
+            }
         }
 
         private static void BloomRendererHook(On.Celeste.BloomRenderer.orig_Apply orig, BloomRenderer self, VirtualRenderTarget target, Scene scene) {
-            foreach (BloomPoint component in scene.Tracker.GetComponents<BloomPoint>().ToArray()) {
-                if (!(component.Entity is Payphone))
-                    component.Visible = false;
-            }
+            if (alphaFade < 1f) {
+                // set all alphas to 0, and back up original values.
+                List<BloomPoint> affectedBloomPoints = new List<BloomPoint>();
+                List<float> originalAlpha = new List<float>();
+                foreach (BloomPoint bloomPoint in scene.Tracker.GetComponents<BloomPoint>().ToArray()) {
+                    if (bloomPoint.Visible && !(bloomPoint.Entity is Payphone)) {
+                        affectedBloomPoints.Add(bloomPoint);
+                        originalAlpha.Add(bloomPoint.Alpha);
+                        bloomPoint.Alpha *= alphaFade;
+                    }
+                }
 
-            orig(self, target, scene);
+                // render the bloom.
+                orig(self, target, scene);
+
+                // restore original alphas.
+                int index = 0;
+                foreach (BloomPoint bloomPoint in affectedBloomPoints) {
+                    bloomPoint.Alpha = originalAlpha[index++];
+                }
+            } else {
+                // alpha multiplier is 1: nothing to modify, go on with vanilla.
+                orig(self, target, scene);
+            }
         }
 
         private static void LightHook(On.Celeste.LightingRenderer.orig_BeforeRender orig, LightingRenderer self, Scene scene) {
-            foreach (VertexLight component in scene.Tracker.GetComponents<VertexLight>().ToArray()) {
-                if (!component.Spotlight)
-                    component.RemoveSelf();
+            if (alphaFade < 1f) {
+                // set all alphas to 0, and back up original values.
+                List<VertexLight> affectedVertexLights = new List<VertexLight>();
+                List<float> originalAlpha = new List<float>();
+                foreach (VertexLight vertexLight in scene.Tracker.GetComponents<VertexLight>().ToArray()) {
+                    if (vertexLight.Visible && !vertexLight.Spotlight) {
+                        affectedVertexLights.Add(vertexLight);
+                        originalAlpha.Add(vertexLight.Alpha);
+                        vertexLight.Alpha *= alphaFade;
+                    }
+                }
+
+                // render the lighting.
+                orig(self, scene);
+
+                // restore original alphas.
+                int index = 0;
+                foreach (VertexLight vertexLight in affectedVertexLights) {
+                    vertexLight.Alpha = originalAlpha[index++];
+                }
+            } else {
+                // alpha multiplier is 1: nothing to modify, go on with vanilla.
+                orig(self, scene);
             }
-
-            LightsField.SetValue(self, new VertexLight[64]);
-            orig(self, scene);
         }
 
-        private static void TransitionHook(On.Celeste.Level.orig_TransitionTo orig, Level transitionLevel, LevelData next, Vector2 direction) {
-            transitionLevel.Tracker.GetComponents<VertexLight>().ForEach(light => {
-                if (!((VertexLight)light).Spotlight)
-                    light.RemoveSelf();
-            });
+        private bool enableLightSources;
+        private bool fade;
 
-            orig(transitionLevel, next, direction);
-        }
-
-        private static void EnableLightRender() {
-            if (!HooksEnabled)
-                return;
-
-            On.Celeste.LightingRenderer.BeforeRender -= LightHook;
-            On.Celeste.BloomRenderer.Apply -= BloomRendererHook;
-            On.Celeste.Level.TransitionTo -= TransitionHook;
-            On.Celeste.Payphone.Update -= PayphoneHook;
-            HooksEnabled = false;
-        }
-
-        private static void DisableLightRender() {
-            if (HooksEnabled)
-                return;
-
-            On.Celeste.LightingRenderer.BeforeRender += LightHook;
-            On.Celeste.BloomRenderer.Apply += BloomRendererHook;
-            On.Celeste.Level.TransitionTo += TransitionHook;
-            On.Celeste.Payphone.Update += PayphoneHook;
-            HooksEnabled = true;
+        public RemoveLightSourcesTrigger(EntityData data, Vector2 offset) : base(data, offset) {
+            enableLightSources = data.Bool("enableLightSources", false);
+            fade = data.Bool("fade", false);
         }
 
         public override void OnEnter(Player player) {
             base.OnEnter(player);
+            SpringCollab2020Module.Instance.Session.LightSourcesDisabled = !enableLightSources;
 
-            if (SceneAs<Level>().Session.GetFlag("lightsDisabled") == false) {
-                SceneAs<Level>().Session.SetFlag("lightsDisabled", true);
-                DisableLightRender();
+            if (!fade) {
+                // don't fade; set the fade to its final value right away.
+                alphaFade = SpringCollab2020Module.Instance.Session.LightSourcesDisabled ? 0f : 1f;
             }
         }
     }
