@@ -45,7 +45,7 @@ namespace Celeste.Mod.SpringCollab2020.Triggers {
 
         private static void BloomRendererHook(On.Celeste.BloomRenderer.orig_Apply orig, BloomRenderer self, VirtualRenderTarget target, Scene scene) {
             if (alphaFade < 1f) {
-                // set all alphas to 0, and back up original values.
+                // multiply all alphas by alphaFade, and back up original values.
                 List<BloomPoint> affectedBloomPoints = new List<BloomPoint>();
                 List<float> originalAlpha = new List<float>();
                 foreach (BloomPoint bloomPoint in scene.Tracker.GetComponents<BloomPoint>().ToArray()) {
@@ -72,7 +72,7 @@ namespace Celeste.Mod.SpringCollab2020.Triggers {
 
         private static void LightHook(On.Celeste.LightingRenderer.orig_BeforeRender orig, LightingRenderer self, Scene scene) {
             if (alphaFade < 1f) {
-                // set all alphas to 0, and back up original values.
+                // multiply all alphas by alphaFade, and back up original values.
                 List<VertexLight> affectedVertexLights = new List<VertexLight>();
                 List<float> originalAlpha = new List<float>();
                 foreach (VertexLight vertexLight in scene.Tracker.GetComponents<VertexLight>().ToArray()) {
