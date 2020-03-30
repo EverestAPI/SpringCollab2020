@@ -240,3 +240,7 @@ placements.entities.SpringCollab2020/FlagToggleStarRotateSpinner.tooltips.invert
 # Strawberry Collection Field
 placements.triggers.SpringCollab2020/StrawberryCollectionField.tooltips.delayBetweenBerries=Whether there should be a 0.3 second delay between each berry collection (like when berries are collected on the ground).
 placements.triggers.SpringCollab2020/StrawberryCollectionField.tooltips.includeGoldens=Whether this trigger should collect golden strawberries and other berries that block normal collection.
+
+# Negative Summit Checkpoint
+placements.entities.SpringCollab2020/NegativeSummitCheckpoint.tooltips.number=Changes the number on the checkpoint card. (Between -9 and 99 inclusive.)
+
