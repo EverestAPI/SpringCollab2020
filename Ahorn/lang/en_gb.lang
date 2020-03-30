@@ -247,3 +247,20 @@ placements.entities.SpringCollab2020/NegativeSummitCheckpoint.tooltips.number=Ch
 # Remove Light Sources Trigger
 placements.triggers.SpringCollab2020/RemoveLightSourcesTrigger.tooltips.enableLightSources=If checked, this trigger will re-enable light sources instead of disabling them.
 placements.triggers.SpringCollab2020/RemoveLightSourcesTrigger.tooltips.fade=If checked, the lights will fade in or out.
+
+# Seeker (Custom Colors)
+placements.entities.SpringCollab2020/SeekerCustomColors.tooltips.attackParticleColor1=The first color of the particles the seeker emits when attacking.
+placements.entities.SpringCollab2020/SeekerCustomColors.tooltips.attackParticleColor2=The second color of the particles the seeker emits when attacking.
+placements.entities.SpringCollab2020/SeekerCustomColors.tooltips.regenParticleColor1=The first color of the particles the seeker emits when respawning.
+placements.entities.SpringCollab2020/SeekerCustomColors.tooltips.regenParticleColor2=The second color of the particles the seeker emits when respawning.
+placements.entities.SpringCollab2020/SeekerCustomColors.tooltips.trailColor=The color of the trail the seeker leaves behind it when "dashing".
+
+# Seeker Statue (Custom Colors)
+placements.entities.SpringCollab2020/SeekerStatueCustomColors.tooltips.hatch=Determines whether the statue releases its seeker when the player is to the right of it, or when the player gets close enough.
+placements.entities.SpringCollab2020/SeekerStatueCustomColors.tooltips.breakOutParticleColor1=The first color of the particles the seeker emits when breaking out of the statue.
+placements.entities.SpringCollab2020/SeekerStatueCustomColors.tooltips.breakOutParticleColor2=The second color of the particles the seeker emits when breaking out of the statue.
+placements.entities.SpringCollab2020/SeekerStatueCustomColors.tooltips.attackParticleColor1=The first color of the particles the seeker emits when attacking.
+placements.entities.SpringCollab2020/SeekerStatueCustomColors.tooltips.attackParticleColor2=The second color of the particles the seeker emits when attacking.
+placements.entities.SpringCollab2020/SeekerStatueCustomColors.tooltips.regenParticleColor1=The first color of the particles the seeker emits when respawning.
+placements.entities.SpringCollab2020/SeekerStatueCustomColors.tooltips.regenParticleColor2=The second color of the particles the seeker emits when respawning.
+placements.entities.SpringCollab2020/SeekerStatueCustomColors.tooltips.trailColor=The color of the trail the seeker leaves behind it when "dashing".
