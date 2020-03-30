@@ -244,3 +244,6 @@ placements.triggers.SpringCollab2020/StrawberryCollectionField.tooltips.includeG
 # Negative Summit Checkpoint
 placements.entities.SpringCollab2020/NegativeSummitCheckpoint.tooltips.number=Changes the number on the checkpoint card. (Between -9 and 99 inclusive.)
 
+# Remove Light Sources Trigger
+placements.triggers.SpringCollab2020/RemoveLightSourcesTrigger.tooltips.enableLightSources=If checked, this trigger will re-enable light sources instead of disabling them.
+placements.triggers.SpringCollab2020/RemoveLightSourcesTrigger.tooltips.fade=If checked, the lights will fade in or out.

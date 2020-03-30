@@ -15,5 +15,7 @@ namespace Celeste.Mod.SpringCollab2020 {
         public List<MultiRoomStrawberrySeedInfo> CollectedMultiRoomStrawberrySeeds { get; set; } = new List<MultiRoomStrawberrySeedInfo>();
 
         public bool MadelineIsSilhouette { get; set; } = false;
+
+        public bool LightSourcesDisabled { get; set; } = false;
     }
 }
