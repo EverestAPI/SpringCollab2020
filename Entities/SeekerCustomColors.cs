@@ -7,6 +7,29 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
     [CustomEntity("SpringCollab2020/SeekerCustomColors")]
     [TrackedAs(typeof(Seeker))]
     class SeekerCustomColors : Seeker {
+        public static void Load() {
+            On.Celeste.Seeker.GotBouncedOn += modGotBouncedOn;
+        }
+
+        public static void Unload() {
+            On.Celeste.Seeker.GotBouncedOn -= modGotBouncedOn;
+        }
+
+        private static void modGotBouncedOn(On.Celeste.Seeker.orig_GotBouncedOn orig, Seeker self, Entity entity) {
+            // if the seeker is one with custom colors, switch out the "stomp" particle that will be used by vanilla code.
+            bool hasCustomColor = self is SeekerCustomColors;
+            if (hasCustomColor) {
+                P_Stomp = (self as SeekerCustomColors).pStomp;
+            }
+
+            orig(self, entity);
+
+            // restore the stomp particle.
+            if (hasCustomColor) {
+                P_Stomp = basePStomp;
+            }
+        }
+
         private static ParticleType basePAttack;
         private static ParticleType basePHitWall;
         private static ParticleType basePStomp;
@@ -54,7 +77,6 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
         public override void Update() {
             P_Attack = pAttack;
             P_HitWall = pHitWall;
-            P_Stomp = pStomp;
             P_Regen = pRegen;
             self["TrailColor"] = trailColor;
 
@@ -62,9 +84,10 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
 
             P_Attack = basePAttack;
             P_HitWall = basePHitWall;
-            P_Stomp = basePStomp;
             P_Regen = basePRegen;
             self["TrailColor"] = baseTrailColor;
         }
+
+
     }
 }
