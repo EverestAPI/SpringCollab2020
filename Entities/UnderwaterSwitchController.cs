@@ -16,16 +16,16 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
             flag = data.Attr("flag");
 
             Add(new Coroutine(Routine()));
+        }
 
-            Add(new TransitionListener() {
-                OnInBegin = () => {
-                    // when transitioning in a room with a controller and the flag is already set, spawn water right away
-                    Session session = SceneAs<Level>().Session;
-                    if (session.GetFlag(flag)) {
-                        spawnWater(session.LevelData.Bounds);
-                    }
-                }
-            });
+        public override void Added(Scene scene) {
+            base.Added(scene);
+
+            // if the flag is already set, spawn water right away
+            Session session = SceneAs<Level>().Session;
+            if (session.GetFlag(flag)) {
+                spawnWater(session.LevelData.Bounds);
+            }
         }
 
         public IEnumerator Routine() {
