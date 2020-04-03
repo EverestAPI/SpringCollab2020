@@ -31,6 +31,7 @@ namespace Celeste.Mod.SpringCollab2020 {
             MadelineSilhouetteTrigger.Load();
             BlockJellySpawnTrigger.Load();
             StrawberryIgnoringLighting.Load();
+            SeekerCustomColors.Load();
         }
 
         public override void LoadContent(bool firstLoad) {
@@ -57,6 +58,7 @@ namespace Celeste.Mod.SpringCollab2020 {
             MadelineSilhouetteTrigger.Unload();
             BlockJellySpawnTrigger.Unload();
             StrawberryIgnoringLighting.Unload();
+            SeekerCustomColors.Unload();
         }
 
         public override void PrepareMapDataProcessors(MapDataFixup context) {
