@@ -264,3 +264,7 @@ placements.entities.SpringCollab2020/SeekerStatueCustomColors.tooltips.attackPar
 placements.entities.SpringCollab2020/SeekerStatueCustomColors.tooltips.regenParticleColor1=The first color of the particles the seeker emits when respawning.
 placements.entities.SpringCollab2020/SeekerStatueCustomColors.tooltips.regenParticleColor2=The second color of the particles the seeker emits when respawning.
 placements.entities.SpringCollab2020/SeekerStatueCustomColors.tooltips.trailColor=The color of the trail the seeker leaves behind it when "dashing".
+
+# Custom Respawn Time Refill
+placements.entities.SpringCollab2020/CustomRespawnTimeRefill.tooltips.twoDash=Whether the refill should give two dashes.
+placements.entities.SpringCollab2020/CustomRespawnTimeRefill.tooltips.respawnTime=The delay (in seconds) before the refill respawns after being collected.
