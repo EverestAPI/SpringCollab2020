@@ -114,7 +114,7 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
             }
         }
 
-        private static Color getModHue(Color[] colors, float gradientSize, Scene scene, Vector2 position) {
+        internal static Color getModHue(Color[] colors, float gradientSize, Scene scene, Vector2 position) {
             float progress = Calc.YoYo((position.Length() + scene.TimeActive * 50f) % gradientSize / gradientSize);
             if (progress == 1) {
                 return colors[colors.Length - 1];
