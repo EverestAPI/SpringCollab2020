@@ -11,6 +11,7 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
     public class CaveWall : Entity {
 
         private char fillTile;
+        private bool disableTransitionFading;
 
         private TileGrid tiles;
 
@@ -43,16 +44,17 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
             private set;
         }
 
-        public CaveWall(Vector2 position, char tile, float width, float height)
+        public CaveWall(Vector2 position, char tile, float width, float height, bool disableTransitionFading)
             : base(position) {
             fillTile = tile;
+            this.disableTransitionFading = disableTransitionFading;
             Collider = new Hitbox(width, height);
             Depth = -13001;
             Add(cutout = new EffectCutout());
         }
 
         public CaveWall(EntityData data, Vector2 offset)
-            : this(data.Position + offset, data.Char("tiletype", '3'), data.Width, data.Height) {
+            : this(data.Position + offset, data.Char("tiletype", '3'), data.Width, data.Height, data.Bool("disableTransitionFading", false)) {
         }
 
         public override void Awake(Scene scene) {
@@ -102,12 +104,14 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
                 cutout.Visible = false;
             }
 
-            TransitionListener transitionListener = new TransitionListener();
-            transitionListener.OnOut = OnTransitionOut;
-            transitionListener.OnOutBegin = OnTransitionOutBegin;
-            transitionListener.OnIn = OnTransitionIn;
-            transitionListener.OnInBegin = OnTransitionInBegin;
-            Add(transitionListener);
+            if (!disableTransitionFading) {
+                TransitionListener transitionListener = new TransitionListener();
+                transitionListener.OnOut = OnTransitionOut;
+                transitionListener.OnOutBegin = OnTransitionOutBegin;
+                transitionListener.OnIn = OnTransitionIn;
+                transitionListener.OnInBegin = OnTransitionInBegin;
+                Add(transitionListener);
+            }
         }
 
         private void TryToInitPosition() {
