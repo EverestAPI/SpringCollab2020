@@ -2,7 +2,8 @@ module SpringCollab2020CaveWall
 
 using ..Ahorn, Maple
 
-@mapdef Entity "SpringCollab2020/caveWall" CaveWall(x::Integer, y::Integer, width::Integer=Maple.defaultBlockWidth, height::Integer=Maple.defaultBlockHeight, tiletype::String="3")
+@mapdef Entity "SpringCollab2020/caveWall" CaveWall(x::Integer, y::Integer, width::Integer=Maple.defaultBlockWidth, height::Integer=Maple.defaultBlockHeight,
+    tiletype::String="3", disableTransitionFading::Bool=false)
 
 const placements = Ahorn.PlacementDict(
     "Cave Wall (Spring Collab 2020)" => Ahorn.EntityPlacement(

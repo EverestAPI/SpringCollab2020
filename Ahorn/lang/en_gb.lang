@@ -21,6 +21,7 @@ placements.entities.SpringCollab2020/LightningDashSwitch.tooltips.persistent=Whe
 
 ﻿# Cave Wall
 placements.entities.SpringCollab2020/caveWall.tooltips.tiletype=Changes the visual appearance of the wall.
+placements.entities.SpringCollab2020/caveWall.tooltips.disableTransitionFading=If ticked, prevents the wall from fading in during transitions.
 
 # Lightning Strike Trigger
 placements.triggers.SpringCollab2020/LightningStrikeTrigger.tooltips.playerOffset=The X offset of the lightning relative to the player's position.
