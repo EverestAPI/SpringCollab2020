@@ -32,6 +32,7 @@ namespace Celeste.Mod.SpringCollab2020 {
             BlockJellySpawnTrigger.Load();
             StrawberryIgnoringLighting.Load();
             SeekerCustomColors.Load();
+            CameraCatchupSpeedTrigger.Load();
         }
 
         public override void LoadContent(bool firstLoad) {
@@ -59,6 +60,7 @@ namespace Celeste.Mod.SpringCollab2020 {
             BlockJellySpawnTrigger.Unload();
             StrawberryIgnoringLighting.Unload();
             SeekerCustomColors.Unload();
+            CameraCatchupSpeedTrigger.Unload();
         }
 
         public override void PrepareMapDataProcessors(MapDataFixup context) {
