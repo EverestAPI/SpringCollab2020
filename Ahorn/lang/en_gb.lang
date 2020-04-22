@@ -273,3 +273,6 @@ placements.entities.SpringCollab2020/SeekerStatueCustomColors.tooltips.trailColo
 # Custom Respawn Time Refill
 placements.entities.SpringCollab2020/CustomRespawnTimeRefill.tooltips.twoDash=Whether the refill should give two dashes.
 placements.entities.SpringCollab2020/CustomRespawnTimeRefill.tooltips.respawnTime=The delay (in seconds) before the refill respawns after being collected.
+
+# Camera Catchup Speed Trigger
+placements.triggers.SpringCollab2020/CameraCatchupSpeedTrigger.tooltips.catchupSpeed=Raise this value to have the camera scroll quicker to its target. Vanilla values are 8 during the temple fall cutscene, and 1 everywhere else.
