@@ -7,6 +7,7 @@ using MonoMod.Cil;
 using MonoMod.RuntimeDetour;
 using System;
 using System.Reflection;
+using System.Linq;
 
 namespace Celeste.Mod.SpringCollab2020.Entities {
     [CustomEntity("SpringCollab2020/SidewaysJumpThru")]
@@ -17,7 +18,36 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
 
         private static FieldInfo actorMovementCounter = typeof(Actor).GetField("movementCounter", BindingFlags.Instance | BindingFlags.NonPublic);
 
+        private static bool hooksActive = false;
+
         public static void Load() {
+            Everest.Events.Level.OnEnter += onLevelEnter;
+            Everest.Events.Level.OnExit += onLevelExit;
+        }
+
+        public static void Unload() {
+            Everest.Events.Level.OnEnter -= onLevelEnter;
+            Everest.Events.Level.OnExit -= onLevelExit;
+        }
+
+        private static void onLevelEnter(Session session, bool fromSaveData) {
+            if (session.MapData?.Levels?.Any(level => level.Entities?.Any(entity => entity.Name == "SpringCollab2020/SidewaysJumpThru") ?? false) ?? false) {
+                activateHooks();
+            }
+        }
+
+        private static void onLevelExit(Level level, LevelExit exit, LevelExit.Mode mode, Session session, HiresSnow snow) {
+            if (mode != LevelExit.Mode.GoldenBerryRestart && mode != LevelExit.Mode.Restart) {
+                deactivateHooks();
+            }
+        }
+
+        public static void activateHooks() {
+            if (hooksActive) {
+                return;
+            }
+            hooksActive = true;
+
             string updateSpriteMethodToPatch = Everest.Loader.DependencyLoaded(new EverestModuleMetadata { Name = "Everest", Version = new Version(1, 1432) }) ?
                 "orig_UpdateSprite" : "UpdateSprite";
 
@@ -46,7 +76,12 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
             On.Celeste.Player.NormalUpdate += onPlayerNormalUpdate;
         }
 
-        public static void Unload() {
+        public static void deactivateHooks() {
+            if (!hooksActive) {
+                return;
+            }
+            hooksActive = false;
+
             On.Celeste.Actor.MoveHExact -= onActorMoveHExact;
             On.Celeste.Platform.MoveHExactCollideSolids -= onPlatformMoveHExactCollideSolids;
 

@@ -21,7 +21,36 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
 
         private static ILHook playerOrigUpdateHook;
 
+        private static bool hooksActive = false;
+
         public static void Load() {
+            Everest.Events.Level.OnEnter += onLevelEnter;
+            Everest.Events.Level.OnExit += onLevelExit;
+        }
+
+        public static void Unload() {
+            Everest.Events.Level.OnEnter -= onLevelEnter;
+            Everest.Events.Level.OnExit -= onLevelExit;
+        }
+
+        private static void onLevelEnter(Session session, bool fromSaveData) {
+            if (session.MapData?.Levels?.Any(level => level.Entities?.Any(entity => entity.Name == "SpringCollab2020/UpsideDownJumpThru") ?? false) ?? false) {
+                activateHooks();
+            }
+        }
+
+        private static void onLevelExit(Level level, LevelExit exit, LevelExit.Mode mode, Session session, HiresSnow snow) {
+            if (mode != LevelExit.Mode.GoldenBerryRestart && mode != LevelExit.Mode.Restart) {
+                deactivateHooks();
+            }
+        }
+
+        public static void activateHooks() {
+            if (hooksActive) {
+                return;
+            }
+            hooksActive = true;
+
             using (new DetourContext { Before = { "*" } }) { // these don't always call the orig methods, better apply them first.
                 // fix general actor/platform behavior to make them comply with jumpthrus.
                 On.Celeste.Actor.MoveVExact += onActorMoveVExact;
@@ -42,7 +71,12 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
             IL.Celeste.Player.RedDashUpdate += filterOutJumpThrusFromCollideChecks;
         }
 
-        public static void Unload() {
+        public static void deactivateHooks() {
+            if (!hooksActive) {
+                return;
+            }
+            hooksActive = false;
+
             On.Celeste.Actor.MoveVExact -= onActorMoveVExact;
             On.Celeste.Platform.MoveVExactCollideSolids -= onPlatformMoveVExactCollideSolids;
 
