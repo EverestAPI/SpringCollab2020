@@ -33,6 +33,7 @@ namespace Celeste.Mod.SpringCollab2020 {
             StrawberryIgnoringLighting.Load();
             SeekerCustomColors.Load();
             CameraCatchupSpeedTrigger.Load();
+            AnimatedEmojiInChapterName.Load();
         }
 
         public override void LoadContent(bool firstLoad) {
@@ -61,6 +62,7 @@ namespace Celeste.Mod.SpringCollab2020 {
             StrawberryIgnoringLighting.Unload();
             SeekerCustomColors.Unload();
             CameraCatchupSpeedTrigger.Unload();
+            AnimatedEmojiInChapterName.Unload();
         }
 
         public override void PrepareMapDataProcessors(MapDataFixup context) {
