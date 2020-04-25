@@ -47,7 +47,6 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
             }
 
             int extraAdvance = 0;
-            bool firstIsString = false;
 
             // go ahead and parse the controls. Controls can be textures, VirtualButtons, directions or strings.
             string[] controlsStrings = data.Attr("controls").Split(',');
@@ -71,7 +70,9 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
                         // width computation doesn't take this 1px into account, so we should add it back in.
                         extraAdvance++;
                         if (i == 0) {
-                            firstIsString = true;
+                            // as the text is rendered 1px to the right, if the first thing is a string, there will be 1px more padding on the left.
+                            // we should add that extra px on the right as well.
+                            extraAdvance++;
                         }
 
                         if (controlString.StartsWith("dialog:")) {
@@ -91,11 +92,6 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
             // if there is no first line, resize the bubble accordingly.
             if (string.IsNullOrEmpty(infoString)) {
                 guiData["infoHeight"] = 0f;
-            }
-            // as the text is rendered 1px to the right, if the first thing is a string, there will be 1px padding on the left.
-            // we should add that extra px on the right as well.
-            if (firstIsString) {
-                extraAdvance++;
             }
             // apply the extra width.
             guiData["controlsWidth"] = guiData.Get<float>("controlsWidth") + extraAdvance;
