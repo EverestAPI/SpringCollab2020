@@ -339,6 +339,13 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
             Collider.Top += 3;
         }
 
+        public override void Added(Scene scene) {
+            base.Added(scene);
+
+            // if hooks weren't activated yet somehow, activate them now.
+            activateHooks();
+        }
+
         public override void Awake(Scene scene) {
             if (animationDelay > 0f) {
                 for (int i = 0; i < columns; i++) {
