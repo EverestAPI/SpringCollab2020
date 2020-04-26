@@ -33,13 +33,16 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
                 On.Celeste.Player.ctor += onPlayerConstructor;
             }
 
-            // block player if they try to climb past an upside-down jumpthru.
-            IL.Celeste.Player.ClimbUpdate += patchPlayerClimbUpdate;
 
-            // ignore upside-down jumpthrus in select places.
-            playerOrigUpdateHook = new ILHook(typeof(Player).GetMethod("orig_Update"), filterOutJumpThrusFromCollideChecks);
-            IL.Celeste.Player.DashUpdate += filterOutJumpThrusFromCollideChecks;
-            IL.Celeste.Player.RedDashUpdate += filterOutJumpThrusFromCollideChecks;
+            using (new DetourContext()) {
+                // block player if they try to climb past an upside-down jumpthru.
+                IL.Celeste.Player.ClimbUpdate += patchPlayerClimbUpdate;
+
+                // ignore upside-down jumpthrus in select places.
+                playerOrigUpdateHook = new ILHook(typeof(Player).GetMethod("orig_Update"), filterOutJumpThrusFromCollideChecks);
+                IL.Celeste.Player.DashUpdate += filterOutJumpThrusFromCollideChecks;
+                IL.Celeste.Player.RedDashUpdate += filterOutJumpThrusFromCollideChecks;
+            }
         }
 
         public static void Unload() {
