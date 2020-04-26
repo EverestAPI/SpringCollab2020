@@ -31,7 +31,6 @@ end
 function Ahorn.render(ctx::Ahorn.Cairo.CairoContext, entity::VariableCrumbleBlock, room::Maple.Room)
     texture = get(entity.data, "texture", "default")
     texture = "objects/crumbleBlock/$texture"
-    println(texture)
 
     # Values need to be system specific integer
     x = Int(get(entity.data, "x", 0))
