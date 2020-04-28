@@ -47,6 +47,7 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
                 }
 
                 // make water go away.
+                water.Collidable = false;
                 Scene.Remove(water);
                 water = null;
             }
