@@ -29,7 +29,7 @@ namespace Celeste.Mod.SpringCollab2020.Triggers {
 
         private int ConstantTimer = 10;
 
-        private Random rand = new Random();
+        private Random rand;
     
         public LightningStrikeTrigger(EntityData data, Vector2 offset) : this(data, offset, data.Float("playerOffset", 0f), data.Float("verticalOffset", 0), data.Float("strikeHeight", 0), data.Int("seed", 0), data.Float("delay", 0f), data.Bool("rain", true), data.Bool("flash", true), data.Bool("constant", false)) { }
 
@@ -42,6 +42,8 @@ namespace Celeste.Mod.SpringCollab2020.Triggers {
             Raining = raining;
             Flash = flash;
             Constant = constant;
+
+            rand = new Random(seed);
         }
 
         public override void OnEnter(Player player) {
@@ -66,19 +68,12 @@ namespace Celeste.Mod.SpringCollab2020.Triggers {
             }
         }
 
-        public int GenSeed() {
-            if (!Constant)
-                return Seed;
-            else
-                return rand.Next(1, 100);
-        }
-
         public void Strike(Player player) {
             Level level = player.SceneAs<Level>();
             if (StrikeHeight == 0)
-                level.Add(new LightningStrike(new Vector2(player.X + PlayerOffset, level.Bounds.Top), GenSeed(), level.Bounds.Height, Delay));
+                level.Add(new LightningStrike(new Vector2(player.X + PlayerOffset, level.Bounds.Top), Seed, level.Bounds.Height, Delay));
             else
-                level.Add(new LightningStrike(new Vector2(player.X + PlayerOffset, player.Y + VerticalOffset), GenSeed(), StrikeHeight, Delay));
+                level.Add(new LightningStrike(new Vector2(player.X + PlayerOffset, player.Y + VerticalOffset), rand.Next(1, 100), StrikeHeight, Delay));
 
             Add(new Coroutine(ThunderEffect(level), true));
 
