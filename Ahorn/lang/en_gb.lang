@@ -25,10 +25,13 @@ placements.entities.SpringCollab2020/caveWall.tooltips.disableTransitionFading=I
 
 # Lightning Strike Trigger
 placements.triggers.SpringCollab2020/LightningStrikeTrigger.tooltips.playerOffset=The X offset of the lightning relative to the player's position.
+placements.triggers.SpringCollab2020/LightningStrikeTrigger.tooltips.verticalOffset=The Y offset of the lightning relative to the player's position.
+placements.triggers.SpringCollab2020/LightningStrikeTrigger.tooltips.strikeHeight=The height of the lightning strike. If set to 0, the height will be the screen's height.
 placements.triggers.SpringCollab2020/LightningStrikeTrigger.tooltips.seed=The seed for the randomizer which generates the lightning strike.
 placements.triggers.SpringCollab2020/LightningStrikeTrigger.tooltips.delay=The delay, in seconds, between the player entering the trigger and the appearance of the lightning strike.
 placements.triggers.SpringCollab2020/LightningStrikeTrigger.tooltips.rain=Upon lightning strike, rain will begin falling in the level.
 placements.triggers.SpringCollab2020/LightningStrikeTrigger.tooltips.flash=Upon lightning strike, the screen will flash white.
+placements.triggers.SpringCollab2020/LightningStrikeTrigger.tooltips.constant=If lightning should constantly strike while the player is inside the trigger.
 
 # Variable Crumble Blocks
 placements.entities.SpringCollab2020/variableCrumbleBlock.tooltips.texture=The texture of the blocks that are crumbling.2
