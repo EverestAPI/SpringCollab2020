@@ -20,8 +20,8 @@ namespace Celeste.Mod.SpringCollab2020.Triggers {
 
             // check if the player is in a color grade fade trigger
             Player player = self.Tracker.GetEntity<Player>();
-            ColorGradeFadeTrigger trigger;
-            if (player != null && (trigger = player.CollideFirst<ColorGradeFadeTrigger>()) != null) {
+            ColorGradeFadeTrigger trigger = player?.CollideFirst<ColorGradeFadeTrigger>();
+            if (trigger != null) {
                 DynData<Level> selfData = new DynData<Level>(self);
 
                 // the game fades from lastColorGrade to Session.ColorGrade using colorGradeEase as a lerp value.
@@ -31,12 +31,12 @@ namespace Celeste.Mod.SpringCollab2020.Triggers {
                     // we are closer to B. let B be the target color grade when player exits the trigger / dies in it
                     selfData["lastColorGrade"] = trigger.colorGradeA;
                     self.Session.ColorGrade = trigger.colorGradeB;
-                    selfData["colorGradeEase"] = MathHelper.Clamp(positionLerp, 0.001f, 0.999f);
+                    selfData["colorGradeEase"] = positionLerp;
                 } else {
                     // we are closer to A. let A be the target color grade when player exits the trigger / dies in it
                     selfData["lastColorGrade"] = trigger.colorGradeB;
                     self.Session.ColorGrade = trigger.colorGradeA;
-                    selfData["colorGradeEase"] = MathHelper.Clamp(1 - positionLerp, 0.001f, 0.999f);
+                    selfData["colorGradeEase"] = 1 - positionLerp;
                 }
                 selfData["colorGradeEaseSpeed"] = 1f;
             }
