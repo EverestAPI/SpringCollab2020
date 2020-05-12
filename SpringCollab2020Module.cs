@@ -1,6 +1,7 @@
 using Celeste.Mod.SpringCollab2020.Effects;
 using Celeste.Mod.SpringCollab2020.Entities;
 using Celeste.Mod.SpringCollab2020.Triggers;
+using Microsoft.Xna.Framework;
 using System;
 
 namespace Celeste.Mod.SpringCollab2020 {
@@ -36,6 +37,17 @@ namespace Celeste.Mod.SpringCollab2020 {
             CameraCatchupSpeedTrigger.Load();
             ColorGradeFadeTrigger.Load();
             Everest.Events.Level.OnLoadBackdrop += onLoadBackdrop;
+
+            DecalRegistry.AddPropertyHandler("scale", (decal, attrs) => {
+                Vector2 scale = decal.Scale;
+                if (attrs["multiply"] != null) {
+                    scale *= float.Parse(attrs["multiply"].Value);
+                }
+                if (attrs["divide"] != null) {
+                    scale /= float.Parse(attrs["divide"].Value);
+                }
+                decal.Scale = scale;
+            });
         }
 
         public override void LoadContent(bool firstLoad) {
