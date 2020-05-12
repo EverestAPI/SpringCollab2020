@@ -1,3 +1,4 @@
+using Celeste.Mod.SpringCollab2020.Effects;
 using Celeste.Mod.SpringCollab2020.Entities;
 using Celeste.Mod.SpringCollab2020.Triggers;
 using Microsoft.Xna.Framework;
@@ -35,6 +36,7 @@ namespace Celeste.Mod.SpringCollab2020 {
             SeekerCustomColors.Load();
             CameraCatchupSpeedTrigger.Load();
             ColorGradeFadeTrigger.Load();
+            Everest.Events.Level.OnLoadBackdrop += onLoadBackdrop;
 
             DecalRegistry.AddPropertyHandler("scale", (decal, attrs) => {
                 Vector2 scale = decal.Scale;
@@ -75,6 +77,14 @@ namespace Celeste.Mod.SpringCollab2020 {
             SeekerCustomColors.Unload();
             CameraCatchupSpeedTrigger.Unload();
             ColorGradeFadeTrigger.Unload();
+            Everest.Events.Level.OnLoadBackdrop -= onLoadBackdrop;
+        }
+
+        private Backdrop onLoadBackdrop(MapData map, BinaryPacker.Element child, BinaryPacker.Element above) {
+            if (child.Name.Equals("SpringCollab2020/HeatWaveNoColorGrade", StringComparison.OrdinalIgnoreCase)) {
+                return new HeatWaveNoColorGrade();
+            }
+            return null;
         }
 
         public override void PrepareMapDataProcessors(MapDataFixup context) {
