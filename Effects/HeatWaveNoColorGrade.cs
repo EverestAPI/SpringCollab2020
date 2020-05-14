@@ -36,6 +36,12 @@ namespace Celeste.Mod.SpringCollab2020.Effects {
                     levelData["colorGradeEase"] = colorGradeEase;
                     levelData["colorGradeEaseSpeed"] = colorGradeEaseSpeed;
                     level.Session.ColorGrade = colorGrade;
+
+                    if (self.Get<float>("heat") <= 0) {
+                        // the heat hit 0, we should now restore the water sine direction
+                        // ... because if we don't, waterfalls will flow backwards
+                        Distort.WaterSineDirection = 1f;
+                    }
                 }
             } else {
                 // heat wave is visible: update as usual.
