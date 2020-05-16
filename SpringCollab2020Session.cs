@@ -17,5 +17,12 @@ namespace Celeste.Mod.SpringCollab2020 {
         public bool MadelineIsSilhouette { get; set; } = false;
 
         public bool LightSourcesDisabled { get; set; } = false;
+
+        public class SpeedBasedMusicParamInfo {
+            public float MinimumSpeed { get; set; }
+            public float MaximumSpeed { get; set; }
+        }
+
+        public Dictionary<string, SpeedBasedMusicParamInfo> ActiveSpeedBasedMusicParams = new Dictionary<string, SpeedBasedMusicParamInfo>();
     }
 }

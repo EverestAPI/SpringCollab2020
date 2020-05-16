@@ -283,3 +283,9 @@ placements.triggers.SpringCollab2020/CameraCatchupSpeedTrigger.tooltips.catchupS
 placements.triggers.SpringCollab2020/ColorGradeFadeTrigger.tooltips.colorGradeA=The color grade to fade from.
 placements.triggers.SpringCollab2020/ColorGradeFadeTrigger.tooltips.colorGradeB=The color grade to fade to.
 placements.triggers.SpringCollab2020/ColorGradeFadeTrigger.tooltips.direction=The direction of the fade. For example, if set to LeftToRight, the color grade will fade from color grade A to color grade B when the player crosses the trigger from left to right.
+
+# Speed-Based Music Param Trigger
+placements.triggers.SpringCollab2020/SpeedBasedMusicParamTrigger.tooltips.paramName=The name of the music parameter to change.
+placements.triggers.SpringCollab2020/SpeedBasedMusicParamTrigger.tooltips.minSpeed=The minimum value the music parameter can take.
+placements.triggers.SpringCollab2020/SpeedBasedMusicParamTrigger.tooltips.maxSpeed=The maximum value the music parameter can take.
+placements.triggers.SpringCollab2020/SpeedBasedMusicParamTrigger.tooltips.activate=If ticked, the trigger will start adjusting the music parameter to match the player's speed.\nIf unticked, the trigger will stop adjusting that music parameter, and set it to minSpeed.
