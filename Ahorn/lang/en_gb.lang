@@ -58,6 +58,25 @@ placements.triggers.SpringCollab2020/SmoothCameraOffsetTrigger.tooltips.offsetYT
 placements.triggers.SpringCollab2020/SmoothCameraOffsetTrigger.tooltips.positionMode=The fade direction.
 placements.triggers.SpringCollab2020/SmoothCameraOffsetTrigger.tooltips.onlyOnce=If checked, the trigger will be disabled when the player first leaves it.
 
+# Flag Toggle Smooth Camera Offset Trigger
+placements.triggers.SpringCollab2020/FlagToggleSmoothCameraOffsetTrigger.tooltips.offsetXFrom=The X offset to fade from.
+placements.triggers.SpringCollab2020/FlagToggleSmoothCameraOffsetTrigger.tooltips.offsetXTo=The X offset to fade to.
+placements.triggers.SpringCollab2020/FlagToggleSmoothCameraOffsetTrigger.tooltips.offsetYFrom=The Y offset to fade from.
+placements.triggers.SpringCollab2020/FlagToggleSmoothCameraOffsetTrigger.tooltips.offsetYTo=The Y offset to fade to.
+placements.triggers.SpringCollab2020/FlagToggleSmoothCameraOffsetTrigger.tooltips.positionMode=The fade direction.
+placements.triggers.SpringCollab2020/FlagToggleSmoothCameraOffsetTrigger.tooltips.onlyOnce=If checked, the trigger will be disabled when the player first leaves it.
+placements.triggers.SpringCollab2020/FlagToggleSmoothCameraOffsetTrigger.tooltips.flag=The flag this trigger should react to.
+placements.triggers.SpringCollab2020/FlagToggleSmoothCameraOffsetTrigger.tooltips.inverted=If checked, the trigger will be disabled when the flag is active.\nIf unchecked, the trigger will be enabled when the flag is active.
+
+# Flag Toggle Camera Target Trigger
+placements.triggers.SpringCollab2020/FlagToggleCameraTargetTrigger.tooltips.positionMode=Determines which direction the camera position moves in.
+placements.triggers.SpringCollab2020/FlagToggleCameraTargetTrigger.tooltips.yOnly=The camera will only lock on the Y axis.
+placements.triggers.SpringCollab2020/FlagToggleCameraTargetTrigger.tooltips.xOnly=The camera will only lock on the X axis.
+placements.triggers.SpringCollab2020/FlagToggleCameraTargetTrigger.tooltips.lerpStrength=Determines how fast the camera moves to lock into place upon activation.
+placements.triggers.SpringCollab2020/FlagToggleCameraTargetTrigger.tooltips.deleteFlag=Session flag to deactivate the trigger, ignored if left empty. Camera will not reset if player is inside the trigger as it deactivates.\nIf the player transitions into the room with the flag set, the trigger can not be reactivated. However, if it was enabled and then disabled in the room, the player can reactivate it.
+placements.triggers.SpringCollab2020/FlagToggleCameraTargetTrigger.tooltips.flag=The flag this trigger should react to.
+placements.triggers.SpringCollab2020/FlagToggleCameraTargetTrigger.tooltips.inverted=If checked, the trigger will be disabled when the flag is active.\nIf unchecked, the trigger will be enabled when the flag is active.
+
 # Dash Spring
 placements.entities.SpringCollab2020/dashSpring.tooltips.playerCanUse=Determines whether the player is able to interact with the spring.
 
