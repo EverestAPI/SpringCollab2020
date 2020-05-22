@@ -308,3 +308,6 @@ placements.triggers.SpringCollab2020/SpeedBasedMusicParamTrigger.tooltips.paramN
 placements.triggers.SpringCollab2020/SpeedBasedMusicParamTrigger.tooltips.minSpeed=The minimum value the music parameter can take.
 placements.triggers.SpringCollab2020/SpeedBasedMusicParamTrigger.tooltips.maxSpeed=The maximum value the music parameter can take.
 placements.triggers.SpringCollab2020/SpeedBasedMusicParamTrigger.tooltips.activate=If ticked, the trigger will start adjusting the music parameter to match the player's speed.\nIf unticked, the trigger will stop adjusting that music parameter, and set it to minSpeed.
+
+# Static Puffer
+placements.entities.SpringCollab2020/StaticPuffer.tooltips.right=The initial direction of the puffer.
