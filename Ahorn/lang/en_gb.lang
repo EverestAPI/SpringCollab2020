@@ -312,3 +312,6 @@ placements.triggers.SpringCollab2020/SpeedBasedMusicParamTrigger.tooltips.activa
 # Foreground Reflection Tentacles
 placements.entities.SpringCollab2020/ForegroundReflectionTentacles.tooltips.slide_until=Changes how far tentacles fall back when Madeline comes into fear distance.
 placements.entities.SpringCollab2020/ForegroundReflectionTentacles.tooltips.fear_distance=Determines the distance Madeline has to be at for the tentacles to fall back.
+
+# Static Puffer
+placements.entities.SpringCollab2020/StaticPuffer.tooltips.right=The initial direction of the puffer.
