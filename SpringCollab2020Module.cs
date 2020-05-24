@@ -37,6 +37,7 @@ namespace Celeste.Mod.SpringCollab2020 {
             CameraCatchupSpeedTrigger.Load();
             ColorGradeFadeTrigger.Load();
             SpeedBasedMusicParamTrigger.Load();
+            StaticPuffer.Load();
             LeaveTheoBehindTrigger.Load();
             Everest.Events.Level.OnLoadBackdrop += onLoadBackdrop;
 
@@ -80,6 +81,7 @@ namespace Celeste.Mod.SpringCollab2020 {
             CameraCatchupSpeedTrigger.Unload();
             ColorGradeFadeTrigger.Unload();
             SpeedBasedMusicParamTrigger.Unload();
+            StaticPuffer.Unload();
             LeaveTheoBehindTrigger.Unload();
             Everest.Events.Level.OnLoadBackdrop -= onLoadBackdrop;
         }
