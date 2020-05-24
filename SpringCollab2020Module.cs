@@ -38,6 +38,7 @@ namespace Celeste.Mod.SpringCollab2020 {
             ColorGradeFadeTrigger.Load();
             SpeedBasedMusicParamTrigger.Load();
             StaticPuffer.Load();
+            LeaveTheoBehindTrigger.Load();
             Everest.Events.Level.OnLoadBackdrop += onLoadBackdrop;
 
             DecalRegistry.AddPropertyHandler("scale", (decal, attrs) => {
@@ -81,6 +82,7 @@ namespace Celeste.Mod.SpringCollab2020 {
             ColorGradeFadeTrigger.Unload();
             SpeedBasedMusicParamTrigger.Unload();
             StaticPuffer.Unload();
+            LeaveTheoBehindTrigger.Unload();
             Everest.Events.Level.OnLoadBackdrop -= onLoadBackdrop;
         }
 
