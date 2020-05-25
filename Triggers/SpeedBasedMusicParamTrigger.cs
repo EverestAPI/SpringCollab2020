@@ -16,17 +16,19 @@ namespace Celeste.Mod.SpringCollab2020.Triggers {
         private static void onPlayerUpdate(On.Celeste.Player.orig_Update orig, Player self) {
             orig(self);
 
-            AudioState audio = self.SceneAs<Level>().Session.Audio;
-            float playerSpeed = self.Speed.Length();
+            if (SpringCollab2020Module.Instance.Session.ActiveSpeedBasedMusicParams.Count > 0) {
+                AudioState audio = self.SceneAs<Level>().Session.Audio;
+                float playerSpeed = self.Speed.Length();
 
-            // set all the speed-based music params to their corresponding values.
-            foreach (KeyValuePair<string, SpringCollab2020Session.SpeedBasedMusicParamInfo> musicParam
-                in SpringCollab2020Module.Instance.Session.ActiveSpeedBasedMusicParams) {
+                // set all the speed-based music params to their corresponding values.
+                foreach (KeyValuePair<string, SpringCollab2020Session.SpeedBasedMusicParamInfo> musicParam
+                    in SpringCollab2020Module.Instance.Session.ActiveSpeedBasedMusicParams) {
 
-                audio.Music.Param(musicParam.Key, MathHelper.Clamp(playerSpeed, musicParam.Value.MinimumSpeed, musicParam.Value.MaximumSpeed));
+                    audio.Music.Param(musicParam.Key, MathHelper.Clamp(playerSpeed, musicParam.Value.MinimumSpeed, musicParam.Value.MaximumSpeed));
+                }
+
+                audio.Apply();
             }
-
-            audio.Apply();
         }
 
         private string paramName;
