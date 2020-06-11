@@ -155,10 +155,10 @@ placements.entities.SpringCollab2020/GroupedTriggerSpikesUp.tooltips.type=Change
 placements.entities.SpringCollab2020/GroupedTriggerSpikesDown.tooltips.type=Changes the visual appearance of the spikes.
 placements.entities.SpringCollab2020/GroupedTriggerSpikesLeft.tooltips.type=Changes the visual appearance of the spikes.
 placements.entities.SpringCollab2020/GroupedTriggerSpikesRight.tooltips.type=Changes the visual appearance of the spikes.
-placements.entities.SpringCollab2020/GroupedTriggerSpikesUp.tooltips.behindMoveBlocks=Whether the spikes should be deeper than normal in order to appear behind move blocks.
-placements.entities.SpringCollab2020/GroupedTriggerSpikesDown.tooltips.behindMoveBlocks=Whether the spikes should be deeper than normal in order to appear behind move blocks.
-placements.entities.SpringCollab2020/GroupedTriggerSpikesLeft.tooltips.behindMoveBlocks=Whether the spikes should be deeper than normal in order to appear behind move blocks.
-placements.entities.SpringCollab2020/GroupedTriggerSpikesRight.tooltips.behindMoveBlocks=Whether the spikes should be deeper than normal in order to appear behind move blocks.
+placements.entities.SpringCollab2020/GroupedTriggerSpikesUp.tooltips.behindMoveBlocks=Determines whether the trigger spikes appear behind move blocks.
+placements.entities.SpringCollab2020/GroupedTriggerSpikesDown.tooltips.behindMoveBlocks=Determines whether the trigger spikes appear behind move blocks.
+placements.entities.SpringCollab2020/GroupedTriggerSpikesLeft.tooltips.behindMoveBlocks=Determines whether the trigger spikes appear behind move blocks.
+placements.entities.SpringCollab2020/GroupedTriggerSpikesRight.tooltips.behindMoveBlocks=Determines whether the trigger spikes appear behind move blocks.
 
 # Move Block with Customizable Speed
 placements.entities.SpringCollab2020/MoveBlockCustomSpeed.tooltips.canSteer=Determines whether the move block can be moved by the player.
