@@ -2,10 +2,10 @@ module SpringCollab2020GroupedTriggerSpikes
 
 using ..Ahorn, Maple
 
-@mapdef Entity "SpringCollab2020/GroupedTriggerSpikesUp" GroupedTriggerSpikesUp(x::Integer, y::Integer, width::Integer=Maple.defaultSpikeWidth, type::String="default")
-@mapdef Entity "SpringCollab2020/GroupedTriggerSpikesDown" GroupedTriggerSpikesDown(x::Integer, y::Integer, width::Integer=Maple.defaultSpikeWidth, type::String="default")
-@mapdef Entity "SpringCollab2020/GroupedTriggerSpikesLeft" GroupedTriggerSpikesLeft(x::Integer, y::Integer, height::Integer=Maple.defaultSpikeHeight, type::String="default")
-@mapdef Entity "SpringCollab2020/GroupedTriggerSpikesRight" GroupedTriggerSpikesRight(x::Integer, y::Integer, height::Integer=Maple.defaultSpikeHeight, type::String="default")
+@mapdef Entity "SpringCollab2020/GroupedTriggerSpikesUp" GroupedTriggerSpikesUp(x::Integer, y::Integer, width::Integer=Maple.defaultSpikeWidth, type::String="default", behindMoveBlocks::Bool=false)
+@mapdef Entity "SpringCollab2020/GroupedTriggerSpikesDown" GroupedTriggerSpikesDown(x::Integer, y::Integer, width::Integer=Maple.defaultSpikeWidth, type::String="default", behindMoveBlocks::Bool=false)
+@mapdef Entity "SpringCollab2020/GroupedTriggerSpikesLeft" GroupedTriggerSpikesLeft(x::Integer, y::Integer, height::Integer=Maple.defaultSpikeHeight, type::String="default", behindMoveBlocks::Bool=false)
+@mapdef Entity "SpringCollab2020/GroupedTriggerSpikesRight" GroupedTriggerSpikesRight(x::Integer, y::Integer, height::Integer=Maple.defaultSpikeHeight, type::String="default", behindMoveBlocks::Bool=false)
 
 const placements = Ahorn.PlacementDict()
 
