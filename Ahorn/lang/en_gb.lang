@@ -35,6 +35,7 @@ placements.triggers.SpringCollab2020/LightningStrikeTrigger.tooltips.constant=If
 # Variable Crumble Blocks
 placements.entities.SpringCollab2020/variableCrumbleBlock.tooltips.texture=The texture of the blocks that are crumbling.2
 placements.entities.SpringCollab2020/variableCrumbleBlock.tooltips.timer=How long the blocks will shake for before falling.
+placements.entities.SpringCollab2020/variableCrumbleBlock.tooltips.respawnTimer=How much time (in seconds) the block will take before respawning.
 
 # Floatier Space Block
 placements.entities.SpringCollab2020/floatierSpaceBlock.tooltips.disableSpawnOffset=Whether or not the entity should spawn without the random offset.

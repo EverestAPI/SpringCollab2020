@@ -2,7 +2,8 @@ module SpringCollab2020VariableCrumbleBlock
 
 using ..Ahorn, Maple
 
-@mapdef Entity "SpringCollab2020/variableCrumbleBlock" VariableCrumbleBlock(x::Integer, y::Integer, width::Integer=Maple.defaultBlockWidth, texture::String="default", timer::Number=0.4)
+@mapdef Entity "SpringCollab2020/variableCrumbleBlock" VariableCrumbleBlock(x::Integer, y::Integer, width::Integer=Maple.defaultBlockWidth, texture::String="default",
+    timer::Number=0.4, respawnTimer::Number=2.0)
 
 const placements = Ahorn.PlacementDict(
     "Variable Crumble Blocks ($(uppercasefirst(texture))) (Spring Collab 2020)" => Ahorn.EntityPlacement(

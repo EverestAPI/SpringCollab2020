@@ -26,23 +26,27 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
 
         public float crumbleTime = 0.4f;
 
-        public string OverrideTexture;
+        public float respawnTime = 2f;
 
-        public VariableCrumblePlatform(Vector2 position, float width, float timer)
+        private string overrideTexture;
+
+        public VariableCrumblePlatform(Vector2 position, float width, string overrideTexture, float timer, float respawnTimer)
             : base(position, width, 8f, false) {
             EnableAssistModeChecks = false;
+            this.overrideTexture = overrideTexture;
             crumbleTime = timer;
+            respawnTime = respawnTimer;
         }
 
         public VariableCrumblePlatform(EntityData data, Vector2 offset)
-            : this(data.Position + offset, (float) data.Width, data.Float("timer", 0.4f)) {
+            : this(data.Position + offset, (float) data.Width, data.Attr("texture"), data.Float("timer", 0.4f), data.Float("respawnTimer", 2f)) {
         }
 
         public override void Added(Scene scene) {
             AreaData areaData = AreaData.Get(scene);
             string crumbleBlock = areaData.CrumbleBlock;
-            if (OverrideTexture != null) {
-                areaData.CrumbleBlock = OverrideTexture;
+            if (overrideTexture != null) {
+                areaData.CrumbleBlock = overrideTexture;
             }
             base.Added(scene);
             MTexture mTexture = GFX.Game["objects/crumbleBlock/outline"];
@@ -142,7 +146,7 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
                         }
                     }
                 }
-                yield return 2f;
+                yield return respawnTime;
                 while (CollideCheck<Actor>() || CollideCheck<Solid>()) {
                     yield return null;
                 }
