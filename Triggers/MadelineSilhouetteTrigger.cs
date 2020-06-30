@@ -21,11 +21,11 @@ namespace Celeste.Mod.SpringCollab2020.Triggers {
         }
 
         private static void onPlayerAdded(On.Celeste.Player.orig_Added orig, Player self, Scene scene) {
+            orig(self, scene);
+
             if (SpringCollab2020Module.Instance.Session.MadelineIsSilhouette) {
                 refreshPlayerSpriteMode(self, true);
             }
-
-            orig(self, scene);
         }
 
         private static void patchPlayerRender(ILContext il) {
