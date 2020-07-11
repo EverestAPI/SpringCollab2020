@@ -24,11 +24,13 @@ namespace Celeste.Mod.SpringCollab2020.Triggers {
         public override void OnLeave(Player player) {
             base.OnLeave(player);
 
-            // add the attack coroutines back.
-            foreach (FinalBoss badelineBoss in Scene.Tracker.GetEntities<FinalBoss>()) {
-                Coroutine attackCoroutine = new DynData<FinalBoss>(badelineBoss).Get<Coroutine>("attackCoroutine");
-                if (!badelineBoss.Components.Contains(attackCoroutine)) {
-                    badelineBoss.Add(attackCoroutine);
+            if (!player.Dead) {
+                // add the attack coroutines back.
+                foreach (FinalBoss badelineBoss in Scene.Tracker.GetEntities<FinalBoss>()) {
+                    Coroutine attackCoroutine = new DynData<FinalBoss>(badelineBoss).Get<Coroutine>("attackCoroutine");
+                    if (!badelineBoss.Components.Contains(attackCoroutine)) {
+                        badelineBoss.Add(attackCoroutine);
+                    }
                 }
             }
         }
