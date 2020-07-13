@@ -320,3 +320,6 @@ placements.entities.SpringCollab2020/ForegroundReflectionTentacles.tooltips.fear
 
 # Static Puffer
 placements.entities.SpringCollab2020/StaticPuffer.tooltips.right=The initial direction of the puffer.
+
+# Badeline Bounce Direction Trigger
+placements.triggers.SpringCollab2020/BadelineBounceDirectionTrigger.tooltips.bounceLeft=Determines the bounce direction of the player when hitting the Badeline Boss inside of the trigger (checked = to the left, unchecked = to the right).
