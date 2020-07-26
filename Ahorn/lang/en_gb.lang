@@ -323,3 +323,7 @@ placements.entities.SpringCollab2020/StaticPuffer.tooltips.right=The initial dir
 
 # Badeline Bounce Direction Trigger
 placements.triggers.SpringCollab2020/BadelineBounceDirectionTrigger.tooltips.bounceLeft=Determines the bounce direction of the player when hitting the Badeline Boss inside of the trigger (checked = to the left, unchecked = to the right).
+
+# Wall Booster
+placements.entities.SpringCollab2020/NonCoreModeWallBooster.tooltips.left=Whether the entity attaches to the left wall or not.
+placements.entities.SpringCollab2020/NonCoreModeWallBooster.tooltips.notCoreMode=Determines whether the entity should ignore the current core mode and default to ice variant.
