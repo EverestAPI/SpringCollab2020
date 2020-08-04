@@ -15,7 +15,7 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
     /// - speedMultiplier: multiplies the vanilla speed for lava
     /// </summary>
     [CustomEntity("SpringCollab2020/SidewaysLava")]
-    class SidewaysLava : Entity {
+    public class SidewaysLava : Entity {
         private static FieldInfo lavaBlockerTriggerEnabled = typeof(LavaBlockerTrigger).GetField("enabled", BindingFlags.NonPublic | BindingFlags.Instance);
 
         private enum LavaMode {
@@ -60,6 +60,12 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
             Calc.HexToColor("4ca2eb"),
             Calc.HexToColor("0151d0")
         };
+
+        public SidewaysLava(bool intro, string lavaMode, float speedMultiplier) : this(new EntityData() {
+            Values = new Dictionary<string, object>() {
+                { "intro", intro }, { "lavaMode", lavaMode }, { "speedMultiplier", speedMultiplier }
+            }
+        }, Vector2.Zero) { }
 
         public SidewaysLava(EntityData data, Vector2 offset) {
             intro = data.Bool("intro", false);
