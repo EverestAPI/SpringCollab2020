@@ -8,6 +8,8 @@ using System;
 namespace Celeste.Mod.SpringCollab2020.Triggers {
     [CustomEntity("SpringCollab2020/MadelineSilhouetteTrigger")]
     class MadelineSilhouetteTrigger : Trigger {
+        private static Color silhouetteOutOfStaminaZeroDashBlinkColor = Calc.HexToColor("348DC1");
+
         public static void Load() {
             On.Celeste.Player.Added += onPlayerAdded;
             IL.Celeste.Player.Render += patchPlayerRender;
@@ -32,15 +34,20 @@ namespace Celeste.Mod.SpringCollab2020.Triggers {
             ILCursor cursor = new ILCursor(il);
 
             // jump to the usage of the Red color
-            if (cursor.TryGotoNext(instr => instr.MatchCall<Color>("get_Red"))) {
+            if (cursor.TryGotoNext(MoveType.After, instr => instr.MatchCall<Color>("get_Red"))) {
                 Logger.Log("SpringCollab2020/MadelineSilhouetteTrigger", $"Patching silhouette hair color at {cursor.Index} in IL code for Player.Render()");
 
                 // when Madeline blinks red, make the hair blink red.
                 cursor.Emit(OpCodes.Ldarg_0);
-                cursor.EmitDelegate<Action<Player>>(player => {
+                cursor.EmitDelegate<Func<Color, Player, Color>>((color, player) => {
                     if (SpringCollab2020Module.Instance.Session.MadelineIsSilhouette) {
-                        player.Hair.Color = Color.Red;
+                        if (player.Dashes == 0) {
+                            // blink to another shade of blue instead, to avoid red/blue flashes that are hard on the eyes.
+                            color = silhouetteOutOfStaminaZeroDashBlinkColor;
+                        }
+                        player.Hair.Color = color;
                     }
+                    return color;
                 });
             }
 
