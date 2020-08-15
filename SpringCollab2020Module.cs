@@ -40,6 +40,7 @@ namespace Celeste.Mod.SpringCollab2020 {
             StaticPuffer.Load();
             LeaveTheoBehindTrigger.Load();
             BadelineBounceDirectionTrigger.Load();
+            WaterRocketLaunchingComponent.Load();
             Everest.Events.Level.OnLoadBackdrop += onLoadBackdrop;
 
             DecalRegistry.AddPropertyHandler("scale", (decal, attrs) => {
@@ -85,6 +86,7 @@ namespace Celeste.Mod.SpringCollab2020 {
             StaticPuffer.Unload();
             LeaveTheoBehindTrigger.Unload();
             BadelineBounceDirectionTrigger.Unload();
+            WaterRocketLaunchingComponent.Unload();
             Everest.Events.Level.OnLoadBackdrop -= onLoadBackdrop;
         }
 
