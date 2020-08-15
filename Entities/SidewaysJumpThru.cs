@@ -200,7 +200,8 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
                         // and we are checking the collision on the left side of the player for example.
                         bool collideOnLeftSideOfPlayer = (self.Position.X > checkAtPosition.X);
                         SidewaysJumpThru jumpthru = self.CollideFirstOutside<SidewaysJumpThru>(checkAtPosition);
-                        return jumpthru != null && self is Player player && (jumpthru.AllowLeftToRight == collideOnLeftSideOfPlayer);
+                        return jumpthru != null && self is Player player && (jumpthru.AllowLeftToRight == collideOnLeftSideOfPlayer)
+                            && jumpthru.Bottom >= self.Top + checkAtPosition.Y - self.Position.Y + 3;
                     });
                 }
 
