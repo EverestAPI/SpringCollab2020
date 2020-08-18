@@ -21,8 +21,6 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
 
         private static ILHook playerOrigUpdateHook;
 
-        private static readonly Hitbox normalHitbox = new Hitbox(8f, 11f, -4f, -11f);
-
         public static void Load() {
             using (new DetourContext { Before = { "*" } }) { // these don't always call the orig methods, better apply them first.
                 // fix general actor/platform behavior to make them comply with jumpthrus.
@@ -44,9 +42,6 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
                 playerOrigUpdateHook = new ILHook(typeof(Player).GetMethod("orig_Update"), filterOutJumpThrusFromCollideChecks);
                 IL.Celeste.Player.DashUpdate += filterOutJumpThrusFromCollideChecks;
                 IL.Celeste.Player.RedDashUpdate += filterOutJumpThrusFromCollideChecks;
-
-                // listen for the player unducking, to knock the player down before they would go through upside down jumpthrus.
-                On.Celeste.Player.Update += onPlayerUpdate;
             }
         }
 
@@ -60,8 +55,6 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
             playerOrigUpdateHook?.Dispose();
             IL.Celeste.Player.DashUpdate -= filterOutJumpThrusFromCollideChecks;
             IL.Celeste.Player.RedDashUpdate -= filterOutJumpThrusFromCollideChecks;
-
-            On.Celeste.Player.Update -= onPlayerUpdate;
         }
 
         private static bool onActorMoveVExact(On.Celeste.Actor.orig_MoveVExact orig, Actor self, int moveV, Collision onCollide, Solid pusher) {
@@ -296,25 +289,6 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
             }
         }
 
-        private static void onPlayerUpdate(On.Celeste.Player.orig_Update orig, Player self) {
-            bool unduckWouldGoThroughPlatform = self.Ducking && !self.CollideCheck<UpsideDownJumpThru>();
-            if (unduckWouldGoThroughPlatform) {
-                Collider bak = self.Collider;
-                self.Collider = normalHitbox;
-                unduckWouldGoThroughPlatform = self.CollideCheck<UpsideDownJumpThru>();
-                self.Collider = bak;
-            }
-
-            orig(self);
-
-            if (unduckWouldGoThroughPlatform && !self.Ducking) {
-                // we just unducked, and are now inside an upside-down jumpthru.
-                // knock the player down if possible!
-                while (self.CollideCheck<UpsideDownJumpThru>() && !self.CollideCheck<Solid>(self.Position + new Vector2(0f, 1f))) {
-                    self.Position.Y++;
-                }
-            }
-        }
 
 
 
