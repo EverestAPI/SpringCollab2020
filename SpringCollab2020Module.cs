@@ -2,6 +2,7 @@ using Celeste.Mod.SpringCollab2020.Effects;
 using Celeste.Mod.SpringCollab2020.Entities;
 using Celeste.Mod.SpringCollab2020.Triggers;
 using Microsoft.Xna.Framework;
+using Monocle;
 using System;
 
 namespace Celeste.Mod.SpringCollab2020 {
@@ -93,6 +94,15 @@ namespace Celeste.Mod.SpringCollab2020 {
         private Backdrop onLoadBackdrop(MapData map, BinaryPacker.Element child, BinaryPacker.Element above) {
             if (child.Name.Equals("SpringCollab2020/HeatWaveNoColorGrade", StringComparison.OrdinalIgnoreCase)) {
                 return new HeatWaveNoColorGrade();
+            }
+            if (child.Name.Equals("SpringCollab2020/CustomSnow", StringComparison.OrdinalIgnoreCase)) {
+                string[] colorsAsStrings = child.Attr("colors").Split(',');
+                Color[] colors = new Color[colorsAsStrings.Length];
+                for (int i = 0; i < colors.Length; i++) {
+                    colors[i] = Calc.HexToColor(colorsAsStrings[i]);
+                }
+
+                return new CustomSnow(colors, child.AttrBool("foreground"));
             }
             return null;
         }

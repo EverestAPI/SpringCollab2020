@@ -327,3 +327,6 @@ placements.triggers.SpringCollab2020/BadelineBounceDirectionTrigger.tooltips.bou
 # Wall Booster
 placements.entities.SpringCollab2020/NonCoreModeWallBooster.tooltips.left=Whether the entity attaches to the left wall or not.
 placements.entities.SpringCollab2020/NonCoreModeWallBooster.tooltips.notCoreMode=Determines whether the entity should ignore the current core mode and default to ice variant.
+
+# Custom Snow
+placements.effects.SpringCollab2020/CustomSnow.tooltips.colors=Comma-separated list of all colors the particles can take from.
