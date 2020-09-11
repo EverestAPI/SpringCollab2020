@@ -280,24 +280,24 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
             if (waiting) {
                 loopSfx.Param("rising", 0f);
 
-                // the sandwich lava fade in animation is not handled here.
-                if (lavaMode != LavaMode.Sandwich) {
-                    float target;
-                    if (lavaMode == LavaMode.LeftToRight) {
-                        // stop 32px to the left of the player.
-                        target = player.X - 32f;
-                    } else {
-                        // stop 32px to the right of the player. since lava is offset by 320px, that gives 320 - 32 = 288px.
-                        target = player.X - 288f;
-                    }
-
-                    if (!intro && player != null && player.JustRespawned) {
-                        X = Calc.Approach(X, target, 32f * speedMultiplier * Engine.DeltaTime);
-                    }
-                }
-
                 if (player == null || !player.JustRespawned) {
                     waiting = false;
+                } else {
+                    // the sandwich lava fade in animation is not handled here.
+                    if (lavaMode != LavaMode.Sandwich) {
+                        float target;
+                        if (lavaMode == LavaMode.LeftToRight) {
+                            // stop 32px to the left of the player.
+                            target = player.X - 32f;
+                        } else {
+                            // stop 32px to the right of the player. since lava is offset by 320px, that gives 320 - 32 = 288px.
+                            target = player.X - 288f;
+                        }
+
+                        if (!intro && player != null && player.JustRespawned) {
+                            X = Calc.Approach(X, target, 32f * speedMultiplier * Engine.DeltaTime);
+                        }
+                    }
                 }
             } else {
                 if (lavaMode != LavaMode.Sandwich) {
