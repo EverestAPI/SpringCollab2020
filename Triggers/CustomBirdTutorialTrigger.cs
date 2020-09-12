@@ -1,9 +1,8 @@
-﻿using Celeste.Mod.Entities;
-using Celeste.Mod.SpringCollab2020.Entities;
+﻿using Celeste.Mod.SpringCollab2020.Entities;
 using Microsoft.Xna.Framework;
 
 namespace Celeste.Mod.SpringCollab2020.Triggers {
-    [CustomEntity("SpringCollab2020/CustomBirdTutorialTrigger")]
+    [Mod.Entities.CustomEntity("SpringCollab2020/CustomBirdTutorialTrigger")]
     class CustomBirdTutorialTrigger : Trigger {
         private string birdId;
         private bool showTutorial;
