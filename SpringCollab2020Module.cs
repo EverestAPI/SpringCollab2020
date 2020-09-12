@@ -18,6 +18,8 @@ namespace Celeste.Mod.SpringCollab2020 {
         }
 
         public override void Load() {
+            Logger.SetLogLevel("SpringCollab2020", LogLevel.Info);
+
             NoRefillField.Load();
             FloatierSpaceBlock.Load();
             MoveBlockBarrier.Load();
