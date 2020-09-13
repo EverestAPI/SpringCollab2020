@@ -330,3 +330,6 @@ placements.entities.SpringCollab2020/NonCoreModeWallBooster.tooltips.notCoreMode
 
 # Custom Snow
 placements.effects.SpringCollab2020/CustomSnow.tooltips.colors=Comma-separated list of all colors the particles can take from.
+
+# Change Theme Trigger
+placements.triggers.SpringCollab2020/ChangeThemeTrigger.tooltips.enable=Whether the theme is enabled when entering this zone.

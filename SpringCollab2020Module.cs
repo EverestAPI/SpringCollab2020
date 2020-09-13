@@ -10,6 +10,9 @@ namespace Celeste.Mod.SpringCollab2020 {
 
         public static SpringCollab2020Module Instance;
 
+        public override Type SaveDataType => typeof(SpringCollab2020SaveData);
+        public SpringCollab2020SaveData SaveData => (SpringCollab2020SaveData) _SaveData;
+
         public override Type SessionType => typeof(SpringCollab2020Session);
         public SpringCollab2020Session Session => (SpringCollab2020Session) _Session;
 
