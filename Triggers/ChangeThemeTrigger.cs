@@ -1,6 +1,7 @@
 ﻿using Celeste.Mod.Entities;
 using Microsoft.Xna.Framework;
 using Monocle;
+using System;
 
 namespace Celeste.Mod.SpringCollab2020.Triggers {
     // a very hardcoded trigger that is here to persist theme choices between play sessions.
@@ -62,6 +63,42 @@ namespace Celeste.Mod.SpringCollab2020.Triggers {
                     case "SpringCollab2020/4-Expert/Zerex":
                         setBloom(level, 2.5f);
                         break;
+                }
+            }
+        }
+
+        public override void Awake(Scene scene) {
+            base.Awake(scene);
+
+            // let's restore the saved theme...
+            Level level = Scene as Level;
+            string sid = level.Session.Area.GetSID();
+            bool enabled = SpringCollab2020Module.Instance.SaveData.ModifiedThemeMaps.Contains(sid);
+            if (enabled) {
+                switch (sid) {
+                    case "SpringCollab2020/1-Beginner/DanTKO":
+                        triggerTrigger("LightningColorTrigger", -456, 32);
+                        triggerTrigger("ExtendedVariantTrigger", -456, 32);
+
+                        level.Session.LightingAlphaAdd = 0.095f;
+                        level.Lighting.Alpha = level.BaseLightingAlpha + level.Session.LightingAlphaAdd;
+                        break;
+                }
+            } else {
+                switch (sid) {
+                    case "SpringCollab2020/1-Beginner/DanTKO":
+                        triggerTrigger("ExtendedVariantTrigger", -448, 136);
+                        break;
+                }
+            }
+        }
+
+        private void triggerTrigger(string triggerName, int x, int y) {
+            foreach (Trigger trigger in Scene.Tracker.GetEntities<Trigger>()) {
+                if (trigger.GetType().Name.Contains(triggerName) && trigger.X == x && trigger.Y == y) {
+                    trigger.OnEnter(Scene.Tracker.GetEntity<Player>());
+                    trigger.OnLeave(Scene.Tracker.GetEntity<Player>());
+                    break;
                 }
             }
         }
