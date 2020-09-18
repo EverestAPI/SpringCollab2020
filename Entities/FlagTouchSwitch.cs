@@ -207,8 +207,9 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
                     level.Session.SetFlag(flag + "_switch" + id, true);
                 }
 
-                if (SpringCollab2020MapDataProcessor.FlagTouchSwitches[level.Session.Area.ID][(int) level.Session.Area.Mode][flag]
-                    .All(touchSwitchID => touchSwitchID.Level == level.Session.Level || level.Session.GetFlag(flag + "_switch" + touchSwitchID.ID))
+                if ((SpringCollab2020MapDataProcessor.FlagTouchSwitches.Count <= level.Session.Area.ID
+                    || SpringCollab2020MapDataProcessor.FlagTouchSwitches[level.Session.Area.ID][(int) level.Session.Area.Mode][flag]
+                    .All(touchSwitchID => touchSwitchID.Level == level.Session.Level || level.Session.GetFlag(flag + "_switch" + touchSwitchID.ID)))
                     && allTouchSwitchesInRoom.All(touchSwitch => touchSwitch.activated)) {
 
                     // all switches in the room are enabled, and all session flags for switches outside the room are enabled.
