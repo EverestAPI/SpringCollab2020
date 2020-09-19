@@ -2,7 +2,9 @@ using Celeste.Mod.SpringCollab2020.Effects;
 using Celeste.Mod.SpringCollab2020.Entities;
 using Celeste.Mod.SpringCollab2020.Triggers;
 using Microsoft.Xna.Framework;
+using Mono.Cecil.Cil;
 using Monocle;
+using MonoMod.Cil;
 using System;
 
 namespace Celeste.Mod.SpringCollab2020 {
@@ -49,6 +51,8 @@ namespace Celeste.Mod.SpringCollab2020 {
             WaterRocketLaunchingComponent.Load();
             Everest.Events.Level.OnLoadBackdrop += onLoadBackdrop;
 
+            IL.Celeste.Level.Reload += resetFlagsOnTimerResets;
+
             DecalRegistry.AddPropertyHandler("scale", (decal, attrs) => {
                 Vector2 scale = decal.Scale;
                 if (attrs["multiply"] != null) {
@@ -94,6 +98,8 @@ namespace Celeste.Mod.SpringCollab2020 {
             BadelineBounceDirectionTrigger.Unload();
             WaterRocketLaunchingComponent.Unload();
             Everest.Events.Level.OnLoadBackdrop -= onLoadBackdrop;
+
+            IL.Celeste.Level.Reload -= resetFlagsOnTimerResets;
         }
 
         private Backdrop onLoadBackdrop(MapData map, BinaryPacker.Element child, BinaryPacker.Element above) {
@@ -116,6 +122,22 @@ namespace Celeste.Mod.SpringCollab2020 {
             base.PrepareMapDataProcessors(context);
 
             context.Add<SpringCollab2020MapDataProcessor>();
+        }
+
+        private void resetFlagsOnTimerResets(ILContext il) {
+            ILCursor cursor = new ILCursor(il);
+
+            if (cursor.TryGotoNext(MoveType.After, instr => instr.MatchStfld<Level>("TimerStarted"))) {
+                Logger.Log("SpringCollab2020", $"Injecting call to reset flags along with timer at {cursor.Index} in IL for Level.Reload");
+
+                cursor.Emit(OpCodes.Ldarg_0);
+                cursor.EmitDelegate<Action<Level>>(self => {
+                    if (self.Session.Area.GetSID().StartsWith("SpringCollab2020/")) {
+                        Logger.Log(LogLevel.Debug, "SpringCollab2020", "Resetting session flags along with chapter timer");
+                        self.Session.Flags.Clear();
+                    }
+                });
+            }
         }
     }
 }
