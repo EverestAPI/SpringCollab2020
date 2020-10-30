@@ -52,6 +52,7 @@ namespace Celeste.Mod.SpringCollab2020 {
             Everest.Events.Level.OnLoadBackdrop += onLoadBackdrop;
 
             IL.Celeste.Level.Reload += resetFlagsOnTimerResets;
+            IL.Celeste.OuiChapterPanel.Render += renderOldGMHSCompletionStamp;
 
             DecalRegistry.AddPropertyHandler("scale", (decal, attrs) => {
                 Vector2 scale = decal.Scale;
@@ -100,6 +101,7 @@ namespace Celeste.Mod.SpringCollab2020 {
             Everest.Events.Level.OnLoadBackdrop -= onLoadBackdrop;
 
             IL.Celeste.Level.Reload -= resetFlagsOnTimerResets;
+            IL.Celeste.OuiChapterPanel.Render -= renderOldGMHSCompletionStamp;
         }
 
         private Backdrop onLoadBackdrop(MapData map, BinaryPacker.Element child, BinaryPacker.Element above) {
@@ -135,6 +137,25 @@ namespace Celeste.Mod.SpringCollab2020 {
                     if (self.Session.Area.GetSID().StartsWith("SpringCollab2020/")) {
                         Logger.Log(LogLevel.Debug, "SpringCollab2020", "Resetting session flags along with chapter timer");
                         self.Session.Flags.Clear();
+                    }
+                });
+            }
+        }
+
+        private void renderOldGMHSCompletionStamp(ILContext il) {
+            ILCursor cursor = new ILCursor(il);
+
+            // draw the stamp just after the chapter card.
+            if (cursor.TryGotoNext(instr => instr.MatchStfld<OuiChapterPanel>("card"))
+                && cursor.TryGotoNext(MoveType.After, instr => instr.MatchCallvirt<MTexture>("Draw"))) {
+
+                Logger.Log("SpringCollab2020", $"Injecting GMHS stamp rendering at {cursor.Index} in IL for OuiChapterPanel.Render");
+
+                cursor.Emit(OpCodes.Ldarg_0);
+                cursor.EmitDelegate<Action<OuiChapterPanel>>(self => {
+                    // draw it only if the player beat old grandmaster heart side, and we're actually looking at it.
+                    if (self.Area.GetSID() == "SpringCollab2020/5-Grandmaster/ZZ-HeartSide" && SaveData.BeatOldGrandmasterHeartSide) {
+                        MTN.FileSelect["heart"].Draw(self.Position + new Vector2(-580f, 130f));
                     }
                 });
             }
