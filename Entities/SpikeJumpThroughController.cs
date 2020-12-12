@@ -9,25 +9,14 @@ using System.Linq;
 
 namespace Celeste.Mod.SpringCollab2020.Entities {
     [CustomEntity("SpringCollab2020/SpikeJumpThroughController")]
+    [Tracked]
     class SpikeJumpThroughController : Entity {
         private static bool SpikeHooked;
-        private static SpikeJumpThroughController CurrentController;
-        private static SpikeJumpThroughController NextController;
-        private static float TransitionProgress = -1f;
 
         public SpikeJumpThroughController(EntityData data, Vector2 offset) : this(data.Bool("persistent", false), offset) { }
 
         public SpikeJumpThroughController(bool persistent, Vector2 offset) : base(offset) {
             SpringCollab2020Module.Instance.Session.SpikeJumpThroughHooked = persistent;
-
-            Add(new TransitionListener {
-                OnIn = progress => TransitionProgress = progress,
-                OnOut = progress => TransitionProgress = progress,
-                OnInBegin = () => TransitionProgress = 0f,
-                OnInEnd = () => TransitionProgress = -1f
-            });
-
-            Logger.Log("s", SpringCollab2020Module.Instance.Session.SpikeJumpThroughHooked.ToString());
 
         }
 
@@ -39,18 +28,9 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
             On.Celeste.Level.LoadLevel -= OnLoadLevelHook;
         }
 
-        public override void Update() {
-            base.Update();
-            if (TransitionProgress == -1f && CurrentController == null) {
-                CurrentController = this;
-                NextController = null;
-            }
-        }
-
         public override void Awake(Scene scene) {
             base.Awake(scene);
 
-            NextController = this;
             if (!SpikeHooked) {
                 On.Celeste.Spikes.OnCollide += OnCollideHook;
                 SpikeHooked = true;
@@ -60,12 +40,7 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
         public override void Removed(Scene scene) {
             base.Removed(scene);
 
-            CurrentController = NextController;
-            NextController = null;
-
-            TransitionProgress = -1f;
-
-            if (SpikeHooked && CurrentController == null) {
+            if (SpikeHooked && scene.Tracker.CountEntities<SpikeJumpThroughController>() <= 1) {
                 On.Celeste.Spikes.OnCollide -= OnCollideHook;
                 SpikeHooked = false;
             }
@@ -74,7 +49,6 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
         public override void SceneEnd(Scene scene) {
             base.SceneEnd(scene);
 
-            CurrentController = NextController = null;
             if (SpikeHooked) {
                 On.Celeste.Spikes.OnCollide -= OnCollideHook;
                 SpikeHooked = false;
