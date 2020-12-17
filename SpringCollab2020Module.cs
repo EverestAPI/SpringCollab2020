@@ -49,6 +49,7 @@ namespace Celeste.Mod.SpringCollab2020 {
             LeaveTheoBehindTrigger.Load();
             BadelineBounceDirectionTrigger.Load();
             WaterRocketLaunchingComponent.Load();
+            SpikeJumpThroughController.Load();
             Everest.Events.Level.OnLoadBackdrop += onLoadBackdrop;
 
             IL.Celeste.Level.Reload += resetFlagsOnTimerResets;
@@ -98,6 +99,7 @@ namespace Celeste.Mod.SpringCollab2020 {
             LeaveTheoBehindTrigger.Unload();
             BadelineBounceDirectionTrigger.Unload();
             WaterRocketLaunchingComponent.Unload();
+            SpikeJumpThroughController.Unload();
             Everest.Events.Level.OnLoadBackdrop -= onLoadBackdrop;
 
             IL.Celeste.Level.Reload -= resetFlagsOnTimerResets;

@@ -13,6 +13,9 @@ placements.entities.SpringCollab2020/returnBerry.tooltips.SpringCollab2020_ignor
 placements.entities.SpringCollab2020/glassBerry.tooltips.checkpointID=Manually determine what checkpoint section strawberries are visually grouped up in, showing up on the start menu during gameplay and level select. Overrides Everest's automatic berry IDs. (Default = -1)
 placements.entities.SpringCollab2020/glassBerry.tooltips.order=Manually determine what order strawberries are visually placed in on the start menu during gameplay and level select. Overrides Everest's automatic berry IDs. (Default = -1)
 
+# Spike Jump Through Controller
+placements.entities.SpringCollab2020/SpikeJumpThroughController.tooltips.persistent=Whether or not the controller should stay active across rooms. If set to true, the controller's effects will stay active until the player leaves a room with a non-persistent controller.
+
 # Lightning Dash Switch
 placements.entities.SpringCollab2020/LightningDashSwitch.tooltips.side=Which direction the switch is facing.
 placements.entities.SpringCollab2020/LightningDashSwitch.tooltips.sprite=Changes the visual appearance of the switch.

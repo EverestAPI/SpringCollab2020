@@ -18,6 +18,8 @@ namespace Celeste.Mod.SpringCollab2020 {
 
         public bool LightSourcesDisabled { get; set; } = false;
 
+        public bool SpikeJumpThroughHooked { get; set; } = false;
+
         public class SpeedBasedMusicParamInfo {
             public float MinimumSpeed { get; set; }
             public float MaximumSpeed { get; set; }
