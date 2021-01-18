@@ -49,6 +49,9 @@ namespace Celeste.Mod.SpringCollab2020.Triggers {
                     case "SpringCollab2020/4-Expert/Mun":
                         level.Session.SetFlag("darkmode");
                         level.SnapColorGrade("panicattack");
+                        setBloom(level, 0.3f);
+                        level.Session.LightingAlphaAdd = 0.25f;
+                        level.Lighting.Alpha = level.BaseLightingAlpha + level.Session.LightingAlphaAdd;
                         break;
                     case "SpringCollab2020/4-Expert/Zerex":
                         level.Session.SetFlag("darker");
