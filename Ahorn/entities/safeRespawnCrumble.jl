@@ -2,7 +2,7 @@
 
 using ..Ahorn, Maple
 
-@mapdef Entity "SpringCollab2020/safeRespawnCrumble" SafeRespawnCrumble(x::Integer, y::Integer, width::Integer=Maple.defaultBlockWidth)
+@mapdef Entity "SpringCollab2020/safeRespawnCrumble" SafeRespawnCrumble(x::Integer, y::Integer, width::Integer=Maple.defaultBlockWidth, invisible::Bool=false)
 
 const placements = Ahorn.PlacementDict(
     "Safe Respawn Crumble (Spring Collab 2020)" => Ahorn.EntityPlacement(

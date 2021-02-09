@@ -28,6 +28,8 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
 
             // make sure the platform is not collidable by default.
             Collidable = false;
+
+            Visible = !data.Bool("invisible");
         }
 
         public override void Added(Scene scene) {

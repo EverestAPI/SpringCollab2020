@@ -348,3 +348,6 @@ placements.effects.SpringCollab2020/BlackholeCustomColors.tooltips.bgColorOuterW
 
 # Attached Ice Wall
 placements.entities.SpringCollab2020/AttachedIceWall.tooltips.left=Whether the entity attaches to the left wall or not.
+
+# Safe Respawn Crumble
+placements.entities.SpringCollab2020/safeRespawnCrumble.tooltips.invisible=If enabled, the platform will be completely invisible. Useful for debug mid-air spawn points.
