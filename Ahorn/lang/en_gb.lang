@@ -345,3 +345,6 @@ placements.effects.SpringCollab2020/BlackholeCustomColors.tooltips.colorsWild=Co
 placements.effects.SpringCollab2020/BlackholeCustomColors.tooltips.bgColorInner=The color used for the background at the center of the screen.
 placements.effects.SpringCollab2020/BlackholeCustomColors.tooltips.bgColorOuterMild=The color used for the background at the edges of the screen, when the blackhole strength is Mild.
 placements.effects.SpringCollab2020/BlackholeCustomColors.tooltips.bgColorOuterWild=The color used for the background at the edges of the screen, when the blackhole strength is Wild.
+
+# Attached Ice Wall
+placements.entities.SpringCollab2020/AttachedIceWall.tooltips.left=Whether the entity attaches to the left wall or not.
