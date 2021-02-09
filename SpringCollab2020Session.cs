@@ -23,6 +23,8 @@ namespace Celeste.Mod.SpringCollab2020 {
         public class SpeedBasedMusicParamInfo {
             public float MinimumSpeed { get; set; }
             public float MaximumSpeed { get; set; }
+            public float MinimumParamValue { get; set; }
+            public float MaximumParamValue { get; set; }
         }
 
         public Dictionary<string, SpeedBasedMusicParamInfo> ActiveSpeedBasedMusicParams = new Dictionary<string, SpeedBasedMusicParamInfo>();

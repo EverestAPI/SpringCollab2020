@@ -119,6 +119,9 @@ namespace Celeste.Mod.SpringCollab2020 {
 
                 return new CustomSnow(colors, child.AttrBool("foreground"));
             }
+            if (child.Name.Equals("SpringCollab2020/BlackholeCustomColors", StringComparison.OrdinalIgnoreCase)) {
+                return BlackholeCustomColors.CreateBlackholeWithCustomColors(child);
+            }
             return null;
         }
 
