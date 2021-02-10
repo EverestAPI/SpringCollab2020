@@ -11,6 +11,7 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
             WallBooster iceWall = new WallBooster(entityData.Position + offset, entityData.Height, left, notCoreMode: true);
             StaticMover staticMover = iceWall.Get<StaticMover>();
             staticMover.SolidChecker = solid => iceWall.CollideCheck(solid, iceWall.Position + (left ? -2 : 2) * Vector2.UnitX);
+            iceWall.Get<CoreModeListener>().RemoveSelf();
             return iceWall;
         }
     }
