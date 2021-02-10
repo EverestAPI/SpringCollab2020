@@ -216,6 +216,10 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
             }
         }
 
+        public bool IsLeaving() {
+            return leaving;
+        }
+
         public void Leave() {
             AddTag(Tags.TransitionUpdate);
             leaving = true;
