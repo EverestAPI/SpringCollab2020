@@ -22,6 +22,8 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
     [Tracked(false)]
     [CustomEntity("SpringCollab2020/safeRespawnCrumble")]
     class SafeRespawnCrumble : Solid {
+        private readonly bool outlineVisible;
+
         // We'll want to declare the SafeRespawnCrumble as "safe ground" so that Return Strawberries can be collected on it.
         public SafeRespawnCrumble(EntityData data, Vector2 offset) : base(data.Position + offset, (float) data.Width, 8f, true) {
             EnableAssistModeChecks = false;
@@ -29,7 +31,7 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
             // make sure the platform is not collidable by default.
             Collidable = false;
 
-            Visible = !data.Bool("invisible");
+            outlineVisible = !data.Bool("invisible");
         }
 
         public override void Added(Scene scene) {
@@ -42,25 +44,27 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
             tiles = new List<Image>();
             outlineTiles = new List<Image>();
 
-            if (Width <= 8f) {
-                Image toDraw = new Image(outlineTexture.GetSubtexture(24, 0, 8, 8, null));
-                toDraw.Color = Color.White;
-                outlineTiles.Add(toDraw);
-            } else {
-                // Select left, middle, or right
-                for (int tile = 0; (float) tile < base.Width; tile += 8) {
-                    int tileTex;
-                    if (tile == 0)
-                        tileTex = 0;
-                    else if (tile > 0 && (float) tile < base.Width - 8f)
-                        tileTex = 1;
-                    else
-                        tileTex = 2;
-
-                    Image toDraw = new Image(outlineTexture.GetSubtexture(tileTex * 8, 0, 8, 8));
-                    toDraw.Position = new Vector2((float) tile, 0f);
+            if (outlineVisible) {
+                if (Width <= 8f) {
+                    Image toDraw = new Image(outlineTexture.GetSubtexture(24, 0, 8, 8, null));
+                    toDraw.Color = Color.White;
                     outlineTiles.Add(toDraw);
-                    Add(toDraw);
+                } else {
+                    // Select left, middle, or right
+                    for (int tile = 0; (float) tile < base.Width; tile += 8) {
+                        int tileTex;
+                        if (tile == 0)
+                            tileTex = 0;
+                        else if (tile > 0 && (float) tile < base.Width - 8f)
+                            tileTex = 1;
+                        else
+                            tileTex = 2;
+
+                        Image toDraw = new Image(outlineTexture.GetSubtexture(tileTex * 8, 0, 8, 8));
+                        toDraw.Position = new Vector2((float) tile, 0f);
+                        outlineTiles.Add(toDraw);
+                        Add(toDraw);
+                    }
                 }
             }
 
