@@ -159,7 +159,9 @@ namespace Celeste.Mod.SpringCollab2020 {
                 cursor.Emit(OpCodes.Ldarg_0);
                 cursor.EmitDelegate<Action<OuiChapterPanel>>(self => {
                     // draw it only if the player beat old grandmaster heart side, and we're actually looking at it.
-                    if (self.Area.GetSID() == "SpringCollab2020/5-Grandmaster/ZZ-HeartSide" && SaveData.BeatOldGrandmasterHeartSide) {
+                    if (self.Area.GetSID() == "SpringCollab2020/5-Grandmaster/ZZ-NewHeartSide"
+                        && (global::Celeste.SaveData.Instance.GetAreaStatsFor(AreaData.Get("SpringCollab2020/5-Grandmaster/ZZ-HeartSide").ToKey())?.Modes[0].Completed ?? false)) {
+
                         MTN.FileSelect["heart"].Draw(self.Position + new Vector2(-580f, 130f));
                     }
                 });
