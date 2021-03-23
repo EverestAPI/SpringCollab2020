@@ -168,7 +168,7 @@ namespace Celeste.Mod.SpringCollab2020 {
                     if (self.Area.GetSID() == "SpringCollab2020/5-Grandmaster/ZZ-NewHeartSide"
                         && (SaveData.Instance.GetAreaStatsFor(AreaData.Get("SpringCollab2020/5-Grandmaster/ZZ-HeartSide").ToKey())?.Modes[0].Completed ?? false)) {
 
-                        MTN.FileSelect["heart"].Draw(self.Position + new Vector2(-580f, 130f));
+                        GFX.Gui["SpringCollab2020/OldGMHSStamp"].Draw(self.Position + new Vector2(40f, 150f));
                     }
                 });
             }
