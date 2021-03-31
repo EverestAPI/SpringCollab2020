@@ -38,6 +38,11 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
         public StaticPuffer(EntityData data, Vector2 offset) : base(data, offset) {
             // remove the sine wave component so that it isn't updated.
             Get<SineWave>()?.RemoveSelf();
+
+            // offset the horizontal position by a tiny bit.
+            // Vanilla puffers have a non-integer position (due to the randomized offset), making it impossible to be boosted downwards,
+            // so we want to do the same.
+            Position.X += 0.0001f;
         }
     }
 }
