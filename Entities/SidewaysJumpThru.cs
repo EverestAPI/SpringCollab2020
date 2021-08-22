@@ -62,10 +62,8 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
                 "orig_UpdateSprite" : "UpdateSprite";
 
             // implement the basic collision between actors/platforms and sideways jumpthrus.
-            using (new DetourContext { Before = { "*" } }) { // these don't always call the orig methods, better apply them first.
-                On.Celeste.Actor.MoveHExact += onActorMoveHExact;
-                On.Celeste.Platform.MoveHExactCollideSolids += onPlatformMoveHExactCollideSolids;
-            }
+            IL.Celeste.Actor.MoveHExact += addSidewaysJumpthrusInHorizontalMoveMethods;
+            IL.Celeste.Platform.MoveHExactCollideSolids += addSidewaysJumpthrusInHorizontalMoveMethods;
 
             // block "climb hopping" on top of sideways jumpthrus, because this just looks weird.
             On.Celeste.Player.ClimbHopBlockedCheck += onPlayerClimbHopBlockedCheck;
@@ -95,9 +93,8 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
             hooksActive = false;
 
             Logger.Log(LogLevel.Info, "SpringCollab2020/SidewaysJumpThru", "=== Deactivating sideways jumpthru hooks");
-
-            On.Celeste.Actor.MoveHExact -= onActorMoveHExact;
-            On.Celeste.Platform.MoveHExactCollideSolids -= onPlatformMoveHExactCollideSolids;
+            IL.Celeste.Actor.MoveHExact -= addSidewaysJumpthrusInHorizontalMoveMethods;
+            IL.Celeste.Platform.MoveHExactCollideSolids -= addSidewaysJumpthrusInHorizontalMoveMethods;
 
             On.Celeste.Player.ClimbHopBlockedCheck -= onPlayerClimbHopBlockedCheck;
 
@@ -113,104 +110,39 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
             On.Celeste.Player.NormalUpdate -= onPlayerNormalUpdate;
         }
 
-        private static bool onActorMoveHExact(On.Celeste.Actor.orig_MoveHExact orig, Actor self, int moveH, Collision onCollide, Solid pusher) {
-            // fall back to vanilla if no sideways jumpthru is in the room.
-            if (self.SceneAs<Level>().Tracker.CountEntities<SidewaysJumpThru>() == 0)
-                return orig(self, moveH, onCollide, pusher);
+        private static void addSidewaysJumpthrusInHorizontalMoveMethods(ILContext il) {
+            ILCursor cursor = new ILCursor(il);
 
-            Vector2 targetPosition = self.Position + Vector2.UnitX * moveH;
-            int moveDirection = Math.Sign(moveH);
-            int moveAmount = 0;
-            bool movingLeftToRight = moveH > 0;
-            while (moveH != 0) {
-                bool didCollide = false;
+            if (cursor.TryGotoNext(MoveType.After, instr => instr.MatchCall<Entity>("CollideFirst"))
+                 && cursor.TryGotoNext(instr => instr.OpCode == OpCodes.Brfalse_S || instr.OpCode == OpCodes.Brtrue_S)) {
 
-                // check if colliding with a solid
-                Solid solid = self.CollideFirst<Solid>(self.Position + Vector2.UnitX * moveDirection);
-                if (solid != null) {
-                    didCollide = true;
-                } else {
-                    // check if colliding with a sideways jumpthru
-                    SidewaysJumpThru jumpThru = self.CollideFirstOutside<SidewaysJumpThru>(self.Position + Vector2.UnitX * moveDirection);
-                    if (jumpThru != null && jumpThru.AllowLeftToRight != movingLeftToRight) {
-                        // there is a sideways jump-thru and we are moving in the opposite direction => collision
-                        didCollide = true;
+                Logger.Log("SpringCollab2020/SidewaysJumpThru", $"Injecting sideways jumpthru check at {cursor.Index} in IL for {il.Method.Name}");
+                cursor.Emit(OpCodes.Ldarg_0);
+                cursor.Emit(OpCodes.Ldarg_1);
+                cursor.EmitDelegate<Func<Solid, Entity, int, Solid>>((orig, self, moveH) => {
+                    if (orig != null)
+                        return orig;
+
+                    int moveDirection = Math.Sign(moveH);
+                    bool movingLeftToRight = moveH > 0;
+                    if (checkCollisionWithSidewaysJumpthruWhileMoving(self, moveDirection, movingLeftToRight)) {
+                        return new Solid(Vector2.Zero, 0, 0, false); // what matters is that it is non null.
                     }
-                }
 
-                if (didCollide) {
-                    Vector2 movementCounter = (Vector2) actorMovementCounter.GetValue(self);
-                    movementCounter.X = 0f;
-                    actorMovementCounter.SetValue(self, movementCounter);
-                    onCollide?.Invoke(new CollisionData {
-                        Direction = Vector2.UnitX * moveDirection,
-                        Moved = Vector2.UnitX * moveAmount,
-                        TargetPosition = targetPosition,
-                        Hit = solid,
-                        Pusher = pusher
-                    });
-                    return true;
-                }
-
-                // continue moving
-                moveAmount += moveDirection;
-                moveH -= moveDirection;
-                self.X += moveDirection;
+                    return null;
+                });
             }
-            return false;
         }
 
-        private static bool onPlatformMoveHExactCollideSolids(On.Celeste.Platform.orig_MoveHExactCollideSolids orig, Platform self,
-            int moveH, bool thruDashBlocks, Action<Vector2, Vector2, Platform> onCollide) {
-            // fall back to vanilla if no sideways jumpthru is in the room.
-            if (self.SceneAs<Level>().Tracker.CountEntities<SidewaysJumpThru>() == 0)
-                return orig(self, moveH, thruDashBlocks, onCollide);
-
-            float x = self.X;
-            int moveDirection = Math.Sign(moveH);
-            int moveAmount = 0;
-            Solid solid = null;
-            bool movingLeftToRight = moveH > 0;
-            bool collidedWithJumpthru = false;
-            while (moveH != 0) {
-                if (thruDashBlocks) {
-                    // check if we have dash blocks to break on our way.
-                    foreach (DashBlock entity in self.Scene.Tracker.GetEntities<DashBlock>()) {
-                        if (self.CollideCheck(entity, self.Position + Vector2.UnitX * moveDirection)) {
-                            entity.Break(self.Center, Vector2.UnitX * moveDirection, true, true);
-                            self.SceneAs<Level>().Shake(0.2f);
-                            Input.Rumble(RumbleStrength.Medium, RumbleLength.Medium);
-                        }
-                    }
-                }
-
-                // check for collision with a solid
-                solid = self.CollideFirst<Solid>(self.Position + Vector2.UnitX * moveDirection);
-
-                // check for collision with a sideways jumpthru
-                SidewaysJumpThru jumpThru = self.CollideFirstOutside<SidewaysJumpThru>(self.Position + Vector2.UnitX * moveDirection);
-                if (jumpThru != null && jumpThru.AllowLeftToRight != movingLeftToRight) {
-                    // there is a sideways jump-thru and we are moving in the opposite direction => collision
-                    collidedWithJumpthru = true;
-                }
-
-                if (solid != null || collidedWithJumpthru) {
-                    break;
-                }
-
-                // continue moving
-                moveAmount += moveDirection;
-                moveH -= moveDirection;
-                self.X += moveDirection;
+        private static bool checkCollisionWithSidewaysJumpthruWhileMoving(Entity self, int moveDirection, bool movingLeftToRight) {
+            // check if colliding with a sideways jumpthru
+            SidewaysJumpThru jumpThru = self.CollideFirstOutside<SidewaysJumpThru>(self.Position + Vector2.UnitX * moveDirection);
+            if (jumpThru != null && jumpThru.AllowLeftToRight != movingLeftToRight) {
+                // there is a sideways jump-thru and we are moving in the opposite direction => collision
+                return true;
             }
 
-            // actually move and call the collision callback if any
-            self.X = x;
-            self.MoveHExact(moveAmount);
-            if (solid != null && onCollide != null) {
-                onCollide(Vector2.UnitX * moveDirection, Vector2.UnitX * moveAmount, solid);
-            }
-            return solid != null || collidedWithJumpthru;
+            return false;
         }
 
         private static bool onPlayerClimbHopBlockedCheck(On.Celeste.Player.orig_ClimbHopBlockedCheck orig, Player self) {
@@ -225,6 +157,13 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
         private static void modCollideChecks(ILContext il) {
             ILCursor cursor = new ILCursor(il);
 
+            // create a Vector2 temporary variable
+            VariableDefinition checkAtPositionStore = new VariableDefinition(il.Import(typeof(Vector2)));
+            il.Body.Variables.Add(checkAtPositionStore);
+
+            bool isClimb = il.Method.Name.Contains("Climb");
+            bool isWallJump = il.Method.Name.Contains("WallJump") || il.Method.Name.Contains("NormalUpdate");
+
             while (cursor.Next != null) {
                 Instruction next = cursor.Next;
 
@@ -232,35 +171,69 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
                 if (next.OpCode == OpCodes.Call && (next.Operand as MethodReference)?.FullName == "System.Boolean Monocle.Entity::CollideCheck<Celeste.Solid>(Microsoft.Xna.Framework.Vector2)") {
                     Logger.Log("SpringCollab2020/SidewaysJumpThru", $"Patching Entity.CollideCheck to include sideways jumpthrus at {cursor.Index} in IL for {il.Method.Name}");
 
-                    cursor.Remove();
-                    cursor.EmitDelegate<Func<Entity, Vector2, bool>>((self, checkAtPosition) => {
+                    callOrigMethodKeepingEverythingOnStack(cursor, checkAtPositionStore, isSceneCollideCheck: false);
+
+                    // mod the result
+                    cursor.EmitDelegate<Func<bool, Entity, Vector2, bool>>((orig, self, checkAtPosition) => {
                         // we still want to check for solids...
-                        if (self.CollideCheck<Solid>(checkAtPosition))
+                        if (orig) {
                             return true;
+                        }
 
                         // if we are not checking a side, this certainly has nothing to do with jumpthrus.
                         if (self.Position.X == checkAtPosition.X)
                             return false;
 
-                        // our entity also collides if this is with a jumpthru and we are colliding with the solid side of it.
-                        // we are in this case if the jumpthru is left to right (the "solid" side of it is the right one) 
-                        // and we are checking the collision on the left side of the player for example.
-                        bool collideOnLeftSideOfPlayer = (self.Position.X > checkAtPosition.X);
-                        SidewaysJumpThru jumpthru = self.CollideFirstOutside<SidewaysJumpThru>(checkAtPosition);
-                        return jumpthru != null && self is Player player && (jumpthru.AllowLeftToRight == collideOnLeftSideOfPlayer)
-                            && jumpthru.Bottom >= self.Top + checkAtPosition.Y - self.Position.Y + 3;
+                        return entityCollideCheckWithSidewaysJumpthrus(self, checkAtPosition, isClimb, isWallJump);
                     });
                 }
 
                 if (next.OpCode == OpCodes.Callvirt && (next.Operand as MethodReference)?.FullName == "System.Boolean Monocle.Scene::CollideCheck<Celeste.Solid>(Microsoft.Xna.Framework.Vector2)") {
                     Logger.Log("SpringCollab2020/SidewaysJumpThru", $"Patching Scene.CollideCheck to include sideways jumpthrus at {cursor.Index} in IL for {il.Method.Name}");
 
-                    cursor.Remove();
-                    cursor.EmitDelegate<Func<Scene, Vector2, bool>>((self, vector) => self.CollideCheck<Solid>(vector) || self.CollideCheck<SidewaysJumpThru>(vector));
+                    callOrigMethodKeepingEverythingOnStack(cursor, checkAtPositionStore, isSceneCollideCheck: true);
+
+                    cursor.EmitDelegate<Func<bool, Scene, Vector2, bool>>((orig, self, vector) => {
+                        if (orig) {
+                            return true;
+                        }
+                        return sceneCollideCheckWithSidewaysJumpthrus(self, vector, isClimb, isWallJump);
+                    });
                 }
 
                 cursor.Index++;
             }
+        }
+
+        private static void callOrigMethodKeepingEverythingOnStack(ILCursor cursor, VariableDefinition checkAtPositionStore, bool isSceneCollideCheck) {
+            // store the position in the local variable
+            cursor.Emit(OpCodes.Stloc, checkAtPositionStore);
+            cursor.Emit(OpCodes.Ldloc, checkAtPositionStore);
+
+            // let vanilla call CollideCheck
+            cursor.Index++;
+
+            // reload the parameters
+            cursor.Emit(OpCodes.Ldarg_0);
+            if (isSceneCollideCheck) {
+                cursor.Emit(OpCodes.Call, typeof(Entity).GetProperty("Scene").GetGetMethod());
+            }
+
+            cursor.Emit(OpCodes.Ldloc, checkAtPositionStore);
+        }
+
+        private static bool entityCollideCheckWithSidewaysJumpthrus(Entity self, Vector2 checkAtPosition, bool isClimb, bool isWallJump) {
+            // our entity collides if this is with a jumpthru and we are colliding with the solid side of it.
+            // we are in this case if the jumpthru is left to right (the "solid" side of it is the right one) 
+            // and we are checking the collision on the left side of the player for example.
+            bool collideOnLeftSideOfPlayer = (self.Position.X > checkAtPosition.X);
+            SidewaysJumpThru jumpthru = self.CollideFirstOutside<SidewaysJumpThru>(checkAtPosition);
+            return jumpthru != null && self is Player && jumpthru.AllowLeftToRight == collideOnLeftSideOfPlayer
+                && jumpthru.Bottom >= self.Top + checkAtPosition.Y - self.Position.Y + 3;
+        }
+
+        private static bool sceneCollideCheckWithSidewaysJumpthrus(Scene self, Vector2 vector, bool isClimb, bool isWallJump) {
+            return self.CollideCheck<SidewaysJumpThru>(vector);
         }
 
         private static int onPlayerNormalUpdate(On.Celeste.Player.orig_NormalUpdate orig, Player self) {
