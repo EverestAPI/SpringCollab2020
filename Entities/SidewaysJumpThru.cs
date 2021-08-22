@@ -68,19 +68,20 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
             // block "climb hopping" on top of sideways jumpthrus, because this just looks weird.
             On.Celeste.Player.ClimbHopBlockedCheck += onPlayerClimbHopBlockedCheck;
 
-            using (new DetourContext()) {
-                // mod collide checks to include sideways jumpthrus, so that the player behaves with them like with walls.
-                IL.Celeste.Player.WallJumpCheck += modCollideChecks; // allow player to walljump off them
-                IL.Celeste.Player.ClimbCheck += modCollideChecks; // allow player to climb on them
-                IL.Celeste.Player.ClimbBegin += modCollideChecks; // if not applied, the player will clip through jumpthrus if trying to climb on them
-                IL.Celeste.Player.ClimbUpdate += modCollideChecks; // when climbing, jumpthrus are handled like walls
-                IL.Celeste.Player.SlipCheck += modCollideChecks; // make climbing on jumpthrus not slippery
-                IL.Celeste.Player.NormalUpdate += modCollideChecks; // get the wall slide effect
-                IL.Celeste.Player.OnCollideH += modCollideChecks; // handle dashes against jumpthrus properly, without "shifting" down
+            // mod collide checks to include sideways jumpthrus, so that the player behaves with them like with walls.
+            IL.Celeste.Player.WallJumpCheck += modCollideChecks; // allow player to walljump off them
+            IL.Celeste.Player.ClimbCheck += modCollideChecks; // allow player to climb on them
+            IL.Celeste.Player.ClimbBegin += modCollideChecks; // if not applied, the player will clip through jumpthrus if trying to climb on them
+            IL.Celeste.Player.ClimbUpdate += modCollideChecks; // when climbing, jumpthrus are handled like walls
+            IL.Celeste.Player.SlipCheck += modCollideChecks; // make climbing on jumpthrus not slippery
+            IL.Celeste.Player.NormalUpdate += modCollideChecks; // get the wall slide effect
+            IL.Celeste.Player.OnCollideH += modCollideChecks; // handle dashes against jumpthrus properly, without "shifting" down
 
-                // have the push animation when Madeline runs against a jumpthru for example
-                hookOnUpdateSprite = new ILHook(typeof(Player).GetMethod(updateSpriteMethodToPatch, BindingFlags.NonPublic | BindingFlags.Instance), modCollideChecks);
-            }
+            // don't make Madeline duck when dashing against a sideways jumpthru
+            On.Celeste.Player.DuckFreeAt += preventDuckWhenDashingAgainstJumpthru;
+
+            // have the push animation when Madeline runs against a jumpthru for example
+            hookOnUpdateSprite = new ILHook(typeof(Player).GetMethod(updateSpriteMethodToPatch, BindingFlags.NonPublic | BindingFlags.Instance), modCollideChecks);
 
             // one extra hook that kills the player momentum when hitting a jumpthru so that they don't get "stuck" on them.
             On.Celeste.Player.NormalUpdate += onPlayerNormalUpdate;
@@ -107,15 +108,15 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
             IL.Celeste.Player.OnCollideH -= modCollideChecks;
             hookOnUpdateSprite?.Dispose();
 
+            On.Celeste.Player.DuckFreeAt -= preventDuckWhenDashingAgainstJumpthru;
+
             On.Celeste.Player.NormalUpdate -= onPlayerNormalUpdate;
         }
 
         private static void addSidewaysJumpthrusInHorizontalMoveMethods(ILContext il) {
             ILCursor cursor = new ILCursor(il);
 
-            if (cursor.TryGotoNext(MoveType.After, instr => instr.MatchCall<Entity>("CollideFirst"))
-                 && cursor.TryGotoNext(instr => instr.OpCode == OpCodes.Brfalse_S || instr.OpCode == OpCodes.Brtrue_S)) {
-
+            if (cursor.TryGotoNext(MoveType.After, instr => instr.MatchCall<Entity>("CollideFirst"))) {
                 Logger.Log("SpringCollab2020/SidewaysJumpThru", $"Injecting sideways jumpthru check at {cursor.Index} in IL for {il.Method.Name}");
                 cursor.Emit(OpCodes.Ldarg_0);
                 cursor.Emit(OpCodes.Ldarg_1);
@@ -203,6 +204,10 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
 
                 cursor.Index++;
             }
+        }
+
+        private static bool preventDuckWhenDashingAgainstJumpthru(On.Celeste.Player.orig_DuckFreeAt orig, Player self, Vector2 at) {
+            return orig(self, at) && !entityCollideCheckWithSidewaysJumpthrus(self, at, false, false);
         }
 
         private static void callOrigMethodKeepingEverythingOnStack(ILCursor cursor, VariableDefinition checkAtPositionStore, bool isSceneCollideCheck) {
