@@ -6,6 +6,7 @@ using Monocle;
 using MonoMod.Cil;
 using MonoMod.RuntimeDetour;
 using System;
+using System.Linq;
 using System.Reflection;
 
 namespace Celeste.Mod.SpringCollab2020.Entities {
@@ -17,7 +18,46 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
 
         private static FieldInfo actorMovementCounter = typeof(Actor).GetField("movementCounter", BindingFlags.Instance | BindingFlags.NonPublic);
 
+        private static bool hooksActive = false;
+
         public static void Load() {
+            On.Celeste.LevelLoader.ctor += onLevelLoad;
+            On.Celeste.OverworldLoader.ctor += onOverworldLoad;
+        }
+
+        public static void Unload() {
+            On.Celeste.LevelLoader.ctor -= onLevelLoad;
+            On.Celeste.OverworldLoader.ctor -= onOverworldLoad;
+
+            deactivateHooks();
+        }
+
+        private static void onLevelLoad(On.Celeste.LevelLoader.orig_ctor orig, LevelLoader self, Session session, Vector2? startPosition) {
+            orig(self, session, startPosition);
+
+            if (session.MapData?.Levels?.Any(level => level.Entities?.Any(entity => entity.Name == "SpringCollab2020/SidewaysJumpThru") ?? false) ?? false) {
+                activateHooks();
+            } else {
+                deactivateHooks();
+            }
+        }
+
+        private static void onOverworldLoad(On.Celeste.OverworldLoader.orig_ctor orig, OverworldLoader self, Overworld.StartMode startMode, HiresSnow snow) {
+            orig(self, startMode, snow);
+
+            if (startMode != (Overworld.StartMode) (-1)) { // -1 = in-game overworld from the collab utils
+                deactivateHooks();
+            }
+        }
+
+        public static void activateHooks() {
+            if (hooksActive) {
+                return;
+            }
+            hooksActive = true;
+
+            Logger.Log(LogLevel.Info, "SpringCollab2020/SidewaysJumpThru", "=== Activating sideways jumpthru hooks");
+
             string updateSpriteMethodToPatch = Everest.Loader.DependencyLoaded(new EverestModuleMetadata { Name = "Everest", Version = new Version(1, 1432) }) ?
                 "orig_UpdateSprite" : "UpdateSprite";
 
@@ -48,7 +88,14 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
             On.Celeste.Player.NormalUpdate += onPlayerNormalUpdate;
         }
 
-        public static void Unload() {
+        public static void deactivateHooks() {
+            if (!hooksActive) {
+                return;
+            }
+            hooksActive = false;
+
+            Logger.Log(LogLevel.Info, "SpringCollab2020/SidewaysJumpThru", "=== Deactivating sideways jumpthru hooks");
+
             On.Celeste.Actor.MoveHExact -= onActorMoveHExact;
             On.Celeste.Platform.MoveHExactCollideSolids -= onPlatformMoveHExactCollideSolids;
 

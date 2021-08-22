@@ -21,9 +21,48 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
 
         private static ILHook playerOrigUpdateHook;
 
-        private static readonly Hitbox normalHitbox = new Hitbox(8f, 11f, -4f, -11f);
+        private static bool hooksActive = false;
 
+        private static readonly Hitbox normalHitbox = new Hitbox(8f, 11f, -4f, -11f);
+        
         public static void Load() {
+            On.Celeste.LevelLoader.ctor += onLevelLoad;
+            On.Celeste.OverworldLoader.ctor += onOverworldLoad;
+        }
+
+        public static void Unload() {
+            On.Celeste.LevelLoader.ctor -= onLevelLoad;
+            On.Celeste.OverworldLoader.ctor -= onOverworldLoad;
+            deactivateHooks();
+        }
+
+        private static void onLevelLoad(On.Celeste.LevelLoader.orig_ctor orig, LevelLoader self, Session session, Vector2? startPosition) {
+            orig(self, session, startPosition);
+
+            if (session.MapData?.Levels?.Any(level => level.Entities?.Any(entity => entity.Name == "SpringCollab2020/UpsideDownJumpThru") ?? false) ?? false) {
+                activateHooks();
+            } else {
+                deactivateHooks();
+            }
+        }
+
+        private static void onOverworldLoad(On.Celeste.OverworldLoader.orig_ctor orig, OverworldLoader self, Overworld.StartMode startMode, HiresSnow snow) {
+            orig(self, startMode, snow);
+
+            if (startMode != (Overworld.StartMode) (-1)) { // -1 = in-game overworld from the collab utils
+                deactivateHooks();
+            }
+        }
+
+
+        public static void activateHooks() {
+            if (hooksActive) {
+                return;
+            }
+            hooksActive = true;
+
+            Logger.Log(LogLevel.Info, "SpringCollab2020/UpsideDownJumpThru", "=== Activating upside-down jumpthru hooks");
+
             using (new DetourContext { Before = { "*" } }) { // these don't always call the orig methods, better apply them first.
                 // fix general actor/platform behavior to make them comply with jumpthrus.
                 On.Celeste.Actor.MoveVExact += onActorMoveVExact;
@@ -50,7 +89,14 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
             }
         }
 
-        public static void Unload() {
+        public static void deactivateHooks() {
+            if (!hooksActive) {
+                return;
+            }
+            hooksActive = false;
+
+            Logger.Log(LogLevel.Info, "SpringCollab2020/UpsideDownJumpThru", "=== Deactivating upside-down jumpthru hooks");
+
             On.Celeste.Actor.MoveVExact -= onActorMoveVExact;
             On.Celeste.Platform.MoveVExactCollideSolids -= onPlatformMoveVExactCollideSolids;
 
