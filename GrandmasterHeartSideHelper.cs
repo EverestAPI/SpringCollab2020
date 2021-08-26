@@ -20,7 +20,6 @@ namespace Celeste.Mod.SpringCollab2020 {
         private static Hook hookIsHeartSide;
         private static ILHook hookLobbyJournal;
         private static ILHook hookOverworldJournal;
-        private static Hook hookLevelExitToLobby;
         private static ILHook hookPoemColors;
 
         public static void Load() {
@@ -113,13 +112,8 @@ namespace Celeste.Mod.SpringCollab2020 {
                 cursor.Emit(OpCodes.Ldarg_0);
                 cursor.EmitDelegate<Func<Action, Level, Action>>((orig, self) => {
                     if (self.Session.Area.GetSID() == "SpringCollab2020/5-Grandmaster/ZZ-HeartSide") {
-                        // "return to lobby" but it actually returns to the new GM heart side.
+                        // "return to lobby" (new GMHS) instead of returning to map.
                         return () => {
-                            hookLevelExitToLobby = new Hook(
-                                typeof(CollabUtils2.UI.LevelExitToLobby).GetMethod("Begin"),
-                                typeof(GrandmasterHeartSideHelper).GetMethod("modLevelExitToLobby", BindingFlags.NonPublic | BindingFlags.Static));
-                            On.Celeste.LevelEnter.Go += modLevelEnter;
-
                             Engine.Scene = new CollabUtils2.UI.LevelExitToLobby(LevelExit.Mode.Completed, self.Session);
                         };
                     } else {
@@ -128,46 +122,6 @@ namespace Celeste.Mod.SpringCollab2020 {
                     }
                 });
             }
-        }
-
-        private static void modLevelExitToLobby(Action<CollabUtils2.UI.LevelExitToLobby> orig, CollabUtils2.UI.LevelExitToLobby self) {
-            // back up return location.
-            string bakSID = CollabUtils2.CollabModule.Instance.Session.LobbySID;
-            string bakRoom = CollabUtils2.CollabModule.Instance.Session.LobbyRoom;
-            float bakX = CollabUtils2.CollabModule.Instance.Session.LobbySpawnPointX;
-            float bakY = CollabUtils2.CollabModule.Instance.Session.LobbySpawnPointY;
-
-            // modify it to the new gmhs.
-            CollabUtils2.CollabModule.Instance.Session.LobbySID = "SpringCollab2020/5-Grandmaster/ZZ-NewHeartSide";
-            CollabUtils2.CollabModule.Instance.Session.LobbyRoom = null;
-            CollabUtils2.CollabModule.Instance.Session.LobbySpawnPointX = 0;
-            CollabUtils2.CollabModule.Instance.Session.LobbySpawnPointY = 0;
-
-            // run collab utils code.
-            orig(self);
-
-            // restore old values.
-            CollabUtils2.CollabModule.Instance.Session.LobbySID = bakSID;
-            CollabUtils2.CollabModule.Instance.Session.LobbyRoom = bakRoom;
-            CollabUtils2.CollabModule.Instance.Session.LobbySpawnPointX = bakX;
-            CollabUtils2.CollabModule.Instance.Session.LobbySpawnPointY = bakY;
-
-            // undo the hook so that future returns to lobby behave normally.
-            hookLevelExitToLobby?.Dispose();
-            hookLevelExitToLobby = null;
-        }
-
-        private static void modLevelEnter(On.Celeste.LevelEnter.orig_Go orig, Session session, bool fromSaveData) {
-            // This hook is only applied when returning from the old GMHS.
-            // We know we are returning to the start of new GMHS, so set up the session properly for that.
-            session.FirstLevel = true;
-            session.StartedFromBeginning = true;
-            new DynData<Session>(session)["pauseTimerUntilAction"] = false;
-
-            orig(session, fromSaveData);
-
-            // and undo the hook.
-            On.Celeste.LevelEnter.Go -= modLevelEnter;
         }
 
         private static void renderOldGMHSCompletionStamp(ILContext il) {
