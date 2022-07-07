@@ -55,7 +55,7 @@ namespace Celeste.Mod.SpringCollab2020 {
 
             IL.Celeste.Level.Reload += resetFlagsOnTimerResets;
 
-            DecalRegistry.AddPropertyHandler("scale", (decal, attrs) => {
+            DecalRegistry.AddPropertyHandler("SpringCollab2020_scale", (decal, attrs) => {
                 Vector2 scale = decal.Scale;
                 if (attrs["multiply"] != null) {
                     scale *= float.Parse(attrs["multiply"].Value);
