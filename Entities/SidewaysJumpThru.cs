@@ -76,6 +76,7 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
             IL.Celeste.Player.SlipCheck += modCollideChecks; // make climbing on jumpthrus not slippery
             IL.Celeste.Player.NormalUpdate += modCollideChecks; // get the wall slide effect
             IL.Celeste.Player.OnCollideH += modCollideChecks; // handle dashes against jumpthrus properly, without "shifting" down
+            IL.Celeste.Seeker.OnCollideH += modCollideChecks; // make seekers bump against jumpthrus, instead of vibrating at maximum velocity
 
             // don't make Madeline duck when dashing against a sideways jumpthru
             On.Celeste.Player.DuckFreeAt += preventDuckWhenDashingAgainstJumpthru;
@@ -106,6 +107,7 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
             IL.Celeste.Player.SlipCheck -= modCollideChecks;
             IL.Celeste.Player.NormalUpdate -= modCollideChecks;
             IL.Celeste.Player.OnCollideH -= modCollideChecks;
+            IL.Celeste.Seeker.OnCollideH -= modCollideChecks;
             hookOnUpdateSprite?.Dispose();
 
             On.Celeste.Player.DuckFreeAt -= preventDuckWhenDashingAgainstJumpthru;
@@ -233,7 +235,7 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
             // and we are checking the collision on the left side of the player for example.
             bool collideOnLeftSideOfPlayer = (self.Position.X > checkAtPosition.X);
             SidewaysJumpThru jumpthru = self.CollideFirstOutside<SidewaysJumpThru>(checkAtPosition);
-            return jumpthru != null && self is Player && jumpthru.AllowLeftToRight == collideOnLeftSideOfPlayer
+            return jumpthru != null && (self is Player || self is Seeker) && jumpthru.AllowLeftToRight == collideOnLeftSideOfPlayer
                 && jumpthru.Bottom >= self.Top + checkAtPosition.Y - self.Position.Y + 3;
         }
 
