@@ -2,14 +2,14 @@ module SpringCollab2020SidewaysJumpThru
 
 using ..Ahorn, Maple
 
-@mapdef Entity "SpringCollab2020/SidewaysJumpThru" SidewaysJumpThru(x::Integer, y::Integer, height::Integer=Maple.defaultBlockHeight, 
+@mapdef Entity "SpringCollab2020/SidewaysJumpThru" SidewaysJumpThru(x::Integer, y::Integer, height::Integer=Maple.defaultBlockHeight,
     left::Bool=true, texture::String="wood", animationDelay::Number=0.0)
 
 textures = ["wood", "dream", "temple", "templeB", "cliffside", "reflection", "core", "moon"]
 const placements = Ahorn.PlacementDict()
 
 for texture in textures
-	placements["Sideways Jump Through ($(uppercasefirst(texture)), Left) (Spring Collab 2020)"] = Ahorn.EntityPlacement(
+    placements["Sideways Jump Through ($(uppercasefirst(texture)), Left) (Spring Collab 2020)"] = Ahorn.EntityPlacement(
         SidewaysJumpThru,
         "rectangle",
         Dict{String, Any}(
@@ -56,16 +56,16 @@ function Ahorn.render(ctx::Ahorn.Cairo.CairoContext, entity::SidewaysJumpThru, r
 
     height = Int(get(entity.data, "height", 8))
     left = get(entity.data, "left", true)
-    
+
     startX = div(x, 8) + 1
     startY = div(y, 8) + 1
     stopY = startY + div(height, 8) - 1
     animated = Number(get(entity.data, "animationDelay", 0)) > 0
-    
+
     Ahorn.Cairo.save(ctx)
-    
+
     Ahorn.rotate(ctx, pi / 2)
-    
+
     if left
         Ahorn.scale(ctx, 1, -1)
     end
@@ -90,7 +90,7 @@ function Ahorn.render(ctx::Ahorn.Cairo.CairoContext, entity::SidewaysJumpThru, r
             Ahorn.drawImage(ctx, "objects/jumpthru/$(texture)", 8 * i, left ? 0 : -8, quad...)
         end
     end
-    
+
     Ahorn.Cairo.restore(ctx)
 end
 

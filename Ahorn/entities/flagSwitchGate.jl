@@ -1,4 +1,4 @@
-﻿module SpringCollab2020FlagSwitchGate
+module SpringCollab2020FlagSwitchGate
 
 using ..Ahorn, Maple
 
@@ -52,14 +52,14 @@ end
 
 function renderGateSwitch(ctx::Ahorn.Cairo.CairoContext, entity::FlagSwitchGate, x::Number, y::Number, width::Number, height::Number, sprite::String)
     icon = get(entity.data, "icon", "vanilla")
-    
+
     iconResource = "objects/switchgate/icon00"
     if icon != "vanilla"
         iconResource = "objects/SpringCollab2020/flagSwitchGate/$(icon)/icon00"
     end
 
     iconSprite = Ahorn.getSprite(iconResource, "Gameplay")
-    
+
     tilesWidth = div(width, 8)
     tilesHeight = div(height, 8)
 

@@ -1,4 +1,4 @@
-﻿module SpringCollab2020FlagToggleWaterfall
+module SpringCollab2020FlagToggleWaterfall
 
 using ..Ahorn, Maple
 
@@ -101,7 +101,7 @@ function Ahorn.render(ctx::Ahorn.Cairo.CairoContext, entity::FlagToggleWaterfall
     for i in 0:segmentHeight:ceil(Int, height / segmentHeight) * segmentHeight
         Ahorn.drawImage(ctx, waterSegment, 0, i)
     end
-    
+
     Ahorn.restore(ctx)
 end
 

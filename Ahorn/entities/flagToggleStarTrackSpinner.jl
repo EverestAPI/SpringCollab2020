@@ -1,4 +1,4 @@
-﻿module SpringCollab2020FlagToggleStarTrackSpinner
+module SpringCollab2020FlagToggleStarTrackSpinner
 
 using ..Ahorn, Maple
 

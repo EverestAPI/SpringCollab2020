@@ -1,4 +1,4 @@
-﻿using Celeste.Mod.Entities;
+using Celeste.Mod.Entities;
 using Microsoft.Xna.Framework;
 using Monocle;
 using System;
@@ -8,7 +8,7 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
     [CustomEntity("SpringCollab2020/nonBadelineMovingBlock")]
     [Tracked(false)]
     public class NonBadelineMovingBlock : Solid {
-        
+
         private float startDelay;
 
         private int nodeIndex;

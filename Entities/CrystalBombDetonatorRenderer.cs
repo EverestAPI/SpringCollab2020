@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Monocle;
@@ -40,7 +40,7 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
                 levelTileBounds = (Scene as Level).TileBounds;
                 tiles = new VirtualMap<bool>(levelTileBounds.Width, levelTileBounds.Height, false);
             }
-            
+
             for (int xTile = (int)block.X / 8; xTile < (block.Right / 8f); xTile++)
                 for (int yTile = (int)block.Y / 8; yTile < (block.Bottom / 8f); yTile++)
                     tiles[xTile - levelTileBounds.X, yTile - levelTileBounds.Y] = true;
@@ -145,7 +145,7 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
         public override void Render() {
             if (trackedFields.Count <= 0)
                 return;
- 
+
             Color color = Color.Purple * 0.45f;
             Color value = Color.Purple * 0.55f;
             foreach (CrystalBombDetonator crystalBombDetonator in trackedFields) {
@@ -203,7 +203,7 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
 
                 if (Parent.Solidify >= 1f)
                     return 0f;
-                
+
                 float num = offset + along * 0.25f;
                 float num2 = (float) (Math.Sin((double) num) * 2.0 + Math.Sin((double) (num * 0.25f)));
                 return (1f + num2 * Ease.SineInOut(Calc.YoYo(along / length))) * (1f - Parent.Solidify);

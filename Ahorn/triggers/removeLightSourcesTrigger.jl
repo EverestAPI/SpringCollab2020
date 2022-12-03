@@ -1,4 +1,4 @@
-﻿module SpringCollab2020RemoveLightSources
+module SpringCollab2020RemoveLightSources
 
 using ..Ahorn, Maple
 

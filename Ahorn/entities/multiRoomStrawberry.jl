@@ -1,4 +1,4 @@
-﻿module SpringCollab2020MultiRoomStrawberry
+module SpringCollab2020MultiRoomStrawberry
 
 using ..Ahorn, Maple
 

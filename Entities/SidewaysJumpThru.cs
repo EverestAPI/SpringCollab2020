@@ -1,4 +1,4 @@
-﻿using Celeste.Mod.Entities;
+using Celeste.Mod.Entities;
 using Microsoft.Xna.Framework;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
@@ -231,7 +231,7 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
 
         private static bool entityCollideCheckWithSidewaysJumpthrus(Entity self, Vector2 checkAtPosition, bool isClimb, bool isWallJump) {
             // our entity collides if this is with a jumpthru and we are colliding with the solid side of it.
-            // we are in this case if the jumpthru is left to right (the "solid" side of it is the right one) 
+            // we are in this case if the jumpthru is left to right (the "solid" side of it is the right one)
             // and we are checking the collision on the left side of the player for example.
             bool collideOnLeftSideOfPlayer = (self.Position.X > checkAtPosition.X);
             SidewaysJumpThru jumpthru = self.CollideFirstOutside<SidewaysJumpThru>(checkAtPosition);

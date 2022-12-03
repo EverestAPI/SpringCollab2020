@@ -1,4 +1,4 @@
-﻿module SpringCollab2020HeatWaveNoColorGrade
+module SpringCollab2020HeatWaveNoColorGrade
 
 using ..Ahorn, Maple
 

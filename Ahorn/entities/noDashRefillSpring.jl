@@ -1,4 +1,4 @@
-﻿module SpringCollab2020NoDashRefillSpring
+module SpringCollab2020NoDashRefillSpring
 
 using ..Ahorn, Maple
 

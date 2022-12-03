@@ -1,4 +1,4 @@
-﻿module SpringCollab2020SafeRespawnCrumble
+module SpringCollab2020SafeRespawnCrumble
 
 using ..Ahorn, Maple
 

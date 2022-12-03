@@ -1,4 +1,4 @@
-﻿module SpringCollab2020AnimatedJumpthruPlatform
+module SpringCollab2020AnimatedJumpthruPlatform
 
 using ..Ahorn, Maple
 

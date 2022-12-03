@@ -1,4 +1,4 @@
-﻿module SpringCollab2020MoveBlockBarrier
+module SpringCollab2020MoveBlockBarrier
 
 using ..Ahorn, Maple
 
@@ -26,7 +26,7 @@ end
 function Ahorn.render(ctx::Ahorn.Cairo.CairoContext, entity::MoveBlockBarrier, room::Maple.Room)
     width = Int(get(entity.data, "width", 32))
     height = Int(get(entity.data, "height", 32))
-    
+
     Ahorn.drawRectangle(ctx, 0, 0, width, height, (0.45, 0.0, 0.45, 0.8), (0.0, 0.0, 0.0, 0.0))
 end
 

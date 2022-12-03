@@ -1,4 +1,4 @@
-﻿module SpringCollab2020CassetteFriendlyStrawberry
+module SpringCollab2020CassetteFriendlyStrawberry
 
 using ..Ahorn, Maple
 
@@ -39,7 +39,7 @@ function Ahorn.selection(entity::CassetteFriendlyStrawberry)
     sprite = sprites[(winged, hasPips, moon)]
 
     res = Ahorn.Rectangle[Ahorn.getSpriteRectangle(sprite, x, y)]
-    
+
     for node in nodes
         nx, ny = node
 

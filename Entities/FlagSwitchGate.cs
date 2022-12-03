@@ -1,4 +1,4 @@
-﻿using Celeste.Mod.Entities;
+using Celeste.Mod.Entities;
 using Microsoft.Xna.Framework;
 using Monocle;
 using System;
@@ -7,7 +7,7 @@ using System.Collections;
 namespace Celeste.Mod.SpringCollab2020.Entities {
     /// <summary>
     /// A switch gate triggered by a flag touch switch.
-    /// 
+    ///
     /// Attributes:
     /// - flag: the session flag this switch gate reacts to. Must be the same across the touch switch group.
     /// - icon: the name of the icon for the switch gate (relative to objects/SpringCollab2020/flagSwitchGate) or "vanilla" for the default one.

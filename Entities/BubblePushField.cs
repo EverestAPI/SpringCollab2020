@@ -1,4 +1,4 @@
-﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework;
 using Celeste.Mod.Entities;
 using System;
 using System.Collections.Generic;
@@ -82,7 +82,7 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
             base.Update();
 
             Session session = SceneAs<Level>().Session;
-            if ((activationMode == ActivationMode.OnlyWhenFlagActive && !session.GetFlag(flag)) 
+            if ((activationMode == ActivationMode.OnlyWhenFlagActive && !session.GetFlag(flag))
                 || (activationMode == ActivationMode.OnlyWhenFlagInactive && session.GetFlag(flag))) {
 
                 // the bubble push field is currently turned off by a session flag.
@@ -96,7 +96,7 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
                 Add(new BubbleParticle(true, true));
             }
 
-            foreach (WindMover mover in Scene.Tracker.GetComponents<WindMover>()) { 
+            foreach (WindMover mover in Scene.Tracker.GetComponents<WindMover>()) {
                 if(mover.Entity.CollideCheck(this)) {
                     if (WindMovers.ContainsKey(mover))
                         WindMovers[mover] = Calc.Approach(WindMovers[mover], Strength, Engine.DeltaTime / .6f);
@@ -137,7 +137,7 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
                     Player tempPlayer = (Player) mover.Entity;
                     if (tempPlayer.Holding != null || tempPlayer.Dead)
                         return;
-                     
+
                     mover.Move(new Vector2(0f, -UpwardStrength));
                 }
 

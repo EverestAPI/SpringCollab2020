@@ -1,4 +1,4 @@
-﻿module SpringCollab2020FlagToggleWater
+module SpringCollab2020FlagToggleWater
 
 using ..Ahorn, Maple
 

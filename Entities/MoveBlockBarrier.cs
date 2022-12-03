@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Reflection;
 using Celeste.Mod.Entities;
@@ -11,7 +11,7 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
     public class MoveBlockBarrier : SeekerBarrier {
 
         private static FieldInfo particlesInfo = typeof(SeekerBarrier).GetField("particles", BindingFlags.GetField | BindingFlags.Instance | BindingFlags.NonPublic);
-    
+
         public MoveBlockBarrier(EntityData data, Vector2 offset) : base(data, offset) {
         }
 

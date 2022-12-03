@@ -1,4 +1,4 @@
-﻿module SpringCollab2020NonCoreModeWallBooster
+module SpringCollab2020NonCoreModeWallBooster
 
 using ..Ahorn, Maple
 

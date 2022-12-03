@@ -1,4 +1,4 @@
-﻿module SpringCollab2020AttachedIceWall
+module SpringCollab2020AttachedIceWall
 
 using ..Ahorn, Maple
 

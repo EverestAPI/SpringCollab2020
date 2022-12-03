@@ -1,4 +1,4 @@
-﻿using Celeste.Mod.Entities;
+using Celeste.Mod.Entities;
 using Microsoft.Xna.Framework;
 using Monocle;
 using MonoMod.Cil;
@@ -18,7 +18,7 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
                 if (comp is DashListener)
                     Components.Remove(comp);
             }
-            
+
             Add(new DashListener {
                 OnDash = new Action<Vector2>(OnDiagDash)
             });

@@ -1,4 +1,4 @@
-﻿using Monocle;
+using Monocle;
 using Microsoft.Xna.Framework;
 using Celeste.Mod.Entities;
 using System.Reflection;
@@ -36,7 +36,7 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
 
             try {
                 return Calc.HexToColor(color.Replace("#", ""));
-            } 
+            }
             catch {
                 Logger.Log("ColorHelper", "Failed to transform color " + color + ", returning Color.White");
             }

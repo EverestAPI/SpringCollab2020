@@ -1,4 +1,4 @@
-﻿using Celeste.Mod.Entities;
+using Celeste.Mod.Entities;
 using Microsoft.Xna.Framework;
 using Monocle;
 using System.Collections.Generic;
@@ -8,7 +8,7 @@ using System.Reflection;
 namespace Celeste.Mod.SpringCollab2020.Entities {
     /// <summary>
     /// Mashup of vanilla RisingLava and SandwichLava, allowing for lava coming from the sides instead of from the top / bottom.
-    /// 
+    ///
     /// Attributes:
     /// - intro: if true, lava will be invisible until the player moves
     /// - lavaMode: allows picking the lava direction (left to right, right to left, or sandwich)

@@ -1,4 +1,4 @@
-﻿using Celeste.Mod.Entities;
+using Celeste.Mod.Entities;
 using Microsoft.Xna.Framework;
 using Monocle;
 using System;
@@ -13,7 +13,7 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
         private static FieldInfo spriteInfo = typeof(Spring).GetField("sprite", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.GetField);
 
         private static MethodInfo BounceAnimateInfo = typeof(Spring).GetMethod("BounceAnimate", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.InvokeMethod);
-        
+
         public DashSpring(Vector2 position, Orientations orientation, bool playerCanUse)
             : base(position, orientation, playerCanUse) {
             // Only one other player collider is added so it can easily be removed

@@ -1,4 +1,4 @@
-﻿module SpringCollab2020DashSpring
+module SpringCollab2020DashSpring
 
 using ..Ahorn, Maple
 

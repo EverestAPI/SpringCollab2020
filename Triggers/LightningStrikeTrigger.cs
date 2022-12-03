@@ -1,4 +1,4 @@
-﻿using Celeste;
+using Celeste;
 using Celeste.Mod.Entities;
 using Microsoft.Xna.Framework;
 using System.Linq;
@@ -30,7 +30,7 @@ namespace Celeste.Mod.SpringCollab2020.Triggers {
         private int ConstantTimer = 10;
 
         private Random rand;
-    
+
         public LightningStrikeTrigger(EntityData data, Vector2 offset) : this(data, offset, data.Float("playerOffset", 0f), data.Float("verticalOffset", 0), data.Float("strikeHeight", 0), data.Int("seed", 0), data.Float("delay", 0f), data.Bool("rain", true), data.Bool("flash", true), data.Bool("constant", false)) { }
 
         public LightningStrikeTrigger(EntityData data, Vector2 offset, float playerOffset, float verticalOffset, float height, int seed, float delay, bool raining, bool flash, bool constant) : base (data, offset) {

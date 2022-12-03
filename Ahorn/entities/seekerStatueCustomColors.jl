@@ -1,4 +1,4 @@
-﻿module SpringCollab2020SeekerStatueCustomColors
+module SpringCollab2020SeekerStatueCustomColors
 
 using ..Ahorn, Maple
 
@@ -28,7 +28,7 @@ function Ahorn.selection(entity::SeekerStatueCustomColors)
     x, y = Ahorn.position(entity)
 
     res = Ahorn.Rectangle[Ahorn.getSpriteRectangle(statueSprite, x, y)]
-    
+
     for node in nodes
         nx, ny = node
 

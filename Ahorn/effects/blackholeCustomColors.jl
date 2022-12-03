@@ -1,4 +1,4 @@
-﻿module SpringCollab2020BlackholeCustomColors
+module SpringCollab2020BlackholeCustomColors
 
 using ..Ahorn, Maple
 

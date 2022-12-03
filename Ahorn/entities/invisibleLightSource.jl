@@ -1,4 +1,4 @@
-﻿module SpringCollab2020InvisibleLightSource
+module SpringCollab2020InvisibleLightSource
 
 using ..Ahorn, Maple
 
@@ -7,26 +7,26 @@ using ..Ahorn, Maple
 const colors = sort(collect(keys(Ahorn.XNAColors.colors)))
 
 const placements = Ahorn.PlacementDict(
-	"Light Source (Spring Collab 2020)" => Ahorn.EntityPlacement(
-		InvisibleLightSource
-	)
+    "Light Source (Spring Collab 2020)" => Ahorn.EntityPlacement(
+        InvisibleLightSource
+    )
 )
 
 Ahorn.editingOptions(entity::InvisibleLightSource) = Dict{String,Any}(
-	"color" => colors
+    "color" => colors
 )
 
 function Ahorn.selection(entity::InvisibleLightSource)
-	x, y = Ahorn.position(entity)
+    x, y = Ahorn.position(entity)
 
-	return Ahorn.Rectangle(x - 4, y - 4, 7, 8)
+    return Ahorn.Rectangle(x - 4, y - 4, 7, 8)
 end
 
 function Ahorn.renderAbs(ctx::Ahorn.Cairo.CairoContext, entity::InvisibleLightSource, room::Maple.Room)
-	x, y = Ahorn.position(entity)
-	sprite = Ahorn.getTextureSprite("objects/hanginglamp", "Gameplay")
-	
-	Ahorn.drawImage(ctx, sprite, x - 4, y - 4, 0, 16, 7, 8, alpha=0.7)
+    x, y = Ahorn.position(entity)
+    sprite = Ahorn.getTextureSprite("objects/hanginglamp", "Gameplay")
+
+    Ahorn.drawImage(ctx, sprite, x - 4, y - 4, 0, 16, 7, 8, alpha=0.7)
 end
 
 end

@@ -1,4 +1,4 @@
-﻿using Monocle;
+using Monocle;
 using System;
 
 namespace Celeste.Mod.SpringCollab2020.Entities {

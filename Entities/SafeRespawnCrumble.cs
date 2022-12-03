@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Monocle;
@@ -9,11 +9,11 @@ using System;
 /*
  * Safe Respawn Crumble (Spring Collab 2020)
  * https://github.com/EverestAPI/SpringCollab2020/
- * 
+ *
  * A Crumble Platform which is always "crumbled",
  * unless the player respawns in its vicinity
  * or is bubbled to it via a CassetteReturn routine.
- * 
+ *
  * It performs a similar role to Mario Maker's pink block platform,
  * which only spawns when a user playtests their level from an aerial position
  * and disappears once the user jumps off of it.

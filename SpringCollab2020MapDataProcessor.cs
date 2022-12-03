@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
 namespace Celeste.Mod.SpringCollab2020 {
@@ -72,11 +72,11 @@ namespace Celeste.Mod.SpringCollab2020 {
 
         public override void Reset() {
             while (FlagTouchSwitches.Count <= AreaKey.ID) {
-                // fill out the empty space before the current map with empty dictionaries. 
+                // fill out the empty space before the current map with empty dictionaries.
                 FlagTouchSwitches.Add(new List<Dictionary<string, List<EntityID>>>());
             }
             while (FlagTouchSwitches[AreaKey.ID].Count <= (int) AreaKey.Mode) {
-                // fill out the empty space before the current map MODE with empty dictionaries. 
+                // fill out the empty space before the current map MODE with empty dictionaries.
                 FlagTouchSwitches[AreaKey.ID].Add(new Dictionary<string, List<EntityID>>());
             }
 

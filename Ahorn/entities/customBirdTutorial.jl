@@ -26,7 +26,7 @@ end
 
 function Ahorn.render(ctx::Ahorn.Cairo.CairoContext, entity::CustomBirdTutorial, room::Maple.Room)
     scaleX = get(entity.data, "faceLeft", true) ? -1 : 1
-    
+
     Ahorn.drawSprite(ctx, sprite, 0, 0, sx=scaleX, jx=0.5, jy=1.0)
 end
 

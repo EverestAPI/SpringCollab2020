@@ -1,4 +1,4 @@
-﻿using Celeste.Mod.Entities;
+using Celeste.Mod.Entities;
 using Celeste.Mod.SpringCollab2020.Entities;
 using Microsoft.Xna.Framework;
 

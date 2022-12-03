@@ -1,4 +1,4 @@
-﻿module SpringCollab2020LightningStrikeTrigger
+module SpringCollab2020LightningStrikeTrigger
 
 using ..Ahorn, Maple
 

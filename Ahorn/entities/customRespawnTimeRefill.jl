@@ -1,4 +1,4 @@
-﻿module SpringCollab2020CustomRespawnTimeRefill
+module SpringCollab2020CustomRespawnTimeRefill
 
 using ..Ahorn, Maple
 

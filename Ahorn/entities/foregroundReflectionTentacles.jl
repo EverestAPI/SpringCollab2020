@@ -35,7 +35,7 @@ function Ahorn.selection(entity::ForegroundReflectionTentacles)
     x, y = Ahorn.position(entity)
 
     res = Ahorn.Rectangle[Ahorn.Rectangle(x - 12, y - 12, 24, 24)]
-    
+
     for node in nodes
         nx, ny = Int.(node)
 

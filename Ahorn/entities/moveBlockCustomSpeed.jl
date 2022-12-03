@@ -1,4 +1,4 @@
-﻿module SpringCollab2020MoveBlockCustomSpeed
+module SpringCollab2020MoveBlockCustomSpeed
 
 using ..Ahorn, Maple
 

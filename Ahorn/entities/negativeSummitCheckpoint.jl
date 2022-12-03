@@ -1,4 +1,4 @@
-﻿module SpringCollab2020NegativeSummitCheckpoint
+module SpringCollab2020NegativeSummitCheckpoint
 
 using ..Ahorn, Maple
 

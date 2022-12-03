@@ -1,4 +1,4 @@
-﻿using Celeste.Mod.Entities;
+using Celeste.Mod.Entities;
 using Microsoft.Xna.Framework;
 using Monocle;
 using System;
@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 namespace Celeste.Mod.SpringCollab2020.Entities {
     /// <summary>
     /// A touch switch triggering an arbitrary session flag.
-    /// 
+    ///
     /// Attributes:
     /// - flag: the session flag this touch switch sets. Must be the same across the whole touch switch group.
     /// - icon: the name of the icon for the touch switch (relative to objects/SpringCollab2020/flagTouchSwitch) or "vanilla" for the default one.

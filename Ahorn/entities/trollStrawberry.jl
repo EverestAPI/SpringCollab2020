@@ -1,4 +1,4 @@
-﻿module SpringCollab2020TrollStrawberry
+module SpringCollab2020TrollStrawberry
 
 using ..Ahorn, Maple
 

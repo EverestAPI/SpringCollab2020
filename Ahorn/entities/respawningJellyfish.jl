@@ -1,4 +1,4 @@
-﻿module SpringCollab2020RespawningJellyfish
+module SpringCollab2020RespawningJellyfish
 
 using ..Ahorn, Maple
 

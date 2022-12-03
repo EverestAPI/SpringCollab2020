@@ -1,4 +1,4 @@
-﻿module SpringCollab2020SpikeJumpThroughController
+module SpringCollab2020SpikeJumpThroughController
 
 using ..Ahorn, Maple
 
@@ -20,7 +20,7 @@ function Ahorn.selection(entity::SpikeJumpThroughController)
 end
 
 function Ahorn.render(ctx::Ahorn.Cairo.CairoContext, entity::SpikeJumpThroughController, room::Maple.Room)
-	Ahorn.drawSprite(ctx, sprite, 0, 0)
+    Ahorn.drawSprite(ctx, sprite, 0, 0)
 end
 
 end

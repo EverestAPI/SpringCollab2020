@@ -1,4 +1,4 @@
-﻿module SpringCollab2020SeekerCustomColors
+module SpringCollab2020SeekerCustomColors
 
 using ..Ahorn, Maple
 
@@ -23,7 +23,7 @@ function Ahorn.selection(entity::SeekerCustomColors)
     x, y = Ahorn.position(entity)
 
     res = Ahorn.Rectangle[Ahorn.getSpriteRectangle(sprite, x, y)]
-    
+
     for node in nodes
         nx, ny = node
 

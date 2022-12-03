@@ -1,4 +1,4 @@
-﻿module SpringCollab2020NonBadelineMovingBlock
+module SpringCollab2020NonBadelineMovingBlock
 
 using ..Ahorn, Maple
 
@@ -46,7 +46,7 @@ function Ahorn.renderSelectedAbs(ctx::Ahorn.Cairo.CairoContext, entity::NonBadel
 
     width = Int(get(entity.data, "width", 8))
     height = Int(get(entity.data, "height", 8))
-    
+
     if !isempty(nodes)
         nx, ny = Int.(nodes[1])
         cox, coy = floor(Int, width / 2), floor(Int, height / 2)

@@ -1,4 +1,4 @@
-﻿module SpringCollab2020StrawberryIgnoringLighting
+module SpringCollab2020StrawberryIgnoringLighting
 
 using ..Ahorn, Maple
 

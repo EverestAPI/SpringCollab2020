@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
@@ -8,7 +8,7 @@ using Celeste.Mod.Entities;
 /*
  * Glass Berry (Spring Collab 2020)
  * https://github.com/EverestAPI/SpringCollab2020/
- * 
+ *
  * A custom Strawberry which can be collected normally.
  * It will break and return to its home location if the player dashes while carrying it.
  */
@@ -21,7 +21,7 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
     [RegisterStrawberry(true, false)]
     [CustomEntity("SpringCollab2020/glassBerry")]
     class GlassBerry : Entity, IStrawberry, IStrawberrySeeded {
-        // Requested implementations for using IStrawberrySeeded. 
+        // Requested implementations for using IStrawberrySeeded.
         // These are the most basic implementations thereof and there is likely no reason to change these.
         public List<GenericStrawberrySeed> Seeds { get; }
         public string gotSeedFlag => "collected_seeds_of_" + ID.ToString();

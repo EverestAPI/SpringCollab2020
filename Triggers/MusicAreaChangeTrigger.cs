@@ -1,4 +1,4 @@
-﻿using Celeste.Mod.Entities;
+using Celeste.Mod.Entities;
 using Microsoft.Xna.Framework;
 
 namespace Celeste.Mod.SpringCollab2020.Triggers {
@@ -12,7 +12,7 @@ namespace Celeste.Mod.SpringCollab2020.Triggers {
 
         // this is used specifically for the expert lobby. On enter, it sets all given  parameter values
         // to the enter value. On exit, it sets all parameter values to exit. Individual exit/enter values were not necessary so they were not added.
-        // this is hastily written code that could likely be refactored into a more widely useful trigger for FMOD'ers 
+        // this is hastily written code that could likely be refactored into a more widely useful trigger for FMOD'ers
 
         public MusicAreaChangeTrigger(EntityData data, Vector2 offset) : base(data, offset) {
             musicParam1 = data.Attr("musicParam1");

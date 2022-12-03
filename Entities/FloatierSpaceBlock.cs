@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Reflection;
 using Celeste.Mod.Entities;
@@ -19,7 +19,7 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
         private static FieldInfo dashDirectionInfo = typeof(FloatySpaceBlock).GetField("dashDirection", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.GetField);
 
         private static PropertyInfo MasterOfGroupInfo = typeof(FloatySpaceBlock).GetProperty("MasterOfGroup", BindingFlags.Public | BindingFlags.Instance | BindingFlags.SetProperty);
-        
+
         public FloatierSpaceBlock(EntityData data, Vector2 offset) : base(data, offset) {
             floatinessBoost = data.Float("floatinessMultiplier", 1);
             dashEaseMultiplier = data.Float("bounceBackMultiplier", 1);
