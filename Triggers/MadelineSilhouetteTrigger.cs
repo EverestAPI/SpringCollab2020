@@ -52,20 +52,18 @@ namespace Celeste.Mod.SpringCollab2020.Triggers {
             }
 
             // jump to the usage of the White color
-            if (cursor.TryGotoNext(instr => instr.MatchCall<Color>("get_White"))) {
+            if (cursor.TryGotoNext(MoveType.After, instr => instr.MatchCall<Color>("get_White"))) {
                 Logger.Log("SpringCollab2020/MadelineSilhouetteTrigger", $"Patching silhouette color at {cursor.Index} in IL code for Player.Render()");
 
-                // instead of calling Color.White, call getMadelineColor just below.
+                // intercept Color.White (or whatever Max Helping Hand returned) and mod it if required.
                 cursor.Emit(OpCodes.Ldarg_0);
-                cursor.Next.Operand = typeof(MadelineSilhouetteTrigger).GetMethod("GetMadelineColor");
-            }
-        }
-
-        public static Color GetMadelineColor(Player player) {
-            if (SpringCollab2020Module.Instance.Session.MadelineIsSilhouette) {
-                return player.Hair.Color;
-            } else {
-                return Color.White;
+                cursor.EmitDelegate<Func<Color, Player, Color>>((orig, self) => {
+                    if (SpringCollab2020Module.Instance.Session.MadelineIsSilhouette) {
+                        return self.Hair.Color;
+                    } else {
+                        return orig;
+                    }
+                });
             }
         }
 
