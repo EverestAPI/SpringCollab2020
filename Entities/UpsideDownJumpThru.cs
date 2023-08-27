@@ -70,20 +70,19 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
             using (new DetourContext { After = { "*" } }) {
                 // fix player specific behavior allowing them to go through upside-down jumpthrus.
                 On.Celeste.Player.ctor += onPlayerConstructor;
+
+                // block player if they try to climb past an upside-down jumpthru.
+                IL.Celeste.Player.ClimbUpdate += patchPlayerClimbUpdate;
+
+                // ignore upside-down jumpthrus in select places.
+                playerOrigUpdateHook = new ILHook(typeof(Player).GetMethod("orig_Update"), filterOutJumpThrusFromCollideChecks);
+                IL.Celeste.Player.DashUpdate += filterOutJumpThrusFromCollideChecks;
+                IL.Celeste.Player.RedDashUpdate += filterOutJumpThrusFromCollideChecks;
+                IL.Celeste.Actor.MoveVExact += filterOutJumpThrusFromCollideChecks;
+
+                // listen for the player unducking, to knock the player down before they would go through upside down jumpthrus.
+                On.Celeste.Player.Update += onPlayerUpdate;
             }
-
-
-            // block player if they try to climb past an upside-down jumpthru.
-            IL.Celeste.Player.ClimbUpdate += patchPlayerClimbUpdate;
-
-            // ignore upside-down jumpthrus in select places.
-            playerOrigUpdateHook = new ILHook(typeof(Player).GetMethod("orig_Update"), filterOutJumpThrusFromCollideChecks);
-            IL.Celeste.Player.DashUpdate += filterOutJumpThrusFromCollideChecks;
-            IL.Celeste.Player.RedDashUpdate += filterOutJumpThrusFromCollideChecks;
-            IL.Celeste.Actor.MoveVExact += filterOutJumpThrusFromCollideChecks;
-
-            // listen for the player unducking, to knock the player down before they would go through upside down jumpthrus.
-            On.Celeste.Player.Update += onPlayerUpdate;
         }
 
         public static void deactivateHooks() {
