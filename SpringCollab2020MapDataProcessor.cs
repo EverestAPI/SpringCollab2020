@@ -4,8 +4,8 @@ using System.Collections.Generic;
 namespace Celeste.Mod.SpringCollab2020 {
     class SpringCollab2020MapDataProcessor : EverestMapDataProcessor {
 
-        // the structure here is: FlagTouchSwitches[AreaID][ModeID][flagName] = list of entity ids for flag touch switches in this group on this map.
-        public static List<List<Dictionary<string, List<EntityID>>>> FlagTouchSwitches = new List<List<Dictionary<string, List<EntityID>>>>();
+        // the structure here is: FlagTouchSwitches[AreaSID][ModeID][flagName] = list of entity ids for flag touch switches in this group on this map.
+        public static Dictionary<string, List<Dictionary<string, List<EntityID>>>> FlagTouchSwitches = new Dictionary<string, List<Dictionary<string, List<EntityID>>>>();
         private string levelName;
 
         // we want to match multi-room strawberry seeds with the strawberry that has the same name.
@@ -23,11 +23,10 @@ namespace Celeste.Mod.SpringCollab2020 {
                             levelName = levelName.Substring(4);
                         }
                     }
-                },
-                {
+                }, {
                     "entity:SpringCollab2020/FlagTouchSwitch", flagTouchSwitch => {
                         string flag = flagTouchSwitch.Attr("flag");
-                        Dictionary<string, List<EntityID>> allTouchSwitchesInMap = FlagTouchSwitches[AreaKey.ID][(int) AreaKey.Mode];
+                        Dictionary<string, List<EntityID>> allTouchSwitchesInMap = FlagTouchSwitches[AreaKey.SID][(int) AreaKey.Mode];
 
                         // if no dictionary entry exists for this flag, create one. otherwise, get it.
                         List<EntityID> entityIDs;
@@ -71,17 +70,17 @@ namespace Celeste.Mod.SpringCollab2020 {
         }
 
         public override void Reset() {
-            while (FlagTouchSwitches.Count <= AreaKey.ID) {
-                // fill out the empty space before the current map with empty dictionaries.
-                FlagTouchSwitches.Add(new List<Dictionary<string, List<EntityID>>>());
+            if (!FlagTouchSwitches.ContainsKey(AreaKey.SID)) {
+                // create an entry for the current map SID.
+                FlagTouchSwitches[AreaKey.SID] = new List<Dictionary<string, List<EntityID>>>();
             }
-            while (FlagTouchSwitches[AreaKey.ID].Count <= (int) AreaKey.Mode) {
+            while (FlagTouchSwitches[AreaKey.SID].Count <= (int) AreaKey.Mode) {
                 // fill out the empty space before the current map MODE with empty dictionaries.
-                FlagTouchSwitches[AreaKey.ID].Add(new Dictionary<string, List<EntityID>>());
+                FlagTouchSwitches[AreaKey.SID].Add(new Dictionary<string, List<EntityID>>());
             }
 
             // reset the dictionary for the current map and mode.
-            FlagTouchSwitches[AreaKey.ID][(int) AreaKey.Mode] = new Dictionary<string, List<EntityID>>();
+            FlagTouchSwitches[AreaKey.SID][(int) AreaKey.Mode] = new Dictionary<string, List<EntityID>>();
         }
 
         public override void End() {
