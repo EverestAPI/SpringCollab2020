@@ -136,7 +136,7 @@ namespace Celeste.Mod.SpringCollab2020.Entities {
                     Vector2 vector = edge.Parent.Position + edge.B;
                     for (int num = 0; num <= edge.Length; num++) {
                         Vector2 vector2 = value + edge.Normal * num;
-                        Draw.Line(vector2, vector2 + edge.Perpendicular * edge.Wave[num], Color.Purple);
+                        Draw.Line(vector2, Calc.Round(vector2 + edge.Perpendicular * edge.Wave[num]), Color.Purple);
                     }
                 }
             }
